@@ -2,9 +2,14 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Colors from '../utils/assets/Colors';
 
-const FooterText = ({text, coloredText, onColoredTextPress}) => {
+const FooterText = ({
+  text,
+  coloredText,
+  onColoredTextPress,
+  containerStyle,
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <Text style={styles.textStyle}>{text} </Text>
       {coloredText && (
         <Pressable onPress={onColoredTextPress}>
@@ -19,7 +24,14 @@ export default FooterText;
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    bottom: 50,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    backgroundColor: 'transparent',
   },
   textStyle: {
     fontSize: 16,

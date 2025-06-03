@@ -5,6 +5,8 @@ import CustomInput, {CustomInputBox} from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import FooterText from '../components/FooterText';
 import Colors from '../utils/assets/Colors';
+import {useNavigation} from '@react-navigation/native';
+import Routes from '../utils/constants/Routes';
 
 const OTPVerificationScreen = () => {
   const ref1 = useRef(null);
@@ -12,6 +14,13 @@ const OTPVerificationScreen = () => {
   const ref3 = useRef(null);
   const ref4 = useRef(null);
 
+  const navigation = useNavigation();
+  const onPressLogin = () => {
+    navigation.replace(Routes.stack.login);
+  };
+  const onPressButton = () => {
+    navigation.navigate(Routes.stack.passwordNew);
+  };
   return (
     <AuthLayout
       title={'OTP Verification'}
@@ -26,12 +35,12 @@ const OTPVerificationScreen = () => {
 
         <CustomInputBox ref={ref4} nextRef={null} prevRef={ref3} />
       </View>
-      <CustomButton buttonText={'Verify'} />
+      <CustomButton buttonText={'Verify'} onPress={onPressButton} />
 
       <FooterText
         text={'Didn’t Received Code?'}
         coloredText={'Log In'}
-        onColoredTextPress={() => {}}
+        onPressColoredText={onPressLogin}
       />
     </AuthLayout>
   );

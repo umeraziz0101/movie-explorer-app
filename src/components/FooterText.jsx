@@ -5,14 +5,14 @@ import Colors from '../utils/assets/Colors';
 const FooterText = ({
   text,
   coloredText,
-  onColoredTextPress,
+  onPressColoredText,
   containerStyle,
 }) => {
   return (
     <View style={[styles.container, containerStyle]}>
       <Text style={styles.textStyle}>{text} </Text>
       {coloredText && (
-        <Pressable onPress={onColoredTextPress}>
+        <Pressable onPress={onPressColoredText}>
           <Text style={styles.coloredTextStyle}>{coloredText}</Text>
         </Pressable>
       )}

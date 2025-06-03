@@ -5,8 +5,14 @@ import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 
 import Colors from '../utils/assets/Colors';
+import {useNavigation} from '@react-navigation/native';
+import Routes from '../utils/constants/Routes';
 
 const PasswordNewScreen = () => {
+  const navigation = useNavigation();
+  const onPressButton = () => {
+    navigation.navigate(Routes.stack.passwordChanged);
+  };
   return (
     <AuthLayout
       title={'Create New Password'}
@@ -14,7 +20,7 @@ const PasswordNewScreen = () => {
       <CustomInput icon={'lock'} secure iconRight={'passwordShow'} />
       <CustomInput icon={'lock'} secure iconRight={'passwordShow'} />
 
-      <CustomButton buttonText={'Reset Password'} />
+      <CustomButton buttonText={'Reset Password'} onPress={onPressButton} />
     </AuthLayout>
   );
 };

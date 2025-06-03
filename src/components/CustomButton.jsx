@@ -11,6 +11,7 @@ const CustomButton = ({
   buttonTextSize,
   buttonTextType,
   leftIcon,
+  onPress,
 }) => {
   return (
     <TouchableOpacity
@@ -19,7 +20,8 @@ const CustomButton = ({
         styles.buttonContainer,
         transparent && {backgroundColor: 'transparent'},
         buttonContainerStyle,
-      ]}>
+      ]}
+      onPress={onPress}>
       <View style={styles.row}>
         {leftIcon && (
           <CustomIcon name={leftIcon} size={20} style={styles.leftIcon} />
@@ -36,27 +38,6 @@ const CustomButton = ({
 };
 
 export default CustomButton;
-
-// export const SocialButton = ({name, onPress}) =>{
-//   const socialName = {
-
-//   }
-//   return (
-//         <TouchableOpacity
-//       activeOpacity={0.7}
-//       style={[
-//         styles.buttonContainer,
-//         transparent && {backgroundColor: 'transparent'},
-//       ]}>
-//       <CustomText
-//         textType="regular"
-//         size={14}
-//         color={Colors.black_0d0d0d}>
-//         {buttonText}
-//       </CustomText>
-//     </TouchableOpacity>
-//   )
-// }
 
 const styles = StyleSheet.create({
   buttonContainer: {

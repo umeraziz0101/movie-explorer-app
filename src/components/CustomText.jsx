@@ -31,29 +31,6 @@ const CustomText = ({
   children,
   ...rest
 }) => {
-  // const fontStyle ={
-  //     semiBold: 'Poppins-SemiBold',
-  //    black: 'Poppins-Black',
-  //    blackItalic: 'Poppins-BlackItalic',
-  //     'Poppins-Bold',
-  //     'Poppins-BoldItalic',
-  //     'Poppins-ExtraBold',
-  //     'Poppins-ExtraBoldItalic',
-  //     'Poppins-ExtraLight',
-  //     'Poppins-ExtraLightItalic',
-  //     'Poppins-Italic',
-  //     'Poppins-Light',
-  //     'Poppins-LightItalic',
-  //     'Poppins-Medium',
-  //     'Poppins-MediumItalic',
-  //     'Poppins-Regular',
-  //     'Poppins-SemiBold',
-  //     'Poppins-SemiBoldItalic',
-  //     'Poppins-Thin',
-  //     'Poppins-ThinItalic',
-
-  // }
-
   const fontFamily = fontStyles[textType] || fontStyles.regular;
 
   return (

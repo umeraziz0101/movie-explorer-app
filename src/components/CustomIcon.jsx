@@ -1,7 +1,7 @@
 import React from 'react';
 import Icons from '../utils/assets/Icons';
 
-export default function CustomIcon({name, size, fill, style}) {
+const CustomIcon = ({name, size, fill, style}) => {
   const IconComponent = Icons[name];
   if (!IconComponent) {
     console.warn(`No icon found for name="${name}"`);
@@ -16,4 +16,6 @@ export default function CustomIcon({name, size, fill, style}) {
       style={style}
     />
   );
-}
+};
+
+export default CustomIcon;

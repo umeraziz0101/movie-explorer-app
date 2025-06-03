@@ -1,6 +1,5 @@
 const Images = {
-  logo: require('../../assets/images/logo.png'),
-  coverLogin: require('../../assets/images/cover_login.png'),
+  coverOnBoard: require('../../assets/images/cover_onboard.png'),
   coverSplash: require('../../assets/images/cover_splash.png'),
 };
 

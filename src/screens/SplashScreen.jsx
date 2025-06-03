@@ -1,23 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
-  Image,
   ImageBackground,
   StatusBar,
   StyleSheet,
   View,
   Dimensions,
-  Alert,
 } from 'react-native';
 import Images from '../utils/assets/Images';
-import CustomButton from '../components/CustomButton';
-import FooterText from '../components/FooterText';
+
 import Icons from '../utils/assets/Icons';
-import CustomIcon from '../components/CustomIcon';
-import CustomInput from '../components/CustomInput';
+
+import {useNavigation} from '@react-navigation/native';
+import Constants from '../utils/constants/Constants';
+import Routes from '../utils/constants/Routes';
 
 const {width: screenWidth} = Dimensions.get('window');
 
 const SplashScreen = () => {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.replace(Routes.stack.onBoard);
+    }, Constants.splashTimeOut);
+
+    return () => clearTimeout(timer);
+  }, [navigation]);
   return (
     <ImageBackground
       source={Images.coverSplash}
@@ -26,16 +34,9 @@ const SplashScreen = () => {
       <StatusBar hidden />
       <View style={styles.overlay} />
       <Icons.logo style={styles.logo} />
-      <CustomButton transparent />
-      <FooterText
-        text={"Don't have an account"}
-        coloredText={'Sign Up'}
-        onColoredTextPress={() => Alert.alert('Button Pressed')}
-      />
-      <Icons.email width={32} height={32} />
-      <CustomIcon name={'user'} size={24} />
-      <CustomInput icon={'email'} iconRight={'passwordShow'} secure={true} />
-      <CustomInput icon={'email'} />
+
+      {/* <Icons.email width={32} height={32} /> */}
+      {/* <CustomIcon name={'user'} size={24} /> */}
     </ImageBackground>
   );
 };

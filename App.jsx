@@ -1,19 +1,29 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import SplashScreen from './src/screens/SplashScreen';
-import Wrapper from './src/components/Wrapper';
-import AuthLayout from './src/components/AuthLayout';
-import LoginScreen from './src/screens/LoginScreen';
-import SignUpScreen from './src/screens/SignUpScreen';
-import ForgetPasswordScreen from './src/screens/ForgetPasswordScreen';
-import OTPVerificationScreen from './src/screens/OTPVerificationScreen';
-import PasswordNewScreen from './src/screens/PasswordNewScreen';
-import PasswordChangedScreen from './src/screens/PasswordChangedScreen';
+import React, {useEffect, useState} from 'react';
+import {View, ActivityIndicator} from 'react-native';
+import {auth} from './src/utils/firebase/config';
+import AppNavigator from './src/navigation/AppNavigator';
 
 const App = () => {
-  return <OTPVerificationScreen />;
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const subscriber = auth.onAuthStateChanged(usr => {
+      setUser(usr);
+      if (initializing) setInitializing(false);
+    });
+    return subscriber;
+  }, []);
+
+  if (initializing) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#ff465f" />
+      </View>
+    );
+  }
+
+  return <AppNavigator />;
 };
 
 export default App;
-
-const styles = StyleSheet.create({});

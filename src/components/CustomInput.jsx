@@ -9,7 +9,13 @@ import React, {useState} from 'react';
 import CustomIcon from './CustomIcon';
 import Colors from '../utils/assets/Colors';
 
-const CustomInput = ({icon, secure = true, iconRight, containerStyle}) => {
+const CustomInput = ({
+  icon,
+  secure = false,
+  iconRight,
+  containerStyle,
+  ...rest
+}) => {
   const [secureText, setSecureText] = useState(secure);
   const onPressPasswordShow = () => {
     setSecureText(prev => !prev);
@@ -23,6 +29,7 @@ const CustomInput = ({icon, secure = true, iconRight, containerStyle}) => {
         secureTextEntry={secureText}
         {...(secure && {autoCapitalize: 'none'})}
         placeholderTextColor={Colors.white_ffffff}
+        {...rest}
       />
       {iconRight && (
         <TouchableOpacity onPress={onPressPasswordShow}>

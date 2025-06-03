@@ -2,8 +2,13 @@ import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Colors from '../utils/assets/Colors';
 
-const Wrapper = ({children}) => {
-  return <View style={styles.container}>{children}</View>;
+const Wrapper = ({children, statusBarHidden = false, style}) => {
+  return (
+    <View style={[styles.container, style]}>
+      <StatusBar barStyle={'light-content'} hidden={statusBarHidden} />
+      {children}
+    </View>
+  );
 };
 
 export default Wrapper;

@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import CustomIcon from './CustomIcon';
-import Colors from '../utils/assets/Colors';
+import Colors from '../utils/constants/Colors';
 
 const CustomInput = ({
   icon,
@@ -28,7 +28,7 @@ const CustomInput = ({
         style={[styles.input]}
         secureTextEntry={secureText}
         {...(secure && {autoCapitalize: 'none'})}
-        placeholderTextColor={Colors.white_ffffff}
+        placeholderTextColor={Colors.gray_535353}
         {...rest}
       />
       {iconRight && (

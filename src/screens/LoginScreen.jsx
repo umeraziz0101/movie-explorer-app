@@ -4,19 +4,82 @@ import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import FooterText from '../components/FooterText';
-import Colors from '../utils/assets/Colors';
+import Colors from '../utils/constants/Colors';
 import Divider from '../components/Divider';
 import CustomText from '../components/CustomText';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
 
-import {auth} from '../utils/firebase/config';
+import {auth} from '../services/firebaseConfig';
 import {signInWithEmailAndPassword} from '@react-native-firebase/auth';
+import Keys from '../utils/constants/Keys';
+import {validateLoginUser} from '../utils/inputValidation';
+import Strings from '../utils/constants/Strings';
+import {Loader} from '../components/Loader';
+import {loginUser} from '../services/firebaseAuth';
 
 const LoginScreen = () => {
+  //
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+  });
+  const [errors, setErrors] = useState('');
+  const [showPassword, setShowPassword] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (field, value) => {
+    if (field === Keys.input.email) setUser({...user, email: value});
+    if (field === Keys.input.password) setUser({...user, password: value});
+    if (errors[field]) {
+      setErrors(prev => ({...prev, [field]: null}));
+    }
+  };
+
+  const handleLogin = async () => {
+    const newErrors = validateLoginUser(user);
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      setLoading(true);
+
+      const result = await loginUser(user.email, user.password);
+      setLoading(false);
+      if (result.success) {
+        navigation.replace(Routes.tabs.home);
+      } else {
+        Alert.alert(Strings.errors.error, result.message);
+      }
+    }
+  };
+
+  //
+  //
+  //
+  // const handleLogin = async () => {
+  //   if (!email || !password) {
+  //     Alert.alert('Error', 'Please enter both email and password.');
+  //     return;
+  //   }
+  //   try {
+  //     await signInWithEmailAndPassword(auth, email.trim(), password);
+  //     navigation.replace(Routes.tabs.home);
+  //   } catch (error) {
+  //     let message = 'Something went wrong.';
+  //     if (error.code === 'auth/user-not-found') {
+  //       message = 'No user found with this email!';
+  //     } else if (error.code === 'auth/wrong-password') {
+  //       message = 'Incorrect password!';
+  //     } else if (error.code === 'auth/invalid-email') {
+  //       message = 'Email is invalid!';
+  //     }
+  //     Alert.alert('Login Error', message);
+  //   }
+  // };
+
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
   const onPressSignUp = () => {
     navigation.replace(Routes.stack.signUp);
   };
@@ -24,26 +87,6 @@ const LoginScreen = () => {
     navigation.navigate(Routes.stack.forgetPassword);
   };
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Please enter both email and password.');
-      return;
-    }
-    try {
-      await signInWithEmailAndPassword(auth, email.trim(), password);
-      navigation.replace(Routes.tabs.home);
-    } catch (error) {
-      let message = 'Something went wrong.';
-      if (error.code === 'auth/user-not-found') {
-        message = 'No user found with this email!';
-      } else if (error.code === 'auth/wrong-password') {
-        message = 'Incorrect password!';
-      } else if (error.code === 'auth/invalid-email') {
-        message = 'Email is invalid!';
-      }
-      Alert.alert('Login Error', message);
-    }
-  };
   return (
     <AuthLayout
       title={'Login'}
@@ -52,20 +95,34 @@ const LoginScreen = () => {
       <CustomInput
         icon={'email'}
         placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        // value={email}
+        value={user.email}
+        // onChangeText={setEmail}
+        onChangeText={text => {
+          handleChange(Keys.input.email, text);
+        }}
         keyboardType="email-address"
         autoCapitalize="none"
       />
+      {errors.email && (
+        <CustomText style={styles.error}>{errors.email}</CustomText>
+      )}
       <CustomInput
         icon={'lock'}
         placeholder="Password"
         secure
         iconRight={'passwordShow'}
-        value={password}
-        onChangeText={setPassword}
+        // value={password}
+        value={user.password}
+        // onChangeText={setPassword}
+        onChangeText={text => {
+          handleChange(Keys.input.password, text);
+        }}
         autoCapitalize="none"
       />
+      {errors.password && (
+        <CustomText style={styles.error}>{errors.password}</CustomText>
+      )}
       <View style={styles.row}>
         <CustomText textType="regular" size={14}>
           Remember me
@@ -104,6 +161,7 @@ const LoginScreen = () => {
         coloredText={'Sign Up'}
         onPressColoredText={onPressSignUp}
       />
+      <Loader visible={loading} />
     </AuthLayout>
   );
 };
@@ -120,5 +178,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 10,
+  },
+  error: {
+    color: Colors.red_f5615d,
+    marginBottom: 8,
   },
 });

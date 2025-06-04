@@ -4,10 +4,10 @@ import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import FooterText from '../components/FooterText';
-import Colors from '../utils/assets/Colors';
+import Colors from '../utils/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
-import {auth} from '../utils/firebase/config';
+import {auth} from '../services/firebaseConfig';
 import {sendPasswordResetEmail} from '@react-native-firebase/auth';
 
 const ForgetPasswordScreen = () => {

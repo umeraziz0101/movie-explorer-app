@@ -15,7 +15,7 @@ let firebaseApp;
 try {
   firebaseApp = getApp();
 } catch {
-  firebaseApp = initializeApp();
+  firebaseApp = initializeApp(firebaseConfig);
 }
 
 const auth = getAuth(firebaseApp);

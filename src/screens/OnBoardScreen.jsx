@@ -24,6 +24,9 @@ const OnBoardScreen = () => {
   const onPressSignUp = () => {
     navigation.navigate(Routes.stack.signUp);
   };
+  const onPressGuest = () => {
+    navigation.navigate(Routes.tabs.home);
+  };
 
   return (
     <Wrapper statusBarHidden={true} style={styles.container}>
@@ -46,7 +49,7 @@ const OnBoardScreen = () => {
             transparent
             onPress={onPressSignUp}
           />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPressGuest}>
             <CustomText>Continue as guest</CustomText>
           </TouchableOpacity>
         </View>

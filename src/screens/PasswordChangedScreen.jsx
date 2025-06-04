@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import React from 'react';
 import AuthLayout from '../components/AuthLayout';
 import CustomButton from '../components/CustomButton';
-import Colors from '../utils/assets/Colors';
+import Colors from '../utils/constants/Colors';
 import CustomIcon from '../components/CustomIcon';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';

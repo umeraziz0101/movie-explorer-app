@@ -1,6 +1,6 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import Colors from '../utils/assets/Colors';
+import Colors from '../utils/constants/Colors';
 import CustomText from './CustomText';
 import CustomIcon from './CustomIcon';
 

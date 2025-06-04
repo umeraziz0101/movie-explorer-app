@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import CustomText from './CustomText';
-import Colors from '../utils/assets/Colors';
+import Colors from '../utils/constants/Colors';
 
 const Divider = ({colored}) => {
   return (

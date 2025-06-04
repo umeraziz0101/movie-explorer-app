@@ -4,7 +4,7 @@ import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 
-import Colors from '../utils/assets/Colors';
+import Colors from '../utils/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
 

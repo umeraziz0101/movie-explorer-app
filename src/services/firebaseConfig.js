@@ -1,6 +1,7 @@
 import {getApp, initializeApp} from '@react-native-firebase/app';
 import {getAuth} from '@react-native-firebase/auth';
 import {getFirestore} from '@react-native-firebase/firestore';
+import {getFunctions} from '@react-native-firebase/functions';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyD3jf0stAawpHyXBvZussdHHeHXNXSWcBI',
@@ -20,5 +21,6 @@ try {
 
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
+const functions = getFunctions(firebaseApp);
 
-export {firebaseApp, auth, firestore};
+export {firebaseApp, auth, firestore, functions};

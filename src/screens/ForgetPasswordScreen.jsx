@@ -7,34 +7,28 @@ import FooterText from '../components/FooterText';
 import Colors from '../utils/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
-import {auth} from '../services/firebaseConfig';
-import {sendPasswordResetEmail} from '@react-native-firebase/auth';
+import {requestPasswordReset} from '../services/firebaseAuth';
 
 const ForgetPasswordScreen = () => {
-  const [email, setEmail] = useState('');
   const navigation = useNavigation();
-  const onPressLogin = () => {
-    navigation.replace(Routes.stack.login);
-  };
+  const [email, setEmail] = useState('');
 
-  const onPressButton = async () => {
-    if (!email) {
+  const handleSendOTP = async () => {
+    if (!email.trim()) {
       Alert.alert('Error', 'Please enter your email.');
       return;
     }
-    try {
-      await sendPasswordResetEmail(auth, email.trim());
-      Alert.alert('Success', 'Password reset email sent! Check your inbox.');
-      navigation.replace(Routes.stack.login);
-    } catch (error) {
-      let message = 'Something went wrong.';
-      if (error.code === 'auth/user-not-found') {
-        message = 'No user found with that email!';
-      } else if (error.code === 'auth/invalid-email') {
-        message = 'Email is invalid!';
-      }
-      Alert.alert('Reset Error', message);
+
+    const {success, code, message} = await requestPasswordReset(email.trim());
+    if (!success) {
+      Alert.alert('Error', message || 'Failed to request password reset.');
+      return;
     }
+
+    navigation.navigate(Routes.stack.otpVerification, {email});
+  };
+  const onPressLogin = () => {
+    navigation.replace(Routes.stack.login);
   };
 
   return (
@@ -50,7 +44,7 @@ const ForgetPasswordScreen = () => {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <CustomButton buttonText={'Send Code'} onPress={onPressButton} />
+      <CustomButton buttonText={'Send Code'} onPress={handleSendOTP} />
 
       <FooterText
         text={'Remember Password?'}

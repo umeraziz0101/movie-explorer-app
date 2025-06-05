@@ -17,34 +17,10 @@ import {Loader} from '../components/Loader';
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const onPressLogin = () => {
     navigation.replace(Routes.stack.login);
   };
 
-  // const handleSignUp = async () => {
-  //   if (!email || !password) {
-  //     Alert.alert('Error', 'Please enter email and password.');
-  //     return;
-  //   }
-  //   try {
-  //     await createUserWithEmailAndPassword(auth, email.trim(), password);
-  //     navigation.replace(Routes.tabs.home);
-  //   } catch (error) {
-  //     let message = 'Something went wrong.';
-  //     if (error.code === 'auth/email-already-in-use') {
-  //       message = 'That email address is already in use!';
-  //     } else if (error.code === 'auth/invalid-email') {
-  //       message = 'That email address is invalid!';
-  //     } else if (error.code === 'auth/weak-password') {
-  //       message = 'Password should be at least 6 characters!';
-  //     }
-  //     Alert.alert('Sign Up Error', message);
-  //   }
-  // };
-
-  ////////////////////
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -52,7 +28,6 @@ const SignUpScreen = () => {
   });
 
   const [errors, setErrors] = useState('');
-  // const [showPassword, setShowPassword] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (field, value) => {

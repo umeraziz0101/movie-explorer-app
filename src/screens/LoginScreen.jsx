@@ -10,8 +10,6 @@ import CustomText from '../components/CustomText';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
 
-import {auth} from '../services/firebaseConfig';
-import {signInWithEmailAndPassword} from '@react-native-firebase/auth';
 import Keys from '../utils/constants/Keys';
 import {validateLoginUser} from '../utils/inputValidation';
 import Strings from '../utils/constants/Strings';
@@ -19,7 +17,6 @@ import {Loader} from '../components/Loader';
 import {loginUser} from '../services/firebaseAuth';
 
 const LoginScreen = () => {
-  //
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -53,33 +50,7 @@ const LoginScreen = () => {
     }
   };
 
-  //
-  //
-  //
-  // const handleLogin = async () => {
-  //   if (!email || !password) {
-  //     Alert.alert('Error', 'Please enter both email and password.');
-  //     return;
-  //   }
-  //   try {
-  //     await signInWithEmailAndPassword(auth, email.trim(), password);
-  //     navigation.replace(Routes.tabs.home);
-  //   } catch (error) {
-  //     let message = 'Something went wrong.';
-  //     if (error.code === 'auth/user-not-found') {
-  //       message = 'No user found with this email!';
-  //     } else if (error.code === 'auth/wrong-password') {
-  //       message = 'Incorrect password!';
-  //     } else if (error.code === 'auth/invalid-email') {
-  //       message = 'Email is invalid!';
-  //     }
-  //     Alert.alert('Login Error', message);
-  //   }
-  // };
-
   const navigation = useNavigation();
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const onPressSignUp = () => {
     navigation.replace(Routes.stack.signUp);
   };
@@ -95,9 +66,7 @@ const LoginScreen = () => {
       <CustomInput
         icon={'email'}
         placeholder="Email"
-        // value={email}
         value={user.email}
-        // onChangeText={setEmail}
         onChangeText={text => {
           handleChange(Keys.input.email, text);
         }}
@@ -112,9 +81,7 @@ const LoginScreen = () => {
         placeholder="Password"
         secure
         iconRight={'passwordShow'}
-        // value={password}
         value={user.password}
-        // onChangeText={setPassword}
         onChangeText={text => {
           handleChange(Keys.input.password, text);
         }}

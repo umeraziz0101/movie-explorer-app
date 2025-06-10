@@ -1,48 +1,26 @@
-import {Alert, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet} from 'react-native';
+import React from 'react';
 import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 
 import Colors from '../utils/constants/Colors';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import Routes from '../utils/constants/Routes';
-import {confirmPasswordResetWithOTP} from '../services/firebaseAuth';
+import {useRoute} from '@react-navigation/native';
 import {Loader} from '../components/Loader';
+import {usePasswordNewViewModel} from '../viewModels/usePasswordNewViewModel';
+import CustomText from '../components/CustomText';
 
-const PasswordNewScreen = () => {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const {email} = route.params;
-
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPwd] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleReset = async () => {
-    if (!password.trim() || !confirmPassword.trim()) {
-      Alert.alert('Error', 'Please fill both password fields.');
-      return;
-    }
-    if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match.');
-      return;
-    }
-
-    setLoading(true);
-    const {success, message} = await confirmPasswordResetWithOTP(
-      email,
-      password,
-    );
-    setLoading(false);
-
-    if (!success) {
-      Alert.alert('Error', message || 'Failed to reset password.');
-      return;
-    }
-
-    navigation.replace(Routes.stack.passwordChanged);
-  };
+const PasswordNewScreen = ({navigation}) => {
+  const {email} = useRoute().params;
+  const {
+    password,
+    confirmPassword,
+    errors,
+    loading,
+    onChangePassword,
+    onChangeConfirmPassword,
+    resetPassword,
+  } = usePasswordNewViewModel(navigation, email);
 
   return (
     <AuthLayout
@@ -54,18 +32,23 @@ const PasswordNewScreen = () => {
         iconRight={'passwordShow'}
         placeholder="New Password"
         value={password}
-        onChangeText={setPassword}
+        onChangeText={onChangePassword}
       />
+      {errors.password && (
+        <CustomText style={styles.error}>{errors.password}</CustomText>
+      )}
       <CustomInput
         icon="lock"
         secure
         iconRight="passwordShow"
         placeholder="Confirm Password"
         value={confirmPassword}
-        onChangeText={setConfirmPwd}
+        onChangeText={onChangeConfirmPassword}
       />
-
-      <CustomButton buttonText={'Reset Password'} onPress={handleReset} />
+      {errors.confirmPassword && (
+        <CustomText style={styles.error}>{errors.confirmPassword}</CustomText>
+      )}
+      <CustomButton buttonText={'Reset Password'} onPress={resetPassword} />
       <Loader visible={loading} />
     </AuthLayout>
   );
@@ -83,5 +66,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 10,
+  },
+  error: {
+    color: Colors.red_f5615d,
+    marginBottom: 8,
   },
 });

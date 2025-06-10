@@ -1,92 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import Wrapper from '../components/Wrapper';
 import CustomText from '../components/CustomText';
-import {auth, firestore} from '../services/firebaseConfig';
-import {doc, getDoc} from '@react-native-firebase/firestore';
 import CustomButton from '../components/CustomButton';
-import Strings from '../utils/constants/Strings';
-import {logoutUser} from '../services/firebaseAuth';
-import Routes from '../utils/constants/Routes';
+
 import {Loader} from '../components/Loader';
-import {useNavigation} from '@react-navigation/native';
 
-const HomeScreen = () => {
-  const navigation = useNavigation();
-  const guestUser = null;
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-  });
-  const [loading, setLoading] = useState(false);
+import {useHomeViewModel} from '../viewModels/useHomeViewModel';
 
-  useEffect(() => {
-    setLoading(true);
+const HomeScreen = ({navigation}) => {
+  const {user, loading, logout} = useHomeViewModel(navigation);
 
-    const fetchUser = async () => {
-      try {
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
-          console.info('Signed in as Guest user.');
-          setUser({name: 'Guest', email: ''});
-          return;
-        }
-
-        const uid = currentUser.uid;
-        const userRef = doc(firestore, 'users', uid);
-        const snapshot = await getDoc(userRef);
-
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          setUser({name: data.name || '', email: data.email || ''});
-        } else {
-          setUser({name: 'Guest', email: currentUser.email || ''});
-        }
-      } catch (e) {
-        console.error('Error fetching user from Firestore:', e);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  const handleLogout = () => {
-    Alert.alert(
-      Strings.alerts.title.logout,
-      Strings.alerts.message.areYouWantToLogOut,
-      [
-        {
-          text: Strings.buttons.no,
-          style: 'cancel',
-        },
-        {
-          text: Strings.buttons.yes,
-          onPress: async () => {
-            setLoading(true);
-            try {
-              if (user.email !== '') {
-                const result = await logoutUser();
-                if (!result.success) {
-                  throw new Error(result.message || 'Unknown logout error');
-                }
-              }
-
-              setUser({name: '', email: ''});
-
-              navigation.replace(Routes.stack.onBoard);
-            } catch (error) {
-              Alert.alert(Strings.errors.error, error.message);
-            } finally {
-              setLoading(false);
-            }
-          },
-        },
-      ],
-      {cancelable: true},
-    );
-  };
   return (
     <Wrapper>
       <View style={styles.row}>
@@ -100,7 +24,7 @@ const HomeScreen = () => {
       <CustomButton
         buttonText={'Log out'}
         buttonContainerStyle={styles.button}
-        onPress={handleLogout}
+        onPress={logout}
       />
       <Loader visible={loading} />
     </Wrapper>

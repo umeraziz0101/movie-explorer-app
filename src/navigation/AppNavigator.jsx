@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from '../screens/SplashScreen';
@@ -11,10 +11,27 @@ import OTPVerificationScreen from '../screens/OTPVerificationScreen';
 import PasswordNewScreen from '../screens/PasswordNewScreen';
 import PasswordChangedScreen from '../screens/PasswordChangedScreen';
 import HomeScreen from '../screens/HomeScreen';
+import {auth} from '../services/firebaseConfig';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
+  const [initialRoute, setInitialRoute] = useState(Routes.stack.splash);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setTimeout(() => {
+          setInitialRoute(Routes.tabs.home);
+        }, 200);
+      } else {
+        setInitialRoute(Routes.stack.onBoard);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator

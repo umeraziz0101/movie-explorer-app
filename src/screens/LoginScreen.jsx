@@ -7,56 +7,26 @@ import FooterText from '../components/FooterText';
 import Colors from '../utils/constants/Colors';
 import Divider from '../components/Divider';
 import CustomText from '../components/CustomText';
-import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
 
-import Keys from '../utils/constants/Keys';
-import {validateLoginUser} from '../utils/inputValidation';
-import Strings from '../utils/constants/Strings';
+// import Keys from '../utils/constants/Keys';
+// import {validateLoginUser} from '../utils/inputValidation';
+// import Strings from '../utils/constants/Strings';
 import {Loader} from '../components/Loader';
-import {loginUser} from '../services/firebaseAuth';
+// import {loginUser} from '../services/firebaseAuth';
+import {useLoginViewModel} from '../viewModels/useLoginViewModel';
 
-const LoginScreen = () => {
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-  });
-  const [errors, setErrors] = useState('');
-  const [showPassword, setShowPassword] = useState(true);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (field, value) => {
-    if (field === Keys.input.email) setUser({...user, email: value});
-    if (field === Keys.input.password) setUser({...user, password: value});
-    if (errors[field]) {
-      setErrors(prev => ({...prev, [field]: null}));
-    }
-  };
-
-  const handleLogin = async () => {
-    const newErrors = validateLoginUser(user);
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      setLoading(true);
-
-      const result = await loginUser(user.email, user.password);
-      setLoading(false);
-      if (result.success) {
-        navigation.replace(Routes.tabs.home);
-      } else {
-        Alert.alert(Strings.errors.error, result.message);
-      }
-    }
-  };
-
-  const navigation = useNavigation();
-  const onPressSignUp = () => {
-    navigation.replace(Routes.stack.signUp);
-  };
-  const onPressForgetPassword = () => {
-    navigation.navigate(Routes.stack.forgetPassword);
-  };
+const LoginScreen = ({navigation}) => {
+  const {
+    email,
+    password,
+    errors,
+    loading,
+    onChangeEmail,
+    onChangePassword,
+    login,
+    socialSignIn,
+  } = useLoginViewModel(navigation);
 
   return (
     <AuthLayout
@@ -66,10 +36,8 @@ const LoginScreen = () => {
       <CustomInput
         icon={'email'}
         placeholder="Email"
-        value={user.email}
-        onChangeText={text => {
-          handleChange(Keys.input.email, text);
-        }}
+        value={email}
+        onChangeText={onChangeEmail}
         keyboardType="email-address"
         autoCapitalize="none"
       />
@@ -81,10 +49,8 @@ const LoginScreen = () => {
         placeholder="Password"
         secure
         iconRight={'passwordShow'}
-        value={user.password}
-        onChangeText={text => {
-          handleChange(Keys.input.password, text);
-        }}
+        value={password}
+        onChangeText={onChangePassword}
         autoCapitalize="none"
       />
       {errors.password && (
@@ -94,13 +60,14 @@ const LoginScreen = () => {
         <CustomText textType="regular" size={14}>
           Remember me
         </CustomText>
-        <TouchableOpacity onPress={onPressForgetPassword}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(Routes.stack.forgetPassword)}>
           <CustomText color={Colors.pink_ff465f} textType="medium" size={14}>
             ForgetPassword?
           </CustomText>
         </TouchableOpacity>
       </View>
-      <CustomButton buttonText={'Log in'} onPress={handleLogin} />
+      <CustomButton buttonText={'Log in'} onPress={login} />
       <Divider />
       <CustomButton
         buttonText={'Continue with Google'}
@@ -108,6 +75,7 @@ const LoginScreen = () => {
         buttonTextType={'regular'}
         leftIcon={'google'}
         buttonContainerStyle={styles.socialButton}
+        onPress={() => socialSignIn('google')}
       />
       <CustomButton
         buttonText={'Continue with Facebook'}
@@ -126,7 +94,7 @@ const LoginScreen = () => {
       <FooterText
         text={"Don't have an account"}
         coloredText={'Sign Up'}
-        onPressColoredText={onPressSignUp}
+        onPressColoredText={() => navigation.replace(Routes.stack.signUp)}
       />
       <Loader visible={loading} />
     </AuthLayout>

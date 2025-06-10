@@ -7,53 +7,24 @@ import FooterText from '../components/FooterText';
 import Colors from '../utils/constants/Colors';
 import Divider from '../components/Divider';
 import CustomText from '../components/CustomText';
-import Routes from '../utils/constants/Routes';
-import {useNavigation} from '@react-navigation/native';
-import Keys from '../utils/constants/Keys';
-import {validateUser} from '../utils/inputValidation';
-import {registerUser} from '../services/firebaseAuth';
-import Strings from '../utils/constants/Strings';
+
 import {Loader} from '../components/Loader';
+import {useSignUpViewModel} from '../viewModels/useSignUpViewModel';
 
-const SignUpScreen = () => {
-  const navigation = useNavigation();
-  const onPressLogin = () => {
-    navigation.replace(Routes.stack.login);
-  };
+const SignUpScreen = ({navigation}) => {
+  const {
+    name,
+    email,
+    password,
+    errors,
+    loading,
+    onChangeName,
+    onChangeEmail,
+    onChangePassword,
+    signUp,
+    goToLogin,
+  } = useSignUpViewModel(navigation);
 
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-
-  const [errors, setErrors] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (field, value) => {
-    if (field === Keys.input.name) setUser({...user, name: value});
-    if (field === Keys.input.email) setUser({...user, email: value});
-    if (field === Keys.input.password) setUser({...user, password: value});
-    if (errors[field]) {
-      setErrors(prev => ({...prev, [field]: null}));
-    }
-  };
-
-  const handleSignUp = async () => {
-    const newErrors = validateUser(user);
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      setLoading(true);
-      const result = await registerUser(user.name, user.email, user.password);
-      setLoading(false);
-      if (result.success) {
-        navigation.navigate(Routes.tabs.home);
-      } else {
-        Alert.alert(Strings.errors.error, result.message);
-      }
-    }
-  };
   return (
     <AuthLayout
       title={'Sign Up'}
@@ -62,10 +33,8 @@ const SignUpScreen = () => {
       <CustomInput
         icon={'user'}
         placeholder="Name"
-        value={user.name}
-        onChangeText={text => {
-          handleChange(Keys.input.name, text);
-        }}
+        value={name}
+        onChangeText={onChangeName}
       />
       {errors.name && (
         <CustomText style={styles.error}>{errors.name}</CustomText>
@@ -73,10 +42,8 @@ const SignUpScreen = () => {
       <CustomInput
         icon={'email'}
         placeholder="Email"
-        value={user.email}
-        onChangeText={text => {
-          handleChange(Keys.input.email, text);
-        }}
+        value={email}
+        onChangeText={onChangeEmail}
         keyboardType="email-address"
         autoCapitalize="none"
       />
@@ -88,16 +55,14 @@ const SignUpScreen = () => {
         placeholder="Password"
         secure
         iconRight={'passwordShow'}
-        value={user.password}
-        onChangeText={text => {
-          handleChange(Keys.input.password, text);
-        }}
+        value={password}
+        onChangeText={onChangePassword}
         autoCapitalize="none"
       />
       {errors.password && (
         <CustomText style={styles.error}>{errors.password}</CustomText>
       )}
-      <CustomButton buttonText={'Sign up'} onPress={handleSignUp} />
+      <CustomButton buttonText={'Sign up'} onPress={signUp} />
 
       <Divider colored />
       <CustomButton
@@ -124,7 +89,7 @@ const SignUpScreen = () => {
       <FooterText
         text={'Already have an account?'}
         coloredText={'Log In'}
-        onPressColoredText={onPressLogin}
+        onPressColoredText={goToLogin}
       />
       <Loader visible={loading} />
     </AuthLayout>

@@ -13,6 +13,7 @@ import Icons from '../utils/assets/Icons';
 import {useNavigation} from '@react-navigation/native';
 import Constants from '../utils/constants/Constants';
 import Routes from '../utils/constants/Routes';
+import {auth} from '../services/firebaseConfig';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -21,7 +22,13 @@ const SplashScreen = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace(Routes.stack.onBoard);
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          navigation.replace(Routes.tabs.home);
+        } else {
+          navigation.replace(Routes.stack.onBoard);
+        }
+      });
     }, Constants.splashTimeOut);
 
     return () => clearTimeout(timer);

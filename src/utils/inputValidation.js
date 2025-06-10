@@ -57,3 +57,33 @@ export const validateUpdateUser = user => {
 
   return errors;
 };
+
+export const validateEmailUser = user => {
+  const errors = {};
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!user.email.trim()) {
+    errors.email = Strings.errors.emailRequired;
+  } else if (!emailRegex.test(user.email)) {
+    errors.email = Strings.errors.emailInvalid;
+  }
+  return errors;
+};
+
+export const validatePasswordUser = user => {
+  const errors = {};
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*]{6,}$/;
+  if (!user.password.trim()) {
+    errors.password = Strings.errors.passwordRequired;
+  } else if (user.password.length < 6) {
+    errors.password = Strings.errors.passwordWeak;
+  } else if (!passwordRegex.test(user.password)) {
+    errors.password = Strings.errors.passwordInvalid;
+  } else if (!user.confirmPassword.trim()) {
+    errors.confirmPassword = Strings.errors.confirmPasswordRequired;
+  } else if (user.password !== user.confirmPassword) {
+    errors.confirmPassword = Strings.errors.passwordNotMatch;
+  }
+
+  return errors;
+};

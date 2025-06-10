@@ -8,28 +8,13 @@ import Colors from '../utils/constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
 import {requestPasswordReset} from '../services/firebaseAuth';
+import {useForgetPasswordViewModel} from '../viewModels/useForgetPasswordViewModel';
+import {Loader} from '../components/Loader';
+import CustomText from '../components/CustomText';
 
-const ForgetPasswordScreen = () => {
-  const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-
-  const handleSendOTP = async () => {
-    if (!email.trim()) {
-      Alert.alert('Error', 'Please enter your email.');
-      return;
-    }
-
-    const {success, code, message} = await requestPasswordReset(email.trim());
-    if (!success) {
-      Alert.alert('Error', message || 'Failed to request password reset.');
-      return;
-    }
-
-    navigation.navigate(Routes.stack.otpVerification, {email});
-  };
-  const onPressLogin = () => {
-    navigation.replace(Routes.stack.login);
-  };
+const ForgetPasswordScreen = ({navigation}) => {
+  const {email, errors, loading, onChangeEmail, sendOTP, goToLogin} =
+    useForgetPasswordViewModel(navigation);
 
   return (
     <AuthLayout
@@ -40,17 +25,21 @@ const ForgetPasswordScreen = () => {
         icon={'email'}
         placeholder="Email"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={onChangeEmail}
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <CustomButton buttonText={'Send Code'} onPress={handleSendOTP} />
+      {errors.email && (
+        <CustomText style={styles.error}>{errors.email}</CustomText>
+      )}
+      <CustomButton buttonText={'Send Code'} onPress={sendOTP} />
 
       <FooterText
         text={'Remember Password?'}
         coloredText={'Log In'}
-        onPressColoredText={onPressLogin}
+        onPressColoredText={goToLogin}
       />
+      <Loader visible={loading} />
     </AuthLayout>
   );
 };
@@ -62,5 +51,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white_fefefe,
     borderColor: Colors.white_fefefe,
     paddingVertical: 8,
+  },
+  error: {
+    color: Colors.red_f5615d,
+    marginBottom: 8,
   },
 });

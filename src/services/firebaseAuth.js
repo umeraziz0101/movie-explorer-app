@@ -6,7 +6,8 @@ import {httpsCallable} from '@react-native-firebase/functions';
 
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithCredential,
   signOut,
 } from '@react-native-firebase/auth';
 import {
@@ -20,6 +21,7 @@ import {
   query,
   where,
 } from '@react-native-firebase/firestore';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 export const registerUser = async (name, email, password) => {
   try {
@@ -185,5 +187,55 @@ export const confirmPasswordResetWithOTP = async (email, newPassword) => {
   } catch (error) {
     console.log('confirmPasswordResetWithOTP →', error);
     return {success: false, message: error.message};
+  }
+};
+
+export const signInWithGoogle = async () => {
+  try {
+    const {idToken} = await GoogleSignin.signIn();
+    const googleCredential = GoogleAuthProvider.credential(idToken);
+    const userCredential = await signInWithCredential(auth, googleCredential);
+    return {success: true, user: userCredential.user};
+  } catch (error) {
+    return {success: false, message: getFirebaseErrorMessage(error)};
+  }
+};
+
+export const signInWithFacebook = async () => {
+  try {
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+    if (result.isCancelled) throw new Error('User cancelled the login process');
+    const data = await AccessToken.getCurrentAccessToken();
+    if (!data) throw new Error('Something went wrong obtaining access token');
+    const facebookCredential = FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+    const userCredential = await signInWithCredential(auth, facebookCredential);
+    return {success: true, user: userCredential.user};
+  } catch (error) {
+    return {success: false, message: getFirebaseErrorMessage(error)};
+  }
+};
+
+export const signInWithApple = async () => {
+  try {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+    const {identityToken, nonce} = appleAuthRequestResponse;
+    if (!identityToken) throw new Error('Apple Sign-In failed');
+    const appleCredential = OAuthProvider.credential(
+      'apple.com',
+      identityToken,
+      nonce,
+    );
+    const userCredential = await signInWithCredential(auth, appleCredential);
+    return {success: true, user: userCredential.user};
+  } catch (error) {
+    return {success: false, message: getFirebaseErrorMessage(error)};
   }
 };

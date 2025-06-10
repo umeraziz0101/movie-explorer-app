@@ -1,5 +1,5 @@
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React from 'react';
 import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
@@ -9,11 +9,7 @@ import Divider from '../components/Divider';
 import CustomText from '../components/CustomText';
 import Routes from '../utils/constants/Routes';
 
-// import Keys from '../utils/constants/Keys';
-// import {validateLoginUser} from '../utils/inputValidation';
-// import Strings from '../utils/constants/Strings';
 import {Loader} from '../components/Loader';
-// import {loginUser} from '../services/firebaseAuth';
 import {useLoginViewModel} from '../viewModels/useLoginViewModel';
 
 const LoginScreen = ({navigation}) => {

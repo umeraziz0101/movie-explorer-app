@@ -45,7 +45,6 @@ export default CustomInput;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    // backgroundColor: '#aa3',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
@@ -56,13 +55,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   input: {
-    // backgroundColor: '#a33',
     marginHorizontal: 16,
-
     flex: 1,
     color: Colors.white_ffffff,
     fontSize: 16,
-    // fontWeight: 'bold',
+
     fontFamily: 'Poppins-SemiBold',
   },
 });
@@ -121,7 +118,6 @@ const styles1 = StyleSheet.create({
     borderRadius: 12,
   },
   input: {
-    // backgroundColor: '#a33',
     width: '100%',
     height: '100%',
     color: Colors.white_ffffff,

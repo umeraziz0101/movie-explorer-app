@@ -7,14 +7,9 @@ import {validateEmailUser} from '../utils/inputValidation';
 
 export function useForgetPasswordViewModel(navigation) {
   const [email, setEmail] = useState('');
-  // const [error, setError] = useState('');
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
-  // const onChangeEmail = text => {
-  //   setEmail(text);
-  //   if (error) setError('');
-  // };
 
   const onChangeEmail = text => {
     setEmail(text);
@@ -27,11 +22,6 @@ export function useForgetPasswordViewModel(navigation) {
       setErrors(validationErrors);
       return;
     }
-
-    // if (!email.trim()) {
-    //   setError('Please enter your email.');
-    //   return;
-    // }
 
     setLoading(true);
     const {success, message} = await requestPasswordReset(

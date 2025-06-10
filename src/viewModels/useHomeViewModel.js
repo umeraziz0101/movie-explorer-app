@@ -20,9 +20,6 @@ export function useHomeViewModel(navigation) {
           setUser({name: 'Guest', email: ''});
           return;
         }
-        // const uid = currentUser.uid;
-        // const userRef = doc(firestore, 'users', uid);
-        // const snapshot = await getDoc(userRef);
         const snapshot = await getDoc(doc(firestore, 'users', currentUser.uid));
         if (snapshot.exists()) {
           const data = snapshot.data();

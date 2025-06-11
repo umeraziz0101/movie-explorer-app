@@ -3,13 +3,19 @@ import {StyleSheet, View} from 'react-native';
 import Wrapper from '../components/Wrapper';
 import CustomText from '../components/CustomText';
 import CustomButton from '../components/CustomButton';
-
 import {Loader} from '../components/Loader';
-
 import {useHomeViewModel} from '../viewModels/useHomeViewModel';
 
 const HomeScreen = ({navigation}) => {
   const {user, loading, logout} = useHomeViewModel(navigation);
+
+  if (loading) {
+    return (
+      <Wrapper>
+        <Loader visible={true} />
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
@@ -18,15 +24,14 @@ const HomeScreen = ({navigation}) => {
         <CustomText>{user.name}</CustomText>
       </View>
       <View style={styles.row}>
-        <CustomText>email: </CustomText>
+        <CustomText>Email: </CustomText>
         <CustomText>{user.email}</CustomText>
       </View>
       <CustomButton
-        buttonText={'Log out'}
+        buttonText="Log out"
         buttonContainerStyle={styles.button}
         onPress={logout}
       />
-      <Loader visible={loading} />
     </Wrapper>
   );
 };
@@ -36,6 +41,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
+    marginVertical: 8,
   },
   button: {
     marginTop: 18,

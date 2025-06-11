@@ -1,6 +1,10 @@
 import {useState} from 'react';
 import {Alert} from 'react-native';
-import {loginUser, signInWithGoogle} from '../services/firebaseAuth';
+import {
+  loginUser,
+  signInWithFacebook,
+  signInWithGoogle,
+} from '../services/firebaseAuth';
 import {validateLoginUser} from '../utils/inputValidation';
 import Strings from '../utils/constants/Strings';
 import Routes from '../utils/constants/Routes';
@@ -72,6 +76,10 @@ export function useLoginViewModel(navigation) {
     navigation.replace(Routes.tabs.home);
   };
 
+  const goToSignUp = () => {
+    navigation.replace(Routes.stack.signUp);
+  };
+
   return {
     email,
     password,
@@ -81,5 +89,6 @@ export function useLoginViewModel(navigation) {
     onChangePassword,
     login,
     socialSignIn,
+    goToSignUp,
   };
 }

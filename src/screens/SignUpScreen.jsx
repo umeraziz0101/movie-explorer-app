@@ -10,6 +10,7 @@ import CustomText from '../components/CustomText';
 
 import {Loader} from '../components/Loader';
 import {useSignUpViewModel} from '../viewModels/useSignUpViewModel';
+import {useLoginViewModel} from '../viewModels/useLoginViewModel';
 
 const SignUpScreen = ({navigation}) => {
   const {
@@ -24,6 +25,7 @@ const SignUpScreen = ({navigation}) => {
     signUp,
     goToLogin,
   } = useSignUpViewModel(navigation);
+  const {socialSignIn} = useLoginViewModel(navigation);
 
   return (
     <AuthLayout
@@ -71,6 +73,7 @@ const SignUpScreen = ({navigation}) => {
         buttonTextType={'regular'}
         leftIcon={'google'}
         buttonContainerStyle={styles.socialButton}
+        onPress={() => socialSignIn('google')}
       />
       <CustomButton
         buttonText={'Continue with Facebook'}
@@ -78,6 +81,7 @@ const SignUpScreen = ({navigation}) => {
         buttonTextType={'regular'}
         leftIcon={'facebook'}
         buttonContainerStyle={styles.socialButton}
+        onPress={() => socialSignIn('facebook')}
       />
       <CustomButton
         buttonText={'Continue with Apple'}

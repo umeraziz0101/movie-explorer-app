@@ -22,6 +22,7 @@ const LoginScreen = ({navigation}) => {
     onChangePassword,
     login,
     socialSignIn,
+    goToSignUp,
   } = useLoginViewModel(navigation);
 
   return (
@@ -79,6 +80,7 @@ const LoginScreen = ({navigation}) => {
         buttonTextType={'regular'}
         leftIcon={'facebook'}
         buttonContainerStyle={styles.socialButton}
+        onPress={() => socialSignIn('facebook')}
       />
       <CustomButton
         buttonText={'Continue with Apple'}
@@ -90,7 +92,7 @@ const LoginScreen = ({navigation}) => {
       <FooterText
         text={"Don't have an account"}
         coloredText={'Sign Up'}
-        onPressColoredText={() => navigation.replace(Routes.stack.signUp)}
+        onPressColoredText={goToSignUp}
       />
       <Loader visible={loading} />
     </AuthLayout>

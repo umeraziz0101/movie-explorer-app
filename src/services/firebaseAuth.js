@@ -1,3 +1,14 @@
+import {
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp,
+  getDocs,
+  collection,
+  updateDoc,
+  query,
+  where,
+} from '@react-native-firebase/firestore';
 import {getFirebaseErrorMessage} from '../utils/firebase/firebaseErrors';
 import {Collections} from '../utils/constants/Firestore';
 import Strings from '../utils/constants/Strings';
@@ -11,17 +22,10 @@ import {
   signOut,
 } from '@react-native-firebase/auth';
 import {
-  doc,
-  setDoc,
-  getDoc,
-  serverTimestamp,
-  getDocs,
-  collection,
-  updateDoc,
-  query,
-  where,
-} from '@react-native-firebase/firestore';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 
 export const registerUser = async (name, email, password) => {
   try {
@@ -40,6 +44,7 @@ export const registerUser = async (name, email, password) => {
     console.info('[registerUser] ✔︎ Successfully wrote user document');
 
     const snapshot = await getDoc(userRef);
+
     if (snapshot.exists()) {
       console.info('[registerUser] 🔍 Fetched document data:', snapshot.data());
     } else {
@@ -73,20 +78,28 @@ export const logoutUser = async () => {
 };
 
 export const fetchUserData = async () => {
-  try {
-    const currentUser = auth.currentUser;
-    if (!currentUser) throw new Error(Strings.errors.noAuthUserFound);
+  setTimeout(async () => {
+    try {
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        throw new Error(Strings.errors.noAuthUserFound);
+      }
 
-    const doc = await firestore
-      .collection(Collections.users)
-      .doc(currentUser.uid)
-      .get();
-    if (!doc.exists) throw new Error(Strings.errors.userDataNotFound);
+      const userRef = doc(firestore, Collections.users, currentUser.uid);
+      const snapshot = await getDoc(userRef);
+      if (snapshot.exists()) {
+        return snapshot.data();
+      }
 
-    return doc.data();
-  } catch (error) {
-    throw error;
-  }
+      return {
+        name: currentUser.displayName || 'Guest',
+        email: currentUser.email || '',
+      };
+    } catch (error) {
+      console.error('fetchUserData →', error);
+      throw error;
+    }
+  }, 3000);
 };
 
 export const updateUserData = async updatedData => {
@@ -192,30 +205,78 @@ export const confirmPasswordResetWithOTP = async (email, newPassword) => {
 
 export const signInWithGoogle = async () => {
   try {
-    const {idToken} = await GoogleSignin.signIn();
+    console.log('Starting Google Sign-In...');
+    await GoogleSignin.hasPlayServices();
+
+    const response = await GoogleSignin.signIn();
+    console.log('Google Sign-In response:', response);
+    const idToken = response.idToken || response.data?.idToken;
+    console.log('ID Token:', idToken ? 'Found' : 'Missing');
+
+    if (!idToken) {
+      throw new Error('No ID token received from Google Sign-In');
+    }
     const googleCredential = GoogleAuthProvider.credential(idToken);
+
     const userCredential = await signInWithCredential(auth, googleCredential);
+    console.log('Firebase sign-in successful');
+
     return {success: true, user: userCredential.user};
   } catch (error) {
+    console.error('Google Sign-In Error:', error);
+
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      return {success: false, message: 'Sign-in cancelled by user'};
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      return {success: false, message: 'Sign-in already in progress'};
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      return {success: false, message: 'Google Play Services not available'};
+    }
+
     return {success: false, message: getFirebaseErrorMessage(error)};
   }
 };
 
 export const signInWithFacebook = async () => {
   try {
+    console.log('Starting Facebook Sign-In...');
+
     const result = await LoginManager.logInWithPermissions([
       'public_profile',
       'email',
     ]);
-    if (result.isCancelled) throw new Error('User cancelled the login process');
+
+    if (result.isCancelled) {
+      console.log('Facebook login cancelled by user');
+      return {success: false, message: 'User cancelled the login process'};
+    }
+
+    console.log('Facebook login result:', result);
+
     const data = await AccessToken.getCurrentAccessToken();
-    if (!data) throw new Error('Something went wrong obtaining access token');
+
+    if (!data) {
+      throw new Error('Something went wrong obtaining Facebook access token');
+    }
+
+    console.log('Facebook access token obtained');
+
     const facebookCredential = FacebookAuthProvider.credential(
       data.accessToken,
     );
+
     const userCredential = await signInWithCredential(auth, facebookCredential);
+
+    console.log('Firebase Facebook sign-in successful');
+
     return {success: true, user: userCredential.user};
   } catch (error) {
+    console.error('Facebook Sign-In Error:', error);
+
+    if (error.message?.includes('cancelled')) {
+      return {success: false, message: 'User cancelled the login process'};
+    }
+
     return {success: false, message: getFirebaseErrorMessage(error)};
   }
 };

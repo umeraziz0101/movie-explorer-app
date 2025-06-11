@@ -1,45 +1,29 @@
 import {useState, useEffect} from 'react';
 import {Alert} from 'react-native';
-import {auth, firestore} from '../services/firebaseConfig';
-import {doc, getDoc} from '@react-native-firebase/firestore';
-import {logoutUser} from '../services/firebaseAuth';
+import {fetchUserData, logoutUser} from '../services/firebaseAuth';
 import Routes from '../utils/constants/Routes';
 import Strings from '../utils/constants/Strings';
 
 export function useHomeViewModel(navigation) {
   const [user, setUser] = useState({name: '', email: ''});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    (async () => {
       setLoading(true);
       try {
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
-          console.info('Signed in as Guest user.');
-          setUser({name: 'Guest', email: ''});
-          return;
-        }
-        const snapshot = await getDoc(doc(firestore, 'users', currentUser.uid));
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          setUser({name: data.name, email: data.email});
-        } else {
-          setUser({
-            name: currentUser.displayName || 'Guest',
-            email: currentUser.email || '',
-          });
-        }
+        const data = await fetchUserData();
+
+        setUser({name: data.name || 'Guest', email: data.email || ''});
       } catch (e) {
-        console.error('Error fetching user:', e);
+        Alert.alert(Strings.errors.error, e.message);
       } finally {
         setLoading(false);
       }
-    };
-    fetchUser();
+    })();
   }, []);
 
-  const logout = () => {
+  const logout = async () => {
     Alert.alert(
       Strings.alerts.title.logout,
       Strings.alerts.message.areYouWantToLogOut,
@@ -50,7 +34,7 @@ export function useHomeViewModel(navigation) {
           onPress: async () => {
             setLoading(true);
             try {
-              if (user.email !== '') {
+              if (user.email) {
                 const result = await logoutUser();
                 if (!result.success) throw new Error(result.message);
               }
@@ -68,9 +52,5 @@ export function useHomeViewModel(navigation) {
     );
   };
 
-  return {
-    user,
-    loading,
-    logout,
-  };
+  return {user, loading, logout};
 }

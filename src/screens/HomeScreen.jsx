@@ -7,6 +7,8 @@ import {Loader} from '../components/Loader';
 import {useHomeViewModel} from '../viewModels/useHomeViewModel';
 import {useFocusEffect} from '@react-navigation/native';
 import Strings from '../utils/constants/Strings';
+import {ImageBox} from '../components/CustomImage';
+import CustomSection from '../components/CustomSection';
 
 const HomeScreen = ({navigation}) => {
   const {user, loading, logout} = useHomeViewModel(navigation);
@@ -32,7 +34,7 @@ const HomeScreen = ({navigation}) => {
     );
   }
   return (
-    <Wrapper>
+    <Wrapper style={{backgroundColor: '#aa3'}}>
       <View style={styles.row}>
         <CustomText>Name: </CustomText>
         <CustomText>{user.name}</CustomText>
@@ -41,11 +43,15 @@ const HomeScreen = ({navigation}) => {
         <CustomText>Email: </CustomText>
         <CustomText>{user.email}</CustomText>
       </View>
+
       <CustomButton
         buttonText={Strings.buttons.logOut}
         buttonContainerStyle={styles.button}
         onPress={logout}
       />
+      <CustomSection sectionTitle={'Popular Movies'}>
+        <ImageBox title={'Fast X'} />
+      </CustomSection>
     </Wrapper>
   );
 };

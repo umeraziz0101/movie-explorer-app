@@ -1,22 +1,36 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {BackHandler, StyleSheet, View} from 'react-native';
 import Wrapper from '../components/Wrapper';
 import CustomText from '../components/CustomText';
 import CustomButton from '../components/CustomButton';
 import {Loader} from '../components/Loader';
 import {useHomeViewModel} from '../viewModels/useHomeViewModel';
+import {useFocusEffect} from '@react-navigation/native';
+import Strings from '../utils/constants/Strings';
 
 const HomeScreen = ({navigation}) => {
   const {user, loading, logout} = useHomeViewModel(navigation);
+  useFocusEffect(
+    useCallback(() => {
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => {
+          BackHandler.exitApp();
+          return true;
+        },
+      );
 
-  if (loading) {
+      return () => subscription.remove();
+    }, []),
+  );
+
+  if (loading || !user) {
     return (
       <Wrapper>
         <Loader visible={true} />
       </Wrapper>
     );
   }
-
   return (
     <Wrapper>
       <View style={styles.row}>
@@ -28,7 +42,7 @@ const HomeScreen = ({navigation}) => {
         <CustomText>{user.email}</CustomText>
       </View>
       <CustomButton
-        buttonText="Log out"
+        buttonText={Strings.buttons.logOut}
         buttonContainerStyle={styles.button}
         onPress={logout}
       />

@@ -18,7 +18,7 @@ const CustomButton = ({
       activeOpacity={0.7}
       style={[
         styles.buttonContainer,
-        transparent && {backgroundColor: 'transparent'},
+        transparent && {backgroundColor: Colors.transparent},
         buttonContainerStyle,
       ]}
       onPress={onPress}>

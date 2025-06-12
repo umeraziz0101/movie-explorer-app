@@ -7,6 +7,8 @@ const Colors = {
   red_f5615d: '#f5615d',
   black_0d0d0d: '#0d0d0d',
   opacity_dark: 'rgba(0,0,0,0.5)',
+  opacity_dark1: 'rgba(0,0,0,0.7)',
+  transparent: 'transparent',
 };
 
 export default Colors;

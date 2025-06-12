@@ -1,27 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Colors from '../utils/constants/Colors';
-
-const fontStyles = {
-  semiBold: 'Poppins-SemiBold',
-  semiBoldItalic: 'Poppins-SemiBoldItalic',
-  black: 'Poppins-Black',
-  blackItalic: 'Poppins-BlackItalic',
-  bold: 'Poppins-Bold',
-  boldItalic: 'Poppins-BoldItalic',
-  extraBold: 'Poppins-ExtraBold',
-  extraBoldItalic: 'Poppins-ExtraBoldItalic',
-  extraLight: 'Poppins-ExtraLight',
-  extraLightItalic: 'Poppins-ExtraLightItalic',
-  italic: 'Poppins-Italic',
-  light: 'Poppins-Light',
-  lightItalic: 'Poppins-LightItalic',
-  medium: 'Poppins-Medium',
-  mediumItalic: 'Poppins-MediumItalic',
-  regular: 'Poppins-Regular',
-  thin: 'Poppins-Thin',
-  thinItalic: 'Poppins-ThinItalic',
-};
+import Fonts from '../utils/constants/Fonts';
 
 const CustomText = ({
   textType = 'regular',
@@ -31,7 +11,7 @@ const CustomText = ({
   children,
   ...rest
 }) => {
-  const fontFamily = fontStyles[textType] || fontStyles.regular;
+  const fontFamily = Fonts[textType] || Fonts.regular;
 
   return (
     <Text style={[{fontFamily, fontSize: size, color: color}, style]} {...rest}>

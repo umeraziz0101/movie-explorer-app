@@ -10,6 +10,7 @@ import Routes from '../utils/constants/Routes';
 import {Loader} from '../components/Loader';
 import {verifyPasswordResetOTP} from '../services/firebaseAuth';
 import {useOTPVerificationViewModel} from '../viewModels/useOTPVerificationViewModel';
+import Strings from '../utils/constants/Strings';
 
 const OTPVerificationScreen = () => {
   const navigation = useNavigation();
@@ -20,9 +21,9 @@ const OTPVerificationScreen = () => {
     useOTPVerificationViewModel(navigation, email);
   return (
     <AuthLayout
-      title={'OTP Verification'}
-      desc1={'Enter the verification code we just '}
-      desc2={'sent on your email'}>
+      title={Strings.headerTitle.otp}
+      desc1={Strings.headerDescription.enterVerificationCode}
+      desc2={Strings.headerDescription.sentEmail}>
       <View style={styles.row}>
         {otp.map((digit, idx) => (
           <CustomInputBox
@@ -37,11 +38,11 @@ const OTPVerificationScreen = () => {
           />
         ))}
       </View>
-      <CustomButton buttonText={'Verify'} onPress={verify} />
+      <CustomButton buttonText={Strings.buttons.verify} onPress={verify} />
 
       <FooterText
-        text={'Didn’t Received Code?'}
-        coloredText={'Log In'}
+        text={Strings.texts.didNotReceivedCode}
+        coloredText={Strings.texts.logIn}
         onPressColoredText={goToLogin}
       />
       <Loader visible={loading} />

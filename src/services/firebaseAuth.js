@@ -26,10 +26,10 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+import Keys from '../utils/constants/Keys';
 
 export const registerUser = async (name, email, password) => {
   try {
-    console.info('registerUser : ', name, email, password);
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -37,20 +37,19 @@ export const registerUser = async (name, email, password) => {
     );
     const {uid} = userCredential.user;
     const userData = {name, email, createdAt: serverTimestamp()};
-    console.info('[registerUser] about to write to Firestore →', userData);
 
     const userRef = doc(firestore, Collections.users, uid);
     await setDoc(userRef, userData);
-    console.info('[registerUser] ✔︎ Successfully wrote user document');
 
     const snapshot = await getDoc(userRef);
 
     if (snapshot.exists()) {
-      console.info('[registerUser] 🔍 Fetched document data:', snapshot.data());
-    } else {
-      console.warn(
-        '[registerUser] ⚠️ Document does not exist right after setDoc',
+      console.info(
+        Strings.consoleMessage.registerUserFetchedUserData,
+        snapshot.data(),
       );
+    } else {
+      console.warn(Strings.consoleMessage.registerUserDocumentDoesNotExist);
     }
 
     return {success: true, userData};
@@ -78,28 +77,10 @@ export const logoutUser = async () => {
 };
 
 export const fetchUserData = async () => {
-  setTimeout(async () => {
-    try {
-      const currentUser = auth.currentUser;
-      if (!currentUser) {
-        throw new Error(Strings.errors.noAuthUserFound);
-      }
-
-      const userRef = doc(firestore, Collections.users, currentUser.uid);
-      const snapshot = await getDoc(userRef);
-      if (snapshot.exists()) {
-        return snapshot.data();
-      }
-
-      return {
-        name: currentUser.displayName || 'Guest',
-        email: currentUser.email || '',
-      };
-    } catch (error) {
-      console.error('fetchUserData →', error);
-      throw error;
-    }
-  }, 3000);
+  const currentUser = auth.currentUser;
+  const userRef = doc(firestore, Collections.users, currentUser.uid);
+  const snapshot = await getDoc(userRef);
+  return snapshot.data();
 };
 
 export const updateUserData = async updatedData => {
@@ -117,9 +98,7 @@ export const requestPasswordReset = async email => {
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      throw new Error(
-        Strings.errors.emailNotRegistered || 'Email not registered',
-      );
+      throw new Error(Strings.errors.emailNotRegistered);
     }
 
     const userDoc = snapshot.docs[0];
@@ -134,12 +113,12 @@ export const requestPasswordReset = async email => {
       used: false,
     };
 
-    const resetRef = doc(firestore, 'password_resets', email);
+    const resetRef = doc(firestore, Collections.passwordResets, email);
     await setDoc(resetRef, resetObj);
 
     return {success: true, code: randomCode};
   } catch (error) {
-    console.log('requestPasswordReset →', error);
+    console.log(Strings.consoleMessage.requestPasswordReset, error);
     return {
       success: false,
       message: error.message || getFirebaseErrorMessage(error),
@@ -149,37 +128,37 @@ export const requestPasswordReset = async email => {
 
 export const verifyPasswordResetOTP = async (email, otpCode) => {
   try {
-    const resetRef = doc(firestore, 'password_resets', email);
+    const resetRef = doc(firestore, Collections.passwordResets, email);
     const snap = await getDoc(resetRef);
 
     if (!snap.exists()) {
-      throw new Error('No OTP request found for this email.');
+      throw new Error(Strings.errors.otpNoRequestFound);
     }
 
     const data = snap.data();
     if (data.used === true) {
-      throw new Error('This code has already been used.');
+      throw new Error(Strings.errors.otpAlreadyUsed);
     }
 
     if (data.code !== otpCode) {
-      throw new Error('You entered OTP code is incorrect.');
+      throw new Error(Strings.errors.otpIncorrect);
     }
 
     const createdAt = data.createdAt?.toDate?.();
     if (!createdAt) {
-      throw new Error('Invalid OTP record.');
+      throw new Error(Strings.errors.otpInvalid);
     }
     const now = new Date();
     const diffMin = (now.getTime() - createdAt.getTime()) / 1000 / 60;
     if (diffMin > 15) {
-      throw new Error('This OTP code has expired. Please request again.');
+      throw new Error(Strings.errors.otpExpired);
     }
 
     await updateDoc(resetRef, {used: true});
 
     return {success: true};
   } catch (error) {
-    console.log('verifyPasswordResetOTP →', error);
+    console.log(Strings.consoleMessage.verifyPasswordReset, error);
     return {success: false, message: error.message};
   }
 };
@@ -194,43 +173,54 @@ export const confirmPasswordResetWithOTP = async (email, newPassword) => {
       return {success: true};
     } else {
       throw new Error(
-        result.data?.message || 'Unknown error resetting password',
+        result.data?.message || Strings.errors.resetPasswordError,
       );
     }
   } catch (error) {
-    console.log('confirmPasswordResetWithOTP →', error);
+    console.log(Strings.consoleMessage.confirmPasswordReset, error);
     return {success: false, message: error.message};
   }
 };
 
 export const signInWithGoogle = async () => {
   try {
-    console.log('Starting Google Sign-In...');
     await GoogleSignin.hasPlayServices();
-
     const response = await GoogleSignin.signIn();
-    console.log('Google Sign-In response:', response);
+    console.log(Strings.consoleMessage.googleSignInResponse, response);
     const idToken = response.idToken || response.data?.idToken;
-    console.log('ID Token:', idToken ? 'Found' : 'Missing');
+    console.log(
+      Strings.consoleMessage.googleToken,
+      idToken
+        ? Strings.consoleMessage.googleFound
+        : Strings.consoleMessage.googleMissing,
+    );
 
     if (!idToken) {
-      throw new Error('No ID token received from Google Sign-In');
+      throw new Error(Strings.errors.googleNoIdTokenReceived);
     }
     const googleCredential = GoogleAuthProvider.credential(idToken);
 
     const userCredential = await signInWithCredential(auth, googleCredential);
-    console.log('Firebase sign-in successful');
 
     return {success: true, user: userCredential.user};
   } catch (error) {
-    console.error('Google Sign-In Error:', error);
+    console.log(Strings.consoleMessage.googleSignInError, error);
 
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      return {success: false, message: 'Sign-in cancelled by user'};
+      return {
+        success: false,
+        message: Strings.consoleMessage.googleSignInCancelled,
+      };
     } else if (error.code === statusCodes.IN_PROGRESS) {
-      return {success: false, message: 'Sign-in already in progress'};
+      return {
+        success: false,
+        message: Strings.consoleMessage.googleSignInInprogress,
+      };
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      return {success: false, message: 'Google Play Services not available'};
+      return {
+        success: false,
+        message: Strings.consoleMessage.googlePlayServiceNotAvailable,
+      };
     }
 
     return {success: false, message: getFirebaseErrorMessage(error)};
@@ -239,27 +229,25 @@ export const signInWithGoogle = async () => {
 
 export const signInWithFacebook = async () => {
   try {
-    console.log('Starting Facebook Sign-In...');
-
     const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
+      Keys.facebook.publicProfile,
+      Keys.facebook.email,
     ]);
 
     if (result.isCancelled) {
-      console.log('Facebook login cancelled by user');
-      return {success: false, message: 'User cancelled the login process'};
+      return {
+        success: false,
+        message: Strings.consoleMessage.facebookSignInCancelled,
+      };
     }
 
-    console.log('Facebook login result:', result);
+    console.log(Strings.consoleMessage.facebookSignInResult, result);
 
     const data = await AccessToken.getCurrentAccessToken();
 
     if (!data) {
-      throw new Error('Something went wrong obtaining Facebook access token');
+      throw new Error(Strings.errors.facebookSomethingWentWrongToken);
     }
-
-    console.log('Facebook access token obtained');
 
     const facebookCredential = FacebookAuthProvider.credential(
       data.accessToken,
@@ -267,14 +255,15 @@ export const signInWithFacebook = async () => {
 
     const userCredential = await signInWithCredential(auth, facebookCredential);
 
-    console.log('Firebase Facebook sign-in successful');
-
     return {success: true, user: userCredential.user};
   } catch (error) {
-    console.error('Facebook Sign-In Error:', error);
+    console.log(Strings.consoleMessage.facebookSignInError, error);
 
     if (error.message?.includes('cancelled')) {
-      return {success: false, message: 'User cancelled the login process'};
+      return {
+        success: false,
+        message: Strings.consoleMessage.facebookSignInCancelled,
+      };
     }
 
     return {success: false, message: getFirebaseErrorMessage(error)};
@@ -288,7 +277,7 @@ export const signInWithApple = async () => {
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
     const {identityToken, nonce} = appleAuthRequestResponse;
-    if (!identityToken) throw new Error('Apple Sign-In failed');
+    if (!identityToken) throw new Error(Strings.errors.appleSignInFailed);
     const appleCredential = OAuthProvider.credential(
       'apple.com',
       identityToken,

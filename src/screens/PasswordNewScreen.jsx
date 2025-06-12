@@ -9,6 +9,7 @@ import {useRoute} from '@react-navigation/native';
 import {Loader} from '../components/Loader';
 import {usePasswordNewViewModel} from '../viewModels/usePasswordNewViewModel';
 import CustomText from '../components/CustomText';
+import Strings from '../utils/constants/Strings';
 
 const PasswordNewScreen = ({navigation}) => {
   const {email} = useRoute().params;
@@ -24,13 +25,13 @@ const PasswordNewScreen = ({navigation}) => {
 
   return (
     <AuthLayout
-      title={'Create New Password'}
-      desc1={'Your new password must be unique from those previously used.'}>
+      title={Strings.headerTitle.newPassword}
+      desc1={Strings.headerDescription.newPasswordMustUnique}>
       <CustomInput
-        icon={'lock'}
+        icon={Strings.icons.lock}
         secure
-        iconRight={'passwordShow'}
-        placeholder="New Password"
+        iconRight={Strings.icons.passwordShow}
+        placeholder={Strings.inputPlaceholder.newPassword}
         value={password}
         onChangeText={onChangePassword}
       />
@@ -38,17 +39,20 @@ const PasswordNewScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.password}</CustomText>
       )}
       <CustomInput
-        icon="lock"
+        icon={Strings.icons.lock}
         secure
-        iconRight="passwordShow"
-        placeholder="Confirm Password"
+        iconRight={Strings.icons.passwordShow}
+        placeholder={Strings.inputPlaceholder.confirmPassword}
         value={confirmPassword}
         onChangeText={onChangeConfirmPassword}
       />
       {errors.confirmPassword && (
         <CustomText style={styles.error}>{errors.confirmPassword}</CustomText>
       )}
-      <CustomButton buttonText={'Reset Password'} onPress={resetPassword} />
+      <CustomButton
+        buttonText={Strings.buttons.resetPassword}
+        onPress={resetPassword}
+      />
       <Loader visible={loading} />
     </AuthLayout>
   );

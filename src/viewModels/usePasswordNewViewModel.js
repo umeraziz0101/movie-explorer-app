@@ -1,13 +1,11 @@
 import {useState} from 'react';
-import {Alert} from 'react-native';
-import {confirmPasswordResetWithOTP} from '../services/firebaseAuth';
 import Routes from '../utils/constants/Routes';
 import Strings from '../utils/constants/Strings';
 import {validatePasswordUser} from '../utils/inputValidation';
 
 export function usePasswordNewViewModel(navigation, email) {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState(Strings.texts.empty);
+  const [confirmPassword, setConfirmPassword] = useState(Strings.texts.empty);
   const [errors, setErrors] = useState({});
 
   const [loading, setLoading] = useState(false);
@@ -29,19 +27,6 @@ export function usePasswordNewViewModel(navigation, email) {
       return;
     }
     navigation.replace(Routes.stack.passwordChanged);
-
-    // setLoading(true);
-    // const {success, message} = await confirmPasswordResetWithOTP(
-    //   email,
-    //   password,
-    // );
-    // setLoading(false);
-
-    // if (success) {
-    //   navigation.replace(Routes.stack.passwordChanged);
-    // } else {
-    //   Alert.alert(Strings.errors.error, message || 'Failed to reset password.');
-    // }
   };
 
   return {

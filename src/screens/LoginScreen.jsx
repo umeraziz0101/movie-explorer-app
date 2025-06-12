@@ -11,6 +11,7 @@ import Routes from '../utils/constants/Routes';
 
 import {Loader} from '../components/Loader';
 import {useLoginViewModel} from '../viewModels/useLoginViewModel';
+import Strings from '../utils/constants/Strings';
 
 const LoginScreen = ({navigation}) => {
   const {
@@ -27,12 +28,12 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <AuthLayout
-      title={'Login'}
-      desc1={'Welcome back! Glad to '}
-      desc2={'see you, Again!'}>
+      title={Strings.headerTitle.logIn}
+      desc1={Strings.headerDescription.welcomeBack}
+      desc2={Strings.headerDescription.seeYouAgain}>
       <CustomInput
-        icon={'email'}
-        placeholder="Email"
+        icon={Strings.icons.email}
+        placeholder={Strings.inputPlaceholder.email}
         value={email}
         onChangeText={onChangeEmail}
         keyboardType="email-address"
@@ -42,10 +43,10 @@ const LoginScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.email}</CustomText>
       )}
       <CustomInput
-        icon={'lock'}
-        placeholder="Password"
+        icon={Strings.icons.lock}
+        placeholder={Strings.inputPlaceholder.password}
         secure
-        iconRight={'passwordShow'}
+        iconRight={Strings.icons.passwordShow}
         value={password}
         onChangeText={onChangePassword}
         autoCapitalize="none"
@@ -55,43 +56,43 @@ const LoginScreen = ({navigation}) => {
       )}
       <View style={styles.row}>
         <CustomText textType="regular" size={14}>
-          Remember me
+          {Strings.texts.rememberMe}
         </CustomText>
         <TouchableOpacity
           onPress={() => navigation.navigate(Routes.stack.forgetPassword)}>
           <CustomText color={Colors.pink_ff465f} textType="medium" size={14}>
-            ForgetPassword?
+            {Strings.texts.forgetPassword}
           </CustomText>
         </TouchableOpacity>
       </View>
-      <CustomButton buttonText={'Log in'} onPress={login} />
+      <CustomButton buttonText={Strings.buttons.logIn} onPress={login} />
       <Divider />
       <CustomButton
-        buttonText={'Continue with Google'}
+        buttonText={Strings.buttons.google}
         buttonTextSize={14}
         buttonTextType={'regular'}
-        leftIcon={'google'}
+        leftIcon={Strings.icons.google}
         buttonContainerStyle={styles.socialButton}
-        onPress={() => socialSignIn('google')}
+        onPress={() => socialSignIn(Strings.icons.google)}
       />
       <CustomButton
-        buttonText={'Continue with Facebook'}
+        buttonText={Strings.buttons.facebook}
         buttonTextSize={14}
         buttonTextType={'regular'}
-        leftIcon={'facebook'}
+        leftIcon={Strings.icons.facebook}
         buttonContainerStyle={styles.socialButton}
-        onPress={() => socialSignIn('facebook')}
+        onPress={() => socialSignIn(Strings.icons.facebook)}
       />
       <CustomButton
-        buttonText={'Continue with Apple'}
+        buttonText={Strings.buttons.apple}
         buttonTextSize={14}
         buttonTextType={'regular'}
-        leftIcon={'apple'}
+        leftIcon={Strings.icons.apple}
         buttonContainerStyle={styles.socialButton}
       />
       <FooterText
-        text={"Don't have an account"}
-        coloredText={'Sign Up'}
+        text={Strings.texts.dontHaveAccount}
+        coloredText={Strings.texts.signUp}
         onPressColoredText={goToSignUp}
       />
       <Loader visible={loading} />

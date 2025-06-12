@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     paddingVertical: 12,
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.transparent,
   },
   textStyle: {
     fontSize: 16,

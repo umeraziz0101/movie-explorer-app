@@ -11,6 +11,7 @@ import CustomText from '../components/CustomText';
 import {Loader} from '../components/Loader';
 import {useSignUpViewModel} from '../viewModels/useSignUpViewModel';
 import {useLoginViewModel} from '../viewModels/useLoginViewModel';
+import Strings from '../utils/constants/Strings';
 
 const SignUpScreen = ({navigation}) => {
   const {
@@ -29,12 +30,12 @@ const SignUpScreen = ({navigation}) => {
 
   return (
     <AuthLayout
-      title={'Sign Up'}
-      desc1={'Hello! Sign Up to get '}
-      desc2={'started'}>
+      title={Strings.headerTitle.signUp}
+      desc1={Strings.headerDescription.signUp}
+      desc2={Strings.headerDescription.started}>
       <CustomInput
-        icon={'user'}
-        placeholder="Name"
+        icon={Strings.icons.user}
+        placeholder={Strings.inputPlaceholder.name}
         value={name}
         onChangeText={onChangeName}
       />
@@ -42,8 +43,8 @@ const SignUpScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.name}</CustomText>
       )}
       <CustomInput
-        icon={'email'}
-        placeholder="Email"
+        icon={Strings.icons.email}
+        placeholder={Strings.inputPlaceholder.email}
         value={email}
         onChangeText={onChangeEmail}
         keyboardType="email-address"
@@ -53,10 +54,10 @@ const SignUpScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.email}</CustomText>
       )}
       <CustomInput
-        icon={'lock'}
-        placeholder="Password"
+        icon={Strings.icons.lock}
+        placeholder={Strings.inputPlaceholder.password}
         secure
-        iconRight={'passwordShow'}
+        iconRight={Strings.icons.passwordShow}
         value={password}
         onChangeText={onChangePassword}
         autoCapitalize="none"
@@ -64,35 +65,35 @@ const SignUpScreen = ({navigation}) => {
       {errors.password && (
         <CustomText style={styles.error}>{errors.password}</CustomText>
       )}
-      <CustomButton buttonText={'Sign up'} onPress={signUp} />
+      <CustomButton buttonText={Strings.buttons.signUp} onPress={signUp} />
 
       <Divider colored />
       <CustomButton
-        buttonText={'Continue with Google'}
+        buttonText={Strings.buttons.google}
         buttonTextSize={14}
         buttonTextType={'regular'}
-        leftIcon={'google'}
+        leftIcon={Strings.icons.google}
         buttonContainerStyle={styles.socialButton}
-        onPress={() => socialSignIn('google')}
+        onPress={() => socialSignIn(Strings.icons.google)}
       />
       <CustomButton
-        buttonText={'Continue with Facebook'}
+        buttonText={Strings.buttons.facebook}
         buttonTextSize={14}
         buttonTextType={'regular'}
-        leftIcon={'facebook'}
+        leftIcon={Strings.icons.facebook}
         buttonContainerStyle={styles.socialButton}
-        onPress={() => socialSignIn('facebook')}
+        onPress={() => socialSignIn(Strings.icons.facebook)}
       />
       <CustomButton
-        buttonText={'Continue with Apple'}
+        buttonText={Strings.buttons.apple}
         buttonTextSize={14}
         buttonTextType={'regular'}
-        leftIcon={'apple'}
+        leftIcon={Strings.icons.facebook}
         buttonContainerStyle={styles.socialButton}
       />
       <FooterText
-        text={'Already have an account?'}
-        coloredText={'Log In'}
+        text={Strings.texts.alreadyHaveAccount}
+        coloredText={Strings.texts.logIn}
         onPressColoredText={goToLogin}
       />
       <Loader visible={loading} />

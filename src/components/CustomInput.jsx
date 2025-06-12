@@ -1,13 +1,8 @@
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import CustomIcon from './CustomIcon';
 import Colors from '../utils/constants/Colors';
+import Strings from '../utils/constants/Strings';
 
 const CustomInput = ({
   icon,
@@ -68,7 +63,7 @@ export const CustomInputBox = (
   {nextRef, prevRef, containerStyle, ...rest},
   ref,
 ) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(Strings.texts.empty);
 
   const handleChangeText = text => {
     setValue(text);

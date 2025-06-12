@@ -2,6 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import CustomText from './CustomText';
 import Colors from '../utils/constants/Colors';
+import Strings from '../utils/constants/Strings';
 
 const Divider = ({colored}) => {
   return (
@@ -11,7 +12,7 @@ const Divider = ({colored}) => {
         textType="regular"
         size={14}
         style={[styles.text, colored && {color: Colors.pink_ff465f}]}>
-        OR
+        {Strings.texts.or}
       </CustomText>
       <View style={styles.border} />
     </View>

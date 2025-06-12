@@ -15,10 +15,12 @@ import {
   setDoc,
 } from '@react-native-firebase/firestore';
 import {firestore} from '../services/firebaseConfig';
+import Keys from '../utils/constants/Keys';
+import {Collections} from '../utils/constants/Firestore';
 
 export function useLoginViewModel(navigation) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(Strings.texts.empty);
+  const [password, setPassword] = useState(Strings.texts.empty);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +46,6 @@ export function useLoginViewModel(navigation) {
     setLoading(false);
 
     if (success) {
-      // navigation.replace(Routes.tabs.home);
     } else {
       Alert.alert(Strings.errors.error, message);
     }
@@ -52,9 +53,12 @@ export function useLoginViewModel(navigation) {
   const socialSignIn = async method => {
     setLoading(true);
     let result;
-    if (method === 'google') result = await signInWithGoogle();
-    else if (method === 'facebook') result = await signInWithFacebook();
-    else if (method === 'apple') result = await signInWithApple();
+    if (method === Keys.socialSignInMethod.google)
+      result = await signInWithGoogle();
+    else if (method === Keys.socialSignInMethod.facebook)
+      result = await signInWithFacebook();
+    else if (method === Keys.socialSignInMethod.apple)
+      result = await signInWithApple();
     setLoading(false);
 
     if (!result.success) {
@@ -63,11 +67,11 @@ export function useLoginViewModel(navigation) {
     }
 
     const uid = result.user.uid;
-    const userRef = doc(firestore, 'users', uid);
+    const userRef = doc(firestore, Collections.users, uid);
     const snap = await getDoc(userRef);
     if (!snap.exists()) {
       await setDoc(userRef, {
-        name: result.user.displayName || '',
+        name: result.user.displayName || Strings.texts.empty,
         email: result.user.email,
         createdAt: serverTimestamp(),
       });

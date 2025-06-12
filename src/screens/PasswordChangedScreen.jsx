@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import React from 'react';
 import AuthLayout from '../components/AuthLayout';
 import CustomButton from '../components/CustomButton';
@@ -6,6 +6,8 @@ import Colors from '../utils/constants/Colors';
 import CustomIcon from '../components/CustomIcon';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
+import Strings from '../utils/constants/Strings';
+import Images from '../utils/assets/Images';
 
 const PasswordChangedScreen = () => {
   const navigation = useNavigation();
@@ -14,10 +16,13 @@ const PasswordChangedScreen = () => {
   };
   return (
     <AuthLayout
-      title={'Password Changed'}
-      desc1={'Your Password has been changed successfully'}>
-      <CustomIcon name={'badge11'} size={120} style={styles.icon} />
-      <CustomButton buttonText={'Back to Login'} onPress={onPressButton} />
+      title={Strings.headerTitle.passwordChanged}
+      desc1={Strings.headerDescription.passwordChangedSuccessFully}>
+      <Image source={Images.badge} style={styles.icon} />
+      <CustomButton
+        buttonText={Strings.buttons.backToLogin}
+        onPress={onPressButton}
+      />
     </AuthLayout>
   );
 };
@@ -33,5 +38,7 @@ const styles = StyleSheet.create({
   icon: {
     alignSelf: 'center',
     marginBottom: 16,
+    width: 120,
+    height: 120,
   },
 });

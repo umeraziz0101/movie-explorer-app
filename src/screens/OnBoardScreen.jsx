@@ -13,6 +13,7 @@ import CustomText from '../components/CustomText';
 import Wrapper from '../components/Wrapper';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
+import Strings from '../utils/constants/Strings';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -36,21 +37,24 @@ const OnBoardScreen = () => {
         style={styles.background}>
         <Icons.logo style={styles.logo} />
         <CustomText size={20} textType="semiBold">
-          Watch Movies
+          {Strings.texts.watchMovies}
         </CustomText>
         <CustomText size={20} textType="semiBold" style={styles.text}>
-          Anytime Anywhere
+          {Strings.texts.anytimeAnywhere}
         </CustomText>
 
         <View style={styles.footer}>
-          <CustomButton buttonText={'Log in'} onPress={onPressLogin} />
           <CustomButton
-            buttonText={'Sign up'}
+            buttonText={Strings.buttons.logIn}
+            onPress={onPressLogin}
+          />
+          <CustomButton
+            buttonText={Strings.buttons.signUp}
             transparent
             onPress={onPressSignUp}
           />
           <TouchableOpacity onPress={onPressGuest}>
-            <CustomText>Continue as guest</CustomText>
+            <CustomText>{Strings.texts.continueAsGuest}</CustomText>
           </TouchableOpacity>
         </View>
       </ImageBackground>

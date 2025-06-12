@@ -5,7 +5,12 @@ import Routes from '../utils/constants/Routes';
 import Strings from '../utils/constants/Strings';
 
 export function useOTPVerificationViewModel(navigation, email) {
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [otp, setOtp] = useState([
+    Strings.texts.empty,
+    Strings.texts.empty,
+    Strings.texts.empty,
+    Strings.texts.empty,
+  ]);
   const [loading, setLoading] = useState(false);
 
   const onChangeOtp = (index, value, nextRef, prevRef) => {
@@ -17,9 +22,9 @@ export function useOTPVerificationViewModel(navigation, email) {
   };
 
   const verify = async () => {
-    const code = otp.join('');
+    const code = otp.join(Strings.texts.empty);
     if (code.length !== 4) {
-      Alert.alert(Strings.errors.errorTitle, 'Please enter all 4 digits.');
+      Alert.alert(Strings.errors.errorTitle, Strings.errors.otpEnterAllDigits);
       return;
     }
     setLoading(true);
@@ -28,7 +33,10 @@ export function useOTPVerificationViewModel(navigation, email) {
     if (success) {
       navigation.navigate(Routes.stack.passwordNew, {email});
     } else {
-      Alert.alert(Strings.errors.error, message || 'OTP verification failed.');
+      Alert.alert(
+        Strings.errors.error,
+        message || Strings.errors.otpVerificationFailed,
+      );
     }
   };
 

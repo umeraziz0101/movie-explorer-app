@@ -12,6 +12,7 @@ import PasswordNewScreen from '../screens/PasswordNewScreen';
 import PasswordChangedScreen from '../screens/PasswordChangedScreen';
 import HomeScreen from '../screens/HomeScreen';
 import {auth} from '../services/firebaseConfig';
+import Constants from '../utils/constants/Constants';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +24,7 @@ const AppNavigator = () => {
       if (user) {
         setTimeout(() => {
           setInitialRoute(Routes.tabs.home);
-        }, 200);
+        }, Constants.fetchTimeOut);
       } else {
         setInitialRoute(Routes.stack.onBoard);
       }

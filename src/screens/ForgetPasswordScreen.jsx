@@ -1,16 +1,14 @@
-import {Alert, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet} from 'react-native';
+import React from 'react';
 import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import FooterText from '../components/FooterText';
 import Colors from '../utils/constants/Colors';
-import {useNavigation} from '@react-navigation/native';
-import Routes from '../utils/constants/Routes';
-import {requestPasswordReset} from '../services/firebaseAuth';
 import {useForgetPasswordViewModel} from '../viewModels/useForgetPasswordViewModel';
 import {Loader} from '../components/Loader';
 import CustomText from '../components/CustomText';
+import Strings from '../utils/constants/Strings';
 
 const ForgetPasswordScreen = ({navigation}) => {
   const {email, errors, loading, onChangeEmail, sendOTP, goToLogin} =
@@ -18,12 +16,12 @@ const ForgetPasswordScreen = ({navigation}) => {
 
   return (
     <AuthLayout
-      title={'Forget Password'}
-      desc1={"Don't worry! Please enter the"}
-      desc2={'email linked with your account.'}>
+      title={Strings.headerTitle.forgetPassword}
+      desc1={Strings.headerDescription.dontWorry}
+      desc2={Strings.headerDescription.emailLinked}>
       <CustomInput
-        icon={'email'}
-        placeholder="Email"
+        icon={Strings.icons.email}
+        placeholder={Strings.inputPlaceholder.email}
         value={email}
         onChangeText={onChangeEmail}
         keyboardType="email-address"
@@ -32,11 +30,11 @@ const ForgetPasswordScreen = ({navigation}) => {
       {errors.email && (
         <CustomText style={styles.error}>{errors.email}</CustomText>
       )}
-      <CustomButton buttonText={'Send Code'} onPress={sendOTP} />
+      <CustomButton buttonText={Strings.buttons.sendCode} onPress={sendOTP} />
 
       <FooterText
-        text={'Remember Password?'}
-        coloredText={'Log In'}
+        text={Strings.texts.rememberPassword}
+        coloredText={Strings.texts.rememberPassword}
         onPressColoredText={goToLogin}
       />
       <Loader visible={loading} />

@@ -5,7 +5,7 @@ import Routes from '../utils/constants/Routes';
 import Strings from '../utils/constants/Strings';
 
 export function useHomeViewModel(navigation) {
-  const [user, setUser] = useState({name: '', email: ''});
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -13,10 +13,14 @@ export function useHomeViewModel(navigation) {
       setLoading(true);
       try {
         const data = await fetchUserData();
-
-        setUser({name: data.name || 'Guest', email: data.email || ''});
+        console.log(Strings.consoleMessage.useHomeData, data);
+        if (data) {
+          setUser({name: data.name, email: data.email});
+        } else {
+          setUser({name: Strings.texts.guest, email: Strings.texts.empty});
+        }
       } catch (e) {
-        Alert.alert(Strings.errors.error, e.message);
+        setUser({name: Strings.texts.guest, email: Strings.texts.empty});
       } finally {
         setLoading(false);
       }
@@ -38,7 +42,7 @@ export function useHomeViewModel(navigation) {
                 const result = await logoutUser();
                 if (!result.success) throw new Error(result.message);
               }
-              setUser({name: '', email: ''});
+              setUser({name: Strings.texts.empty, email: Strings.texts.empty});
               navigation.replace(Routes.stack.onBoard);
             } catch (err) {
               Alert.alert(Strings.errors.error, err.message);

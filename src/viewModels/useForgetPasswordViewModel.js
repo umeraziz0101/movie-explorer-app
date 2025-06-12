@@ -6,7 +6,7 @@ import Strings from '../utils/constants/Strings';
 import {validateEmailUser} from '../utils/inputValidation';
 
 export function useForgetPasswordViewModel(navigation) {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(Strings.texts.empty);
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ export function useForgetPasswordViewModel(navigation) {
     } else {
       Alert.alert(
         Strings.errors.error,
-        message || 'Failed to request password reset.',
+        message || Strings.errors.passwordResetFailed,
       );
     }
   };

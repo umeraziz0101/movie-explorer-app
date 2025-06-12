@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   ImageBackground,
   StatusBar,
   StyleSheet,
   View,
   Dimensions,
+  Animated,
 } from 'react-native';
 import Images from '../utils/assets/Images';
 
@@ -14,25 +15,34 @@ import {useNavigation} from '@react-navigation/native';
 import Constants from '../utils/constants/Constants';
 import Routes from '../utils/constants/Routes';
 import {auth} from '../services/firebaseConfig';
+import Colors from '../utils/constants/Colors';
 
 const {width: screenWidth} = Dimensions.get('window');
 
 const SplashScreen = () => {
   const navigation = useNavigation();
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          navigation.replace(Routes.tabs.home);
-        } else {
-          navigation.replace(Routes.stack.onBoard);
-        }
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: Constants.animationDuration,
+        useNativeDriver: true,
+      }).start(() => {
+        auth.onAuthStateChanged(user => {
+          if (user) {
+            navigation.replace(Routes.tabs.home);
+          } else {
+            navigation.replace(Routes.stack.onBoard);
+          }
+        });
       });
     }, Constants.splashTimeOut);
 
     return () => clearTimeout(timer);
-  }, [navigation]);
+  }, [fadeAnim, navigation]);
+
   return (
     <ImageBackground
       source={Images.coverSplash}
@@ -41,9 +51,6 @@ const SplashScreen = () => {
       <StatusBar hidden />
       <View style={styles.overlay} />
       <Icons.logo style={styles.logo} />
-
-      {/* <Icons.email width={32} height={32} /> */}
-      {/* <CustomIcon name={'user'} size={24} /> */}
     </ImageBackground>
   );
 };
@@ -58,7 +65,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.70)',
+    backgroundColor: Colors.opacity_dark1,
   },
   logo: {
     width: screenWidth * 0.5,

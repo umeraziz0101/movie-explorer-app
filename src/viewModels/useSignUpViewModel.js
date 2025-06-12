@@ -8,9 +8,9 @@ import {updateProfile} from '@react-native-firebase/auth';
 import {auth} from '../services/firebaseConfig';
 
 export function useSignUpViewModel(navigation) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState(Strings.texts.empty);
+  const [email, setEmail] = useState(Strings.texts.empty);
+  const [password, setPassword] = useState(Strings.texts.empty);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -46,7 +46,6 @@ export function useSignUpViewModel(navigation) {
 
     if (success) {
       await updateProfile(auth.currentUser, {displayName: name});
-      // navigation.replace(Routes.tabs.home);
     } else {
       Alert.alert(Strings.errors.error, message);
     }

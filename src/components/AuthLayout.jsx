@@ -3,11 +3,12 @@ import React from 'react';
 import Wrapper from './Wrapper';
 import CustomIcon from './CustomIcon';
 import CustomText from './CustomText';
+import Strings from '../utils/constants/Strings';
 
 const AuthLayout = ({title, desc1, desc2, descStyle, children}) => {
   return (
     <Wrapper>
-      <CustomIcon name={'logo'} size={79} />
+      <CustomIcon name={Strings.icons.logo} size={79} />
       <CustomText textType="semiBold" size={24} style={styles.title}>
         {title}
       </CustomText>

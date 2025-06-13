@@ -3,7 +3,7 @@ import Icons from '../utils/assets/Icons';
 import Colors from '../utils/constants/Colors';
 
 const CustomIcon = ({name, size, fill, style}) => {
-  const IconComponent = Icons[name];
+  const IconComponent = name;
   if (!IconComponent) {
     return null;
   }

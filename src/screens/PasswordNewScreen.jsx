@@ -10,6 +10,7 @@ import {Loader} from '../components/Loader';
 import {usePasswordNewViewModel} from '../viewModels/usePasswordNewViewModel';
 import CustomText from '../components/CustomText';
 import Strings from '../utils/constants/Strings';
+import Icons from '../utils/assets/Icons';
 
 const PasswordNewScreen = ({navigation}) => {
   const {email} = useRoute().params;
@@ -28,9 +29,9 @@ const PasswordNewScreen = ({navigation}) => {
       title={Strings.headerTitle.newPassword}
       desc1={Strings.headerDescription.newPasswordMustUnique}>
       <CustomInput
-        icon={Strings.icons.lock}
+        icon={Icons.lock}
         secure
-        iconRight={Strings.icons.passwordShow}
+        iconRight={Icons.passwordShow}
         placeholder={Strings.inputPlaceholder.newPassword}
         value={password}
         onChangeText={onChangePassword}
@@ -39,9 +40,9 @@ const PasswordNewScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.password}</CustomText>
       )}
       <CustomInput
-        icon={Strings.icons.lock}
+        icon={Icons.lock}
         secure
-        iconRight={Strings.icons.passwordShow}
+        iconRight={Icons.passwordShow}
         placeholder={Strings.inputPlaceholder.confirmPassword}
         value={confirmPassword}
         onChangeText={onChangeConfirmPassword}

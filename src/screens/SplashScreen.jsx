@@ -16,6 +16,7 @@ import Constants from '../utils/constants/Constants';
 import Routes from '../utils/constants/Routes';
 import {auth} from '../services/firebaseConfig';
 import Colors from '../utils/constants/Colors';
+import CustomIcon from '../components/CustomIcon';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -50,7 +51,7 @@ const SplashScreen = () => {
       style={styles.background}>
       <StatusBar hidden />
       <View style={styles.overlay} />
-      <Icons.logo style={styles.logo} />
+      <CustomIcon name={Icons.logo} size={screenWidth * 0.5} />
     </ImageBackground>
   );
 };
@@ -66,9 +67,5 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: Colors.opacity_dark1,
-  },
-  logo: {
-    width: screenWidth * 0.5,
-    height: screenWidth * 0.5,
   },
 });

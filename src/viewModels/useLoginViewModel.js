@@ -23,6 +23,11 @@ export function useLoginViewModel(navigation) {
   const [password, setPassword] = useState(Strings.texts.empty);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const toggleRemember = val => {
+    setRememberMe(val);
+  };
 
   const onChangeEmail = text => {
     setEmail(text);
@@ -94,5 +99,7 @@ export function useLoginViewModel(navigation) {
     login,
     socialSignIn,
     goToSignUp,
+    toggleRemember,
+    rememberMe,
   };
 }

@@ -30,6 +30,8 @@ export function useSignUpViewModel(navigation) {
   };
 
   const signUp = async () => {
+    const data = {};
+
     const validationErrors = validateUser({name, email, password});
     if (Object.keys(validationErrors).length) {
       setErrors(validationErrors);
@@ -37,11 +39,12 @@ export function useSignUpViewModel(navigation) {
     }
 
     setLoading(true);
-    const {success, message} = await registerUser(
+    const {success, message, userData} = await registerUser(
       name,
       email.toLowerCase(),
       password,
     );
+
     setLoading(false);
 
     if (success) {

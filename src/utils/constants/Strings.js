@@ -2,10 +2,10 @@ const Strings = {
   texts: {
     rememberPassword: 'Remember Password?',
     logIn: 'Log In',
-    dontHaveAccount: "Don't have an account",
+    dontHaveAccount: "Don't have an account?",
     signUp: 'Sign Up',
     rememberMe: 'Remember me',
-    forgetPassword: 'ForgetPassword?',
+    forgetPassword: 'Forget Password?',
     continueAsGuest: 'Continue as guest',
     watchMovies: 'Watch Movies',
     anytimeAnywhere: 'Anytime Anywhere',
@@ -14,6 +14,9 @@ const Strings = {
     empty: '',
     guest: 'Guest',
     or: 'OR',
+    name: 'Name: ',
+    Email: 'Email ',
+    fastX: 'Fast X',
   },
   headerTitle: {
     forgetPassword: 'Forget Password',
@@ -124,6 +127,9 @@ const Strings = {
     facebookSignInResult: 'Facebook login result:',
     facebookSignInError: 'Facebook Sign-In Error:',
     useHomeData: 'useHome Data : ',
+  },
+  section: {
+    popularMovies: 'Popular Movies',
   },
 };
 

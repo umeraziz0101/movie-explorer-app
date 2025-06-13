@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Switch, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
@@ -12,6 +12,9 @@ import Routes from '../utils/constants/Routes';
 import {Loader} from '../components/Loader';
 import {useLoginViewModel} from '../viewModels/useLoginViewModel';
 import Strings from '../utils/constants/Strings';
+import Fonts from '../utils/constants/Fonts';
+import Icons from '../utils/assets/Icons';
+import CustomIcon from '../components/CustomIcon';
 
 const LoginScreen = ({navigation}) => {
   const {
@@ -24,6 +27,8 @@ const LoginScreen = ({navigation}) => {
     login,
     socialSignIn,
     goToSignUp,
+    toggleRemember,
+    rememberMe,
   } = useLoginViewModel(navigation);
 
   return (
@@ -32,7 +37,7 @@ const LoginScreen = ({navigation}) => {
       desc1={Strings.headerDescription.welcomeBack}
       desc2={Strings.headerDescription.seeYouAgain}>
       <CustomInput
-        icon={Strings.icons.email}
+        icon={Icons.email}
         placeholder={Strings.inputPlaceholder.email}
         value={email}
         onChangeText={onChangeEmail}
@@ -43,10 +48,10 @@ const LoginScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.email}</CustomText>
       )}
       <CustomInput
-        icon={Strings.icons.lock}
+        icon={Icons.lock}
         placeholder={Strings.inputPlaceholder.password}
         secure
-        iconRight={Strings.icons.passwordShow}
+        iconRight={Icons.passwordShow}
         value={password}
         onChangeText={onChangePassword}
         autoCapitalize="none"
@@ -55,12 +60,23 @@ const LoginScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.password}</CustomText>
       )}
       <View style={styles.row}>
-        <CustomText textType="regular" size={14}>
-          {Strings.texts.rememberMe}
-        </CustomText>
+        <View style={styles.rememberRow}>
+          <TouchableOpacity onPress={() => toggleRemember(!rememberMe)}>
+            <CustomIcon
+              name={rememberMe ? Icons.checkboxChecked : Icons.checkbox}
+              size={20}
+            />
+          </TouchableOpacity>
+          <CustomText size={14} style={styles.rememberText}>
+            {Strings.texts.rememberMe}
+          </CustomText>
+        </View>
         <TouchableOpacity
           onPress={() => navigation.navigate(Routes.stack.forgetPassword)}>
-          <CustomText color={Colors.pink_ff465f} textType="medium" size={14}>
+          <CustomText
+            color={Colors.pink_ff465f}
+            textType={Fonts.medium}
+            size={14}>
             {Strings.texts.forgetPassword}
           </CustomText>
         </TouchableOpacity>
@@ -70,24 +86,24 @@ const LoginScreen = ({navigation}) => {
       <CustomButton
         buttonText={Strings.buttons.google}
         buttonTextSize={14}
-        buttonTextType={'regular'}
-        leftIcon={Strings.icons.google}
+        buttonTextType={Fonts.regular}
+        leftIcon={Icons.google}
         buttonContainerStyle={styles.socialButton}
         onPress={() => socialSignIn(Strings.icons.google)}
       />
       <CustomButton
         buttonText={Strings.buttons.facebook}
         buttonTextSize={14}
-        buttonTextType={'regular'}
-        leftIcon={Strings.icons.facebook}
+        buttonTextType={Fonts.regular}
+        leftIcon={Icons.facebook}
         buttonContainerStyle={styles.socialButton}
         onPress={() => socialSignIn(Strings.icons.facebook)}
       />
       <CustomButton
         buttonText={Strings.buttons.apple}
         buttonTextSize={14}
-        buttonTextType={'regular'}
-        leftIcon={Strings.icons.apple}
+        buttonTextType={Fonts.regular}
+        leftIcon={Icons.apple}
         buttonContainerStyle={styles.socialButton}
       />
       <FooterText
@@ -112,6 +128,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  rememberRow: {
+    flexDirection: 'row',
+  },
+  rememberText: {
+    marginLeft: 8,
   },
   error: {
     color: Colors.red_f5615d,

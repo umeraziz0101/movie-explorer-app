@@ -9,6 +9,7 @@ import {useForgetPasswordViewModel} from '../viewModels/useForgetPasswordViewMod
 import {Loader} from '../components/Loader';
 import CustomText from '../components/CustomText';
 import Strings from '../utils/constants/Strings';
+import Icons from '../utils/assets/Icons';
 
 const ForgetPasswordScreen = ({navigation}) => {
   const {email, errors, loading, onChangeEmail, sendOTP, goToLogin} =
@@ -20,7 +21,7 @@ const ForgetPasswordScreen = ({navigation}) => {
       desc1={Strings.headerDescription.dontWorry}
       desc2={Strings.headerDescription.emailLinked}>
       <CustomInput
-        icon={Strings.icons.email}
+        icon={Icons.email}
         placeholder={Strings.inputPlaceholder.email}
         value={email}
         onChangeText={onChangeEmail}
@@ -34,7 +35,7 @@ const ForgetPasswordScreen = ({navigation}) => {
 
       <FooterText
         text={Strings.texts.rememberPassword}
-        coloredText={Strings.texts.rememberPassword}
+        coloredText={Strings.texts.logIn}
         onPressColoredText={goToLogin}
       />
       <Loader visible={loading} />

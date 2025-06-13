@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import CustomIcon from './CustomIcon';
 import Colors from '../utils/constants/Colors';
 import Strings from '../utils/constants/Strings';
+import Fonts from '../utils/constants/Fonts';
 
 const CustomInput = ({
   icon,
@@ -54,8 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: Colors.white_ffffff,
     fontSize: 16,
-
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: Fonts.semiBold,
   },
 });
 
@@ -118,6 +118,6 @@ const styles1 = StyleSheet.create({
     color: Colors.white_ffffff,
     fontSize: 22,
     paddingHorizontal: '12',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: Fonts.bold,
   },
 });

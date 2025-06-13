@@ -1,11 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import CustomText from './CustomText';
+import Fonts from '../utils/constants/Fonts';
 
 const CustomSection = ({sectionTitle, children}) => {
   return (
     <View>
-      <CustomText textType="medium" size={20}>
+      <CustomText textType={Fonts.medium} size={20}>
         {sectionTitle}
       </CustomText>
       {children}

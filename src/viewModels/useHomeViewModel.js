@@ -3,28 +3,31 @@ import {Alert} from 'react-native';
 import {fetchUserData, logoutUser} from '../services/firebaseAuth';
 import Routes from '../utils/constants/Routes';
 import Strings from '../utils/constants/Strings';
+import Constants from '../utils/constants/Constants';
 
 export function useHomeViewModel(navigation) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      try {
-        const data = await fetchUserData();
-        console.log(Strings.consoleMessage.useHomeData, data);
-        if (data) {
-          setUser({name: data.name, email: data.email});
-        } else {
+    setTimeout(() => {
+      (async () => {
+        setLoading(true);
+        try {
+          const data = await fetchUserData();
+          console.log(Strings.consoleMessage.useHomeData, data);
+          if (data) {
+            setUser({name: data.name, email: data.email});
+          } else {
+            setUser({name: Strings.texts.guest, email: Strings.texts.empty});
+          }
+        } catch (e) {
           setUser({name: Strings.texts.guest, email: Strings.texts.empty});
+        } finally {
+          setLoading(false);
         }
-      } catch (e) {
-        setUser({name: Strings.texts.guest, email: Strings.texts.empty});
-      } finally {
-        setLoading(false);
-      }
-    })();
+      })();
+    }, Constants.fetchTimeOut);
   }, []);
 
   const logout = async () => {

@@ -3,6 +3,7 @@ import React from 'react';
 import Colors from '../utils/constants/Colors';
 import CustomText from './CustomText';
 import CustomIcon from './CustomIcon';
+import Fonts from '../utils/constants/Fonts';
 
 const CustomButton = ({
   buttonContainerStyle,
@@ -27,7 +28,7 @@ const CustomButton = ({
           <CustomIcon name={leftIcon} size={20} style={styles.leftIcon} />
         )}
         <CustomText
-          textType={buttonTextType ? buttonTextType : 'semiBold'}
+          textType={buttonTextType ? buttonTextType : Fonts.semiBold}
           size={buttonTextSize ? buttonTextSize : 16}
           color={transparent ? Colors.white_ffffff : Colors.black_0d0d0d}>
           {buttonText}

@@ -9,7 +9,6 @@ const Divider = ({colored}) => {
     <View style={styles.container}>
       <View style={styles.border} />
       <CustomText
-        textType="regular"
         size={14}
         style={[styles.text, colored && {color: Colors.pink_ff465f}]}>
         {Strings.texts.or}

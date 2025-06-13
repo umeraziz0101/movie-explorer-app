@@ -14,6 +14,8 @@ import Wrapper from '../components/Wrapper';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
 import Strings from '../utils/constants/Strings';
+import Fonts from '../utils/constants/Fonts';
+import CustomIcon from '../components/CustomIcon';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -35,11 +37,15 @@ const OnBoardScreen = () => {
         source={Images.coverOnBoard}
         resizeMode="cover"
         style={styles.background}>
-        <Icons.logo style={styles.logo} />
-        <CustomText size={20} textType="semiBold">
+        <CustomIcon
+          name={Icons.logo}
+          size={screenWidth * 0.5}
+          style={styles.logo}
+        />
+        <CustomText size={20} textType={Fonts.semiBold}>
           {Strings.texts.watchMovies}
         </CustomText>
-        <CustomText size={20} textType="semiBold" style={styles.text}>
+        <CustomText size={20} textType={Fonts.semiBold} style={styles.text}>
           {Strings.texts.anytimeAnywhere}
         </CustomText>
 
@@ -75,8 +81,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: screenWidth * 0.5,
-    height: screenWidth * 0.5,
     marginBottom: 50,
   },
   text: {

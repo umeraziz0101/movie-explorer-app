@@ -2,13 +2,10 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import CustomText from './CustomText';
 import Images from '../utils/assets/Images';
+import Fonts from '../utils/constants/Fonts';
 
 const CustomImage = () => {
-  return (
-    <View>
-      <Text>CustomImage</Text>
-    </View>
-  );
+  return <View></View>;
 };
 
 export default CustomImage;
@@ -19,7 +16,7 @@ export const ImageBox = ({title, imageSize = 130}) => {
   return (
     <View>
       {title && (
-        <CustomText textType="medium" size={12}>
+        <CustomText textType={Fonts.medium} size={12}>
           {title}
         </CustomText>
       )}

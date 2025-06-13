@@ -1,6 +1,8 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Colors from '../utils/constants/Colors';
+import CustomText from './CustomText';
+import Fonts from '../utils/constants/Fonts';
 
 const FooterText = ({
   text,
@@ -10,12 +12,21 @@ const FooterText = ({
 }) => {
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.textStyle}>{text} </Text>
-      {coloredText && (
-        <Pressable onPress={onPressColoredText}>
-          <Text style={styles.coloredTextStyle}>{coloredText}</Text>
-        </Pressable>
-      )}
+      <View style={styles.row}>
+        <CustomText textType={Fonts.medium} size={14}>
+          {text}{' '}
+        </CustomText>
+        {coloredText && (
+          <Pressable onPress={onPressColoredText}>
+            <CustomText
+              size={14}
+              color={Colors.pink_ff465f}
+              textType={Fonts.semiBold}>
+              {coloredText}
+            </CustomText>
+          </Pressable>
+        )}
+      </View>
     </View>
   );
 };
@@ -24,23 +35,13 @@ export default FooterText;
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    bottom: 50,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: 12,
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     backgroundColor: Colors.transparent,
+    marginBottom: 50,
   },
-  textStyle: {
-    fontSize: 16,
-    color: Colors.white_ffffff,
-    fontWeight: 'semibold',
-  },
-  coloredTextStyle: {
-    fontSize: 16,
-    color: Colors.pink_ff465f,
-    fontWeight: 'bold',
+  row: {
+    flexDirection: 'row',
   },
 });

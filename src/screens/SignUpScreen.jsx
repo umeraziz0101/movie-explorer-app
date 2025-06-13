@@ -1,4 +1,4 @@
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
@@ -12,6 +12,8 @@ import {Loader} from '../components/Loader';
 import {useSignUpViewModel} from '../viewModels/useSignUpViewModel';
 import {useLoginViewModel} from '../viewModels/useLoginViewModel';
 import Strings from '../utils/constants/Strings';
+import Fonts from '../utils/constants/Fonts';
+import Icons from '../utils/assets/Icons';
 
 const SignUpScreen = ({navigation}) => {
   const {
@@ -34,7 +36,7 @@ const SignUpScreen = ({navigation}) => {
       desc1={Strings.headerDescription.signUp}
       desc2={Strings.headerDescription.started}>
       <CustomInput
-        icon={Strings.icons.user}
+        icon={Icons.user}
         placeholder={Strings.inputPlaceholder.name}
         value={name}
         onChangeText={onChangeName}
@@ -43,7 +45,7 @@ const SignUpScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.name}</CustomText>
       )}
       <CustomInput
-        icon={Strings.icons.email}
+        icon={Icons.email}
         placeholder={Strings.inputPlaceholder.email}
         value={email}
         onChangeText={onChangeEmail}
@@ -54,10 +56,10 @@ const SignUpScreen = ({navigation}) => {
         <CustomText style={styles.error}>{errors.email}</CustomText>
       )}
       <CustomInput
-        icon={Strings.icons.lock}
+        icon={Icons.lock}
         placeholder={Strings.inputPlaceholder.password}
         secure
-        iconRight={Strings.icons.passwordShow}
+        iconRight={Icons.passwordShow}
         value={password}
         onChangeText={onChangePassword}
         autoCapitalize="none"
@@ -71,31 +73,33 @@ const SignUpScreen = ({navigation}) => {
       <CustomButton
         buttonText={Strings.buttons.google}
         buttonTextSize={14}
-        buttonTextType={'regular'}
-        leftIcon={Strings.icons.google}
+        buttonTextType={Fonts.regular}
+        leftIcon={Icons.google}
         buttonContainerStyle={styles.socialButton}
         onPress={() => socialSignIn(Strings.icons.google)}
       />
       <CustomButton
         buttonText={Strings.buttons.facebook}
         buttonTextSize={14}
-        buttonTextType={'regular'}
-        leftIcon={Strings.icons.facebook}
+        buttonTextType={Fonts.regular}
+        leftIcon={Icons.facebook}
         buttonContainerStyle={styles.socialButton}
         onPress={() => socialSignIn(Strings.icons.facebook)}
       />
       <CustomButton
         buttonText={Strings.buttons.apple}
         buttonTextSize={14}
-        buttonTextType={'regular'}
-        leftIcon={Strings.icons.facebook}
+        buttonTextType={Fonts.regular}
+        leftIcon={Icons.apple}
         buttonContainerStyle={styles.socialButton}
       />
+
       <FooterText
         text={Strings.texts.alreadyHaveAccount}
         coloredText={Strings.texts.logIn}
         onPressColoredText={goToLogin}
       />
+
       <Loader visible={loading} />
     </AuthLayout>
   );
@@ -104,6 +108,10 @@ const SignUpScreen = ({navigation}) => {
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
   socialButton: {
     backgroundColor: Colors.white_fefefe,
     borderColor: Colors.white_fefefe,

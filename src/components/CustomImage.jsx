@@ -12,7 +12,12 @@ export default CustomImage;
 
 const styles = StyleSheet.create({});
 
-export const ImageBox = ({title, imageSize = 130}) => {
+export const ImageBox = ({
+  title,
+  imageSource,
+  imageSize = 130,
+  imageRadius = 8,
+}) => {
   return (
     <View>
       {title && (
@@ -22,8 +27,11 @@ export const ImageBox = ({title, imageSize = 130}) => {
       )}
       <View>
         <Image
-          source={Images.coverOnBoard}
-          style={[styles1.image, {height: imageSize, width: imageSize}]}
+          source={imageSource}
+          style={[
+            styles1.image,
+            {height: imageSize, width: imageSize, borderRadius: imageRadius},
+          ]}
         />
       </View>
     </View>
@@ -33,6 +41,5 @@ export const ImageBox = ({title, imageSize = 130}) => {
 const styles1 = StyleSheet.create({
   image: {
     marginTop: 8,
-    borderRadius: 8,
   },
 });

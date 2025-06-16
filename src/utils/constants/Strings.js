@@ -67,6 +67,7 @@ const Strings = {
       'Something went wrong obtaining Facebook access token',
     appleSignInFailed: 'Apple Sign-In failed',
     passwordResetFailed: 'Failed to request password reset.',
+    failedToLoadImage: 'Failed to load image',
   },
   alerts: {
     title: {
@@ -129,7 +130,10 @@ const Strings = {
     useHomeData: 'useHome Data : ',
   },
   section: {
+    today: 'Today',
     popularMovies: 'Popular Movies',
+    lastMonth: 'Last Month',
+    lastSixMonth: 'Last 6 Month',
   },
 };
 

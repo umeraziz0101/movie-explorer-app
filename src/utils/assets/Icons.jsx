@@ -8,6 +8,7 @@ import Google from '../../assets/icons/google.svg';
 import Apple from '../../assets/icons/apple.svg';
 import CheckBox from '../../assets/icons/checkbox.svg';
 import CheckBoxChecked from '../../assets/icons/checkbox_checked.svg';
+import Back from '../../assets/icons/back.svg';
 
 const Icons = {
   logo: Logo,
@@ -20,5 +21,7 @@ const Icons = {
   apple: Apple,
   checkbox: CheckBox,
   checkboxChecked: CheckBoxChecked,
+  back: Back,
 };
+
 export default Icons;

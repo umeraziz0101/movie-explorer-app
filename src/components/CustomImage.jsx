@@ -6,13 +6,32 @@ import Fonts from '../utils/constants/Fonts';
 import Colors from '../utils/constants/Colors';
 import Strings from '../utils/constants/Strings';
 
-const CustomImage = () => {
-  return <View></View>;
+const CustomImage = ({local, imageSource, imageSize = 130, imageCircle}) => {
+  imageCircle = imageSize / 2;
+  return (
+    <View>
+      <Image
+        source={local ? imageSource : {uri: imageSource}}
+        resizeMode="cover"
+        style={[
+          styles.image,
+          {
+            height: imageSize,
+            width: imageSize,
+            // borderRadius: imageCircle ? imageCircle : 0,
+            borderRadius: imageCircle,
+          },
+        ]}
+      />
+    </View>
+  );
 };
 
 export default CustomImage;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {},
+});
 
 export const ImageBox = ({
   title,

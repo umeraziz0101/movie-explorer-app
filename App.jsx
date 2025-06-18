@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import AppNavigator from './src/navigation/AppNavigator';
+import AppNavigator from './src/navigation/TabNavigator';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {Settings} from 'react-native-fbsdk-next';
 import Keys from './src/utils/constants/Keys';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {PaperProvider} from 'react-native-paper';
+import StackNavigator from './src/navigation/StackNavigator';
+// import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const App = () => {
   useEffect(() => {
@@ -19,9 +21,10 @@ const App = () => {
   }, []);
 
   return (
-    <GestureHandlerRootView>
-      <AppNavigator />
-    </GestureHandlerRootView>
+    <PaperProvider>
+      {/* <AppNavigator /> */}
+      <StackNavigator />
+    </PaperProvider>
   );
 };
 

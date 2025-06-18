@@ -13,16 +13,17 @@ import CustomText from './CustomText';
 import Fonts from '../utils/constants/Fonts';
 import CustomHeader from './CustomHeader';
 
-const MoviesCarousel = ({movies}) => {
+const MoviesCarousel = ({movies, onSignOut}) => {
   const {width} = useWindowDimensions();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
-        <CustomHeader logo />
+        <CustomHeader logo onSignOut={onSignOut} />
       </View>
       {/* <CustomHeader /> */}
+
       <Carousel
         width={width}
         height={width * 1.2}

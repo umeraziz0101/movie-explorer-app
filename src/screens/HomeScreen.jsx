@@ -1,24 +1,16 @@
 import React, {useCallback} from 'react';
-import {
-  BackHandler,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {BackHandler, ScrollView, StyleSheet} from 'react-native';
 import Wrapper from '../components/Wrapper';
-import CustomText from '../components/CustomText';
-import CustomButton from '../components/CustomButton';
 import {Loader} from '../components/Loader';
 import {useHomeViewModel} from '../viewModels/useHomeViewModel';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import Strings from '../utils/constants/Strings';
-import {ImageBox} from '../components/CustomImage';
 import CustomSection from '../components/CustomSection';
 import {moviesPopular, moviesPopularToday} from '../data/DataManager';
 import MoviesList from '../components/MoviesList';
 import MoviesCarousel from '../components/MoviesCarousel';
-import CustomHeader from '../components/CustomHeader';
+import Icons from '../utils/assets/Icons';
+import CustomIcon from '../components/CustomIcon';
 
 const HomeScreen = ({navigation}) => {
   const {user, loading, logout} = useHomeViewModel(navigation);
@@ -47,8 +39,15 @@ const HomeScreen = ({navigation}) => {
     <Wrapper top>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* <CustomHeader /> */}
-        <MoviesCarousel movies={moviesPopularToday} />
+        <MoviesCarousel movies={moviesPopularToday} onSignOut={logout} />
         <Wrapper>
+          <CustomIcon
+            name={Icons.backgroundHome}
+            size={'100%'}
+            fill="none"
+            style={StyleSheet.absoluteFill}
+          />
+
           {/* <View style={styles.row}>
             <CustomText>{Strings.texts.name}</CustomText>
             <CustomText>{user.name}</CustomText>

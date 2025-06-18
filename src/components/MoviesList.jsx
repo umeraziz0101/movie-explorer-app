@@ -16,7 +16,8 @@ const MoviesList = ({data, imageSize, gridView = false}) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
-          <MovieItem {...item} imageSize={imageSize} isGrid={isGrid} />
+          // <MovieItem {...item} imageSize={imageSize} isGrid={isGrid} />
+          <MovieItem item={item} imageSize={imageSize} isGrid={isGrid} />
         )}
         columnWrapperStyle={isGrid && styles.row}
         contentContainerStyle={isGrid && styles.gridContent}
@@ -25,9 +26,11 @@ const MoviesList = ({data, imageSize, gridView = false}) => {
   );
 };
 
-const MovieItem = ({title, poster_path, imageSize, isGrid}) => (
+// const MovieItem = ({title, poster_path, imageSize, isGrid}) => (
+const MovieItem = ({item, imageSize, isGrid}) => (
   <View style={[styles.card, isGrid && styles.cardGrid]}>
-    <ImageBox title={title} imageSource={poster_path} imageSize={imageSize} />
+    {/* <ImageBox item={item} title={title} imageSource={poster_path} imageSize={imageSize} /> */}
+    <ImageBox item={item} imageSize={imageSize} />
   </View>
 );
 

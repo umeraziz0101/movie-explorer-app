@@ -1,10 +1,20 @@
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import CustomText from './CustomText';
 import Images from '../utils/assets/Images';
 import Fonts from '../utils/constants/Fonts';
 import Colors from '../utils/constants/Colors';
 import Strings from '../utils/constants/Strings';
+import {useNavigation} from '@react-navigation/native';
+import Routes from '../utils/constants/Routes';
 
 const CustomImage = ({local, imageSource, imageSize = 130, imageCircle}) => {
   imageCircle = imageSize / 2;
@@ -34,13 +44,17 @@ const styles = StyleSheet.create({
 });
 
 export const ImageBox = ({
-  title,
-  imageSource,
+  // title,
+  // imageSource,
+  item,
   imageSize = 130,
   imageRadius = 8,
 }) => {
+  const title = item.title;
+  const imageSource = item.poster_path;
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const navigation = useNavigation();
 
   const handleImageLoad = () => {
     setImageLoading(false);
@@ -60,16 +74,21 @@ export const ImageBox = ({
         </CustomText>
       )}
       <View>
-        <Image
-          source={{uri: imageSource}}
-          resizeMode="cover"
-          style={[
-            styles1.image,
-            {height: imageSize, width: imageSize, borderRadius: imageRadius},
-          ]}
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-        />
+        <Pressable
+          onPress={() => {
+            navigation.navigate(Routes.stack.detail, {data: item});
+          }}>
+          <Image
+            source={{uri: imageSource}}
+            resizeMode="cover"
+            style={[
+              styles1.image,
+              {height: imageSize, width: imageSize, borderRadius: imageRadius},
+            ]}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+          />
+        </Pressable>
         {imageLoading && (
           <View style={styles1.imageLoader}>
             <ActivityIndicator size={'small'} color={Colors.pink_ff465f} />

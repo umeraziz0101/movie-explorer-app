@@ -82,7 +82,7 @@ export function useLoginViewModel(navigation) {
       });
     }
 
-    navigation.replace(Routes.tabs.home);
+    navigation.replace(Routes.tabs.root);
   };
 
   const goToSignUp = () => {

@@ -42,7 +42,11 @@ const MoviesCarousel = ({movies, onSignOut}) => {
               style={[styles.image, {width}]}
               resizeMode="cover">
               <LinearGradient
-                colors={[Colors.opacity_dark1, Colors.transparent]}
+                colors={[
+                  Colors.opacity_dark_max,
+                  Colors.opacity_dark,
+                  Colors.opacity_dark,
+                ]}
                 start={{x: 0.5, y: 1}}
                 end={{x: 0.5, y: 0}}
                 style={styles.gradient}

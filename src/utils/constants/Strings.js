@@ -18,6 +18,7 @@ const Strings = {
     Email: 'Email ',
     fastX: 'Fast X',
     newScreen: 'New Screen',
+    playTrailer: 'Play Trailer',
   },
   headerTitle: {
     forgetPassword: 'Forget Password',

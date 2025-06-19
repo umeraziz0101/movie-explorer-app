@@ -1,5 +1,10 @@
-import React from 'react';
-import {ScrollView, StyleSheet, RefreshControl} from 'react-native';
+import React, {useCallback, useEffect} from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  RefreshControl,
+  BackHandler,
+} from 'react-native';
 import Wrapper from '../components/Wrapper';
 import {Loader} from '../components/Loader';
 import {useHomeViewModel} from '../viewModels/useHomeViewModel';
@@ -11,6 +16,7 @@ import MoviesList from '../components/MoviesList';
 import MoviesCarousel from '../components/MoviesCarousel';
 import Icons from '../utils/assets/Icons';
 import CustomIcon from '../components/CustomIcon';
+import {useFocusEffect} from '@react-navigation/native';
 
 const HomeScreen = ({navigation}) => {
   const {

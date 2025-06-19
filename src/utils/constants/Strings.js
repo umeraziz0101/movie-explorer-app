@@ -17,6 +17,7 @@ const Strings = {
     name: 'Name: ',
     Email: 'Email ',
     fastX: 'Fast X',
+    newScreen: 'New Screen',
   },
   headerTitle: {
     forgetPassword: 'Forget Password',
@@ -84,6 +85,7 @@ const Strings = {
     logOut: 'Log out',
     logIn: 'Log in',
     signUp: 'Sign up',
+    signOut: 'Sign Out',
     google: 'Continue with Google',
     facebook: 'Continue with Facebook',
     apple: 'Continue with Apple',

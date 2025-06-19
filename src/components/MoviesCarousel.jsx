@@ -1,4 +1,3 @@
-// src/components/MoviesCarousel.jsx
 import React, {useState} from 'react';
 import {
   View,
@@ -12,6 +11,8 @@ import Colors from '../utils/constants/Colors';
 import CustomText from './CustomText';
 import Fonts from '../utils/constants/Fonts';
 import CustomHeader from './CustomHeader';
+import LinearGradient from 'react-native-linear-gradient';
+import Constants from '../utils/constants/Constants';
 
 const MoviesCarousel = ({movies, onSignOut}) => {
   const {width} = useWindowDimensions();
@@ -22,13 +23,15 @@ const MoviesCarousel = ({movies, onSignOut}) => {
       <View style={styles.headerWrapper}>
         <CustomHeader logo onSignOut={onSignOut} />
       </View>
-      {/* <CustomHeader /> */}
 
       <Carousel
         width={width}
         height={width * 1.2}
         data={movies}
-        scrollAnimationDuration={1000}
+        scrollAnimationDuration={Constants.carousel.ScrollAnimationDuration}
+        autoPlay={true}
+        loop={true}
+        autoPlayInterval={Constants.carousel.AutoPlayInterval}
         onSnapToItem={index => setCurrentIndex(index)}
         renderItem={({item}) => {
           const uri = item.poster_path;
@@ -38,6 +41,12 @@ const MoviesCarousel = ({movies, onSignOut}) => {
               source={{uri}}
               style={[styles.image, {width}]}
               resizeMode="cover">
+              <LinearGradient
+                colors={[Colors.opacity_dark1, Colors.transparent]}
+                start={{x: 0.5, y: 1}}
+                end={{x: 0.5, y: 0}}
+                style={styles.gradient}
+              />
               <View style={styles.textOverlay}>
                 <CustomText
                   textType={Fonts.semiBold}
@@ -81,11 +90,18 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
   },
-  image: {height: '100%', justifyContent: 'flex-end'},
+  gradient: {
+    ...StyleSheet.absoluteFillObject,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: 'hidden',
+  },
+  image: {
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
   textOverlay: {
-    // backgroundColor: 'rgba(0,0,0,0.5)',
     padding: 20,
-    // paddingHorizontal: 20,
     alignItems: 'center',
     marginBottom: 40,
   },

@@ -4,12 +4,11 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
 import CustomText from './CustomText';
-import Images from '../utils/assets/Images';
+
 import Fonts from '../utils/constants/Fonts';
 import Colors from '../utils/constants/Colors';
 import Strings from '../utils/constants/Strings';
@@ -28,7 +27,7 @@ const CustomImage = ({local, imageSource, imageSize = 130, imageCircle}) => {
           {
             height: imageSize,
             width: imageSize,
-            // borderRadius: imageCircle ? imageCircle : 0,
+
             borderRadius: imageCircle,
           },
         ]}
@@ -43,13 +42,7 @@ const styles = StyleSheet.create({
   image: {},
 });
 
-export const ImageBox = ({
-  // title,
-  // imageSource,
-  item,
-  imageSize = 130,
-  imageRadius = 8,
-}) => {
+export const ImageBox = ({item, imageSize = 130, imageRadius = 8}) => {
   const title = item.title;
   const imageSource = item.poster_path;
   const [imageLoading, setImageLoading] = useState(true);
@@ -130,7 +123,6 @@ const styles1 = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  ////////
   image: {
     marginTop: 8,
   },

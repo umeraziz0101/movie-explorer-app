@@ -1,18 +1,27 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CustomIcon from './CustomIcon';
 import Icons from '../utils/assets/Icons';
 import CustomImage from './CustomImage';
-import Images from '../utils/assets/Images';
 import Colors from '../utils/constants/Colors';
 import {Menu} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
 import {auth} from '../services/firebaseConfig';
+import Images from '../utils/assets/Images';
+import Strings from '../utils/constants/Strings';
+
+const DEFAULT_AVATAR = Images.avatar;
 
 const CustomHeader = ({logo, onSignOut}) => {
-  const currentUser = auth.currentUser.photoURL;
+  const [profileImage, setProfileImage] = useState(DEFAULT_AVATAR);
+
   const navigation = useNavigation();
+  useEffect(() => {
+    const url = auth.currentUser?.photoURL;
+    if (url) setProfileImage(url);
+  }, []);
+
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
@@ -41,11 +50,9 @@ const CustomHeader = ({logo, onSignOut}) => {
           anchor={
             <TouchableOpacity onPress={openMenu}>
               <CustomImage
-                // local
                 imageSize={40}
                 imageCircle
-                // imageSource={Images.fastX }
-                imageSource={currentUser}
+                imageSource={profileImage}
               />
             </TouchableOpacity>
           }>
@@ -54,7 +61,7 @@ const CustomHeader = ({logo, onSignOut}) => {
               closeMenu();
               onSignOut && onSignOut();
             }}
-            title="Sign Out"
+            title={Strings.buttons.signOut}
           />
         </Menu>
       </View>
@@ -69,9 +76,6 @@ const styles = StyleSheet.create({
     top: 40,
     width: '90%',
     position: 'absolute',
-    // backgroundColor: '#aa3',
-    // paddingHorizontal: 16,
-    // marginHorizontal: 16,
     alignSelf: 'center',
   },
   row: {

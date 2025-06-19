@@ -1,5 +1,5 @@
-import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet} from 'react-native';
+import React from 'react';
 import AuthLayout from '../components/AuthLayout';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';

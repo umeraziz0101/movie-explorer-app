@@ -1,6 +1,3 @@
-// please add half circle (black, horizontally) on active tab
-// position: bottom of active tab
-
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Routes from '../utils/constants/Routes';
@@ -11,7 +8,7 @@ import GenreScreen from '../screens/GenreScreen';
 import Colors from '../utils/constants/Colors';
 import Icons from '../utils/assets/Icons';
 import CustomIcon from '../components/CustomIcon';
-import {useWindowDimensions, View} from 'react-native';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,29 +22,14 @@ const TabNavigator = () => {
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: {
-          position: 'absolute',
-          bottom: 30,
-          left: '5%',
-          right: '5%',
-          marginHorizontal: width * 0.04,
-          width: '92%',
-          elevation: 0,
-          backgroundColor: Colors.pink_ff465f,
-          paddingTop: 0,
-          paddingBottom: 0,
-          paddingHorizontal: 0,
-          borderRadius: 15,
-          height: 60,
-        },
-        tabBarItemStyle: {
-          // backgroundColor: Colors.gray_535353,
-        },
-        tabBarIconStyle: {
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        },
+        tabBarStyle: [
+          styles.tabBarContainer,
+          {
+            marginHorizontal: width * 0.04,
+          },
+        ],
+
+        tabBarIconStyle: styles.iconStyle,
         tabBarIcon: ({focused, size}) => {
           let IconComponent;
 
@@ -69,19 +51,20 @@ const TabNavigator = () => {
           }
 
           return (
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.iconContainer}>
               <CustomIcon name={IconComponent} size={size} />
               {focused && (
                 <View
-                  style={{
-                    position: 'absolute',
-                    bottom: -semicircleDiameter,
-                    width: semicircleDiameter,
-                    height: semicircleDiameter / 2,
-                    backgroundColor: 'black',
-                    borderTopLeftRadius: semicircleDiameter / 2,
-                    borderTopRightRadius: semicircleDiameter / 2,
-                  }}
+                  style={[
+                    styles.semiCircle,
+                    {
+                      bottom: -semicircleDiameter,
+                      width: semicircleDiameter,
+                      height: semicircleDiameter / 2,
+                      borderTopLeftRadius: semicircleDiameter / 2,
+                      borderTopRightRadius: semicircleDiameter / 2,
+                    },
+                  ]}
                 />
               )}
             </View>
@@ -97,3 +80,31 @@ const TabNavigator = () => {
 };
 
 export default TabNavigator;
+
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    position: 'absolute',
+    bottom: 30,
+    width: '92%',
+    elevation: 0,
+    backgroundColor: Colors.pink_ff465f,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingHorizontal: 0,
+    borderRadius: 15,
+    height: 60,
+  },
+  iconStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  semiCircle: {
+    position: 'absolute',
+    backgroundColor: Colors.black_0d0d0d,
+  },
+});

@@ -2,7 +2,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {ImageBox} from './CustomImage';
 
-const MoviesList = ({data, imageSize, gridView = false}) => {
+const MoviesList = ({data, imageSize, gridView = false, ...rest}) => {
   const isGrid = Boolean(gridView);
 
   return (
@@ -16,20 +16,20 @@ const MoviesList = ({data, imageSize, gridView = false}) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
-          // <MovieItem {...item} imageSize={imageSize} isGrid={isGrid} />
           <MovieItem item={item} imageSize={imageSize} isGrid={isGrid} />
         )}
         columnWrapperStyle={isGrid && styles.row}
         contentContainerStyle={isGrid && styles.gridContent}
+        onEndReachedThreshold={0.5}
+        onEndReached={rest.onEndReached}
+        {...rest}
       />
     </View>
   );
 };
 
-// const MovieItem = ({title, poster_path, imageSize, isGrid}) => (
 const MovieItem = ({item, imageSize, isGrid}) => (
   <View style={[styles.card, isGrid && styles.cardGrid]}>
-    {/* <ImageBox item={item} title={title} imageSource={poster_path} imageSize={imageSize} /> */}
     <ImageBox item={item} imageSize={imageSize} />
   </View>
 );
@@ -44,9 +44,6 @@ const styles = StyleSheet.create({
     marginRight: 24,
   },
   cardGrid: {
-    // flex: 1,
-    // marginRight: 0,
-
     marginBottom: 16,
   },
   row: {

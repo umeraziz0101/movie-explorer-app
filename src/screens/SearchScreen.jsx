@@ -1,11 +1,14 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
+import Wrapper from '../components/Wrapper';
+import CustomText from '../components/CustomText';
+import Strings from '../utils/constants/Strings';
 
 const SearchScreen = () => {
   return (
-    <View>
-      <Text>SearchScreen</Text>
-    </View>
+    <Wrapper>
+      <CustomText>{Strings.texts.newScreen}</CustomText>
+    </Wrapper>
   );
 };
 

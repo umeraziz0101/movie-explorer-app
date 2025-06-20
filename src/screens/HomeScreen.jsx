@@ -1,31 +1,27 @@
-import React, {useCallback} from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import Wrapper from '../components/Wrapper';
-import CustomText from '../components/CustomText';
-import CustomButton from '../components/CustomButton';
 import {Loader} from '../components/Loader';
 import {useHomeViewModel} from '../viewModels/useHomeViewModel';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+
 import Strings from '../utils/constants/Strings';
-import {ImageBox} from '../components/CustomImage';
 import CustomSection from '../components/CustomSection';
+import {moviesPopularToday} from '../data/DataManager';
+import MoviesList from '../components/MoviesList';
+import MoviesCarousel from '../components/MoviesCarousel';
+import Icons from '../utils/assets/Icons';
+import CustomIcon from '../components/CustomIcon';
 
 const HomeScreen = ({navigation}) => {
-  const {user, loading, logout} = useHomeViewModel(navigation);
-
-  useFocusEffect(
-    useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => {
-          BackHandler.exitApp();
-          return true;
-        },
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  const {
+    user,
+    loading,
+    logout,
+    moviesPopular,
+    refreshing,
+    loadMorePopularMovies,
+    reloadPopularMovies,
+  } = useHomeViewModel(navigation);
 
   if (loading || !user) {
     return (
@@ -34,25 +30,48 @@ const HomeScreen = ({navigation}) => {
       </Wrapper>
     );
   }
-  return (
-    <Wrapper>
-      <View style={styles.row}>
-        <CustomText>{Strings.texts.name}</CustomText>
-        <CustomText>{user.name}</CustomText>
-      </View>
-      <View style={styles.row}>
-        <CustomText>{Strings.texts.Email}</CustomText>
-        <CustomText>{user.email}</CustomText>
-      </View>
 
-      <CustomButton
-        buttonText={Strings.buttons.logOut}
-        buttonContainerStyle={styles.button}
-        onPress={logout}
-      />
-      <CustomSection sectionTitle={Strings.section.popularMovies}>
-        <ImageBox title={Strings.texts.fastX} />
-      </CustomSection>
+  return (
+    <Wrapper top>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={reloadPopularMovies}
+          />
+        }>
+        <MoviesCarousel movies={moviesPopularToday} onSignOut={logout} />
+        <Wrapper>
+          <CustomIcon
+            name={Icons.backgroundHome}
+            size={'100%'}
+            fill="none"
+            style={StyleSheet.absoluteFill}
+          />
+
+          <CustomSection sectionTitle={Strings.section.popularMovies}>
+            <MoviesList
+              data={moviesPopular}
+              onEndReached={loadMorePopularMovies}
+            />
+          </CustomSection>
+          <CustomSection sectionTitle={Strings.section.lastMonth}>
+            <MoviesList
+              data={moviesPopular}
+              onEndReached={loadMorePopularMovies}
+            />
+          </CustomSection>
+          <CustomSection sectionTitle={Strings.section.lastSixMonth}>
+            <MoviesList
+              data={moviesPopular}
+              imageSize={100}
+              gridView
+              onEndReached={loadMorePopularMovies}
+            />
+          </CustomSection>
+        </Wrapper>
+      </ScrollView>
     </Wrapper>
   );
 };

@@ -17,6 +17,7 @@ const Strings = {
     name: 'Name: ',
     Email: 'Email ',
     fastX: 'Fast X',
+    newScreen: 'New Screen',
   },
   headerTitle: {
     forgetPassword: 'Forget Password',
@@ -67,6 +68,7 @@ const Strings = {
       'Something went wrong obtaining Facebook access token',
     appleSignInFailed: 'Apple Sign-In failed',
     passwordResetFailed: 'Failed to request password reset.',
+    failedToLoadImage: 'Failed to load image',
   },
   alerts: {
     title: {
@@ -83,6 +85,7 @@ const Strings = {
     logOut: 'Log out',
     logIn: 'Log in',
     signUp: 'Sign up',
+    signOut: 'Sign Out',
     google: 'Continue with Google',
     facebook: 'Continue with Facebook',
     apple: 'Continue with Apple',
@@ -129,7 +132,10 @@ const Strings = {
     useHomeData: 'useHome Data : ',
   },
   section: {
+    today: 'Today',
     popularMovies: 'Popular Movies',
+    lastMonth: 'Last Month',
+    lastSixMonth: 'Last 6 Month',
   },
 };
 

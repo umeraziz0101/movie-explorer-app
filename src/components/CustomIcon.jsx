@@ -1,5 +1,4 @@
 import React from 'react';
-import Icons from '../utils/assets/Icons';
 import Colors from '../utils/constants/Colors';
 
 const CustomIcon = ({name, size, fill, style}) => {

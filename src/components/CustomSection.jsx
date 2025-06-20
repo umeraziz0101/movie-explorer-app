@@ -5,7 +5,7 @@ import Fonts from '../utils/constants/Fonts';
 
 const CustomSection = ({sectionTitle, children}) => {
   return (
-    <View>
+    <View style={styles.container}>
       <CustomText textType={Fonts.medium} size={20}>
         {sectionTitle}
       </CustomText>
@@ -16,4 +16,8 @@ const CustomSection = ({sectionTitle, children}) => {
 
 export default CustomSection;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 8,
+  },
+});

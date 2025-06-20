@@ -33,7 +33,7 @@ const SplashScreen = () => {
       }).start(() => {
         auth.onAuthStateChanged(user => {
           if (user) {
-            navigation.replace(Routes.tabs.home);
+            navigation.replace(Routes.tabs.root);
           } else {
             navigation.replace(Routes.stack.onBoard);
           }

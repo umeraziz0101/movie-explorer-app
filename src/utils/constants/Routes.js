@@ -8,9 +8,14 @@ const Routes = {
     otpVerification: 'OTPVerification',
     passwordNew: 'PasswordNew',
     passwordChanged: 'PasswordChanged',
+    detail: 'Detail',
   },
   tabs: {
-    home: 'Home',
+    root: 'MainTabs',
+    home: 'HomeTab',
+    favorites: 'FavoriteTab',
+    search: 'SearchTab',
+    genres: 'GenreTab',
   },
 };
 

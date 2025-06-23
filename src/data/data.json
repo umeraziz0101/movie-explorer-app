@@ -82,7 +82,20 @@
       {
         "adult": false,
         "backdrop_path": "/zOpe0eHsq0A2NvNyBbtT6sj53qV.jpg",
-        "genre_ids": ["28", "878", "35", "10751"],
+        "genres": [
+          {
+            "id": 28,
+            "name": "Action"
+          },
+          {
+            "id": 12,
+            "name": "Adventure"
+          },
+          {
+            "id": 878,
+            "name": "Science Fiction"
+          }
+        ],
         "id": 939243,
         "original_language": "en",
         "original_title": "Sonic the Hedgehog 3",
@@ -93,12 +106,125 @@
         "title": "Sonic 3",
         "video": false,
         "vote_average": 7.6,
-        "vote_count": 577
+        "vote_count": 577,
+        "cast": [
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1136406,
+            "known_for_department": "Acting",
+            "name": "Tom Hollanddd",
+            "original_name": "Tom Holland",
+            "popularity": 49.869,
+            "profile_path": "https://media0078.elcinema.com/uploads/_315x420_08ed0505ec26adbeaac94b2c6a32b6996515829d0f8330934ccb7697a3954738.jpg",
+            "cast_id": 16,
+            "character": "Peter Parker / Spider-Man",
+            "credit_id": "558993e49251414371001b1b",
+            "order": 0
+          },
+          {
+            "adult": false,
+            "gender": 1,
+            "id": 1245,
+            "known_for_department": "Acting",
+            "name": "Zendaya",
+            "original_name": "Zendaya Maree Stoermer Coleman",
+            "popularity": 78.956,
+            "profile_path": "https://thesciencesurvey.com/wp-content/uploads/2022/02/Zendaya_for_British_Vogue_in_2021_-_01.jpg",
+            "cast_id": 17,
+            "character": "MJ",
+            "credit_id": "5bc91da1c3a36857140032e8",
+            "order": 1
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "https://upload.wikimedia.org/wikipedia/commons/7/75/Benedict_Cumberbatch_2011.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1813,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "https://upload.wikimedia.org/wikipedia/commons/7/75/Benedict_Cumberbatch_2011.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1814,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1815,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1816,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          }
+        ]
       },
       {
         "adult": false,
         "backdrop_path": "https://img.vwassets.com/pickwicktheatre.com/vertical_4b6e05dc-ddb0-4388-9586-524168a942be.jpg",
-        "genre_ids": ["16", "35", "10751", "14"],
+        "genres": [
+          {
+            "id": 28,
+            "name": "Action"
+          },
+          {
+            "id": 12,
+            "name": "Adventure"
+          },
+          {
+            "id": 878,
+            "name": "Science Fiction"
+          }
+        ],
         "id": 1241982,
         "original_language": "en",
         "original_title": "Moana 2",
@@ -109,12 +235,125 @@
         "title": "Moana 2",
         "video": false,
         "vote_average": 7.0,
-        "vote_count": 892
+        "vote_count": 892,
+        "cast": [
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1136406,
+            "known_for_department": "Acting",
+            "name": "Tom Holland",
+            "original_name": "Tom Holland",
+            "popularity": 49.869,
+            "profile_path": "/bBRlrpJm9XkNSg0YT5LCaxqoFMX.jpg",
+            "cast_id": 16,
+            "character": "Peter Parker / Spider-Man",
+            "credit_id": "558993e49251414371001b1b",
+            "order": 0
+          },
+          {
+            "adult": false,
+            "gender": 1,
+            "id": 1245,
+            "known_for_department": "Acting",
+            "name": "Zendaya",
+            "original_name": "Zendaya Maree Stoermer Coleman",
+            "popularity": 78.956,
+            "profile_path": "/h3dIYhZFbzpeKFEsXFXwXTm7YiB.jpg",
+            "cast_id": 17,
+            "character": "MJ",
+            "credit_id": "5bc91da1c3a36857140032e8",
+            "order": 1
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          }
+        ]
       },
       {
         "adult": false,
         "backdrop_path": "/zOpe0eHsq0A2NvNyBbtT6sj53qV.jpg",
-        "genre_ids": ["28", "878", "35", "10751"],
+        "genres": [
+          {
+            "id": 28,
+            "name": "Action"
+          },
+          {
+            "id": 12,
+            "name": "Adventure"
+          },
+          {
+            "id": 878,
+            "name": "Science Fiction"
+          }
+        ],
         "id": 939244,
         "original_language": "en",
         "original_title": "Sonic the Hedgehog 3",
@@ -125,12 +364,125 @@
         "title": "Sonic 3",
         "video": false,
         "vote_average": 7.6,
-        "vote_count": 577
+        "vote_count": 577,
+        "cast": [
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1136406,
+            "known_for_department": "Acting",
+            "name": "Tom Holland",
+            "original_name": "Tom Holland",
+            "popularity": 49.869,
+            "profile_path": "/bBRlrpJm9XkNSg0YT5LCaxqoFMX.jpg",
+            "cast_id": 16,
+            "character": "Peter Parker / Spider-Man",
+            "credit_id": "558993e49251414371001b1b",
+            "order": 0
+          },
+          {
+            "adult": false,
+            "gender": 1,
+            "id": 1245,
+            "known_for_department": "Acting",
+            "name": "Zendaya",
+            "original_name": "Zendaya Maree Stoermer Coleman",
+            "popularity": 78.956,
+            "profile_path": "/h3dIYhZFbzpeKFEsXFXwXTm7YiB.jpg",
+            "cast_id": 17,
+            "character": "MJ",
+            "credit_id": "5bc91da1c3a36857140032e8",
+            "order": 1
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          }
+        ]
       },
       {
         "adult": false,
         "backdrop_path": "https://img.vwassets.com/pickwicktheatre.com/vertical_4b6e05dc-ddb0-4388-9586-524168a942be.jpg",
-        "genre_ids": ["16", "35", "10751", "14"],
+        "genres": [
+          {
+            "id": 28,
+            "name": "Action"
+          },
+          {
+            "id": 12,
+            "name": "Adventure"
+          },
+          {
+            "id": 878,
+            "name": "Science Fiction"
+          }
+        ],
         "id": 1241983,
         "original_language": "en",
         "original_title": "Moana 2",
@@ -141,7 +493,107 @@
         "title": "Moana 2",
         "video": false,
         "vote_average": 7.0,
-        "vote_count": 892
+        "vote_count": 892,
+        "cast": [
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1136406,
+            "known_for_department": "Acting",
+            "name": "Tom Holland",
+            "original_name": "Tom Holland",
+            "popularity": 49.869,
+            "profile_path": "/bBRlrpJm9XkNSg0YT5LCaxqoFMX.jpg",
+            "cast_id": 16,
+            "character": "Peter Parker / Spider-Man",
+            "credit_id": "558993e49251414371001b1b",
+            "order": 0
+          },
+          {
+            "adult": false,
+            "gender": 1,
+            "id": 1245,
+            "known_for_department": "Acting",
+            "name": "Zendaya",
+            "original_name": "Zendaya Maree Stoermer Coleman",
+            "popularity": 78.956,
+            "profile_path": "/h3dIYhZFbzpeKFEsXFXwXTm7YiB.jpg",
+            "cast_id": 17,
+            "character": "MJ",
+            "credit_id": "5bc91da1c3a36857140032e8",
+            "order": 1
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1812,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1813,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1814,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1815,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          },
+          {
+            "adult": false,
+            "gender": 2,
+            "id": 1816,
+            "known_for_department": "Acting",
+            "name": "Benedict Cumberbatch",
+            "original_name": "Benedict Timothy Carlton Cumberbatch",
+            "popularity": 45.782,
+            "profile_path": "/wz3MRiMmoz6b5X3oSzMRC9nLxY1.jpg",
+            "cast_id": 18,
+            "character": "Doctor Stephen Strange",
+            "credit_id": "60d1ef0e7e3fa6006f2a0c7e",
+            "order": 2
+          }
+        ]
       }
     ]
   },

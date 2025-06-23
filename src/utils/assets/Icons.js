@@ -19,6 +19,7 @@ import Search from '../../assets/icons/search.svg';
 import HomeFill from '../../assets/icons/home_fill.svg';
 import Home from '../../assets/icons/home.svg';
 import Play from '../../assets/icons/play.svg';
+import PlayBlack from '../../assets/icons/play_black.svg';
 
 const Icons = {
   logo: Logo,
@@ -42,6 +43,7 @@ const Icons = {
   search: Search,
   searchFill: SearchFill,
   play: Play,
+  playBlack: PlayBlack,
 };
 
 export default Icons;

@@ -1,5 +1,6 @@
 import {
   ImageBackground,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   useWindowDimensions,
@@ -17,17 +18,51 @@ import Fonts from '../utils/constants/Fonts';
 import Strings from '../utils/constants/Strings';
 import CustomIcon from '../components/CustomIcon';
 import Icons from '../utils/assets/Icons';
+import CustomSection from '../components/CustomSection';
+import ReadMore from '@fawazahmed/react-native-read-more';
+import CastList from '../components/CastList';
+import CustomButton from '../components/CustomButton';
+import MoviesList from '../components/MoviesList';
+import {moviesPopular} from '../data/DataManager';
+import {Loader} from '../components/Loader';
 
-const DetailScreen = () => {
+const DetailScreen = ({navigation}) => {
   const {width} = useWindowDimensions();
-  const {logout} = useHomeViewModel();
+  // const {logout} = useHomeViewModel();
   const {data} = useRoute().params;
-  const uri = data.poster_path;
-  const year = new Date(data.release_date).getFullYear();
+  const movieData = data;
+
+  const uri = movieData.poster_path;
+  const year = new Date(movieData.release_date).getFullYear();
+  //////
+  const {
+    user,
+    loading,
+    logout,
+    moviesPopular,
+    refreshing,
+    loadMorePopularMovies,
+    reloadPopularMovies,
+  } = useHomeViewModel(navigation);
+
+  if (loading || !user) {
+    return (
+      <Wrapper>
+        <Loader visible={true} />
+      </Wrapper>
+    );
+  }
+
   return (
     <Wrapper top>
-      {/* <CustomText>{data.title}</CustomText> */}
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={reloadPopularMovies}
+          />
+        }>
         <View style={styles.container}>
           <View style={styles.headerWrapper}>
             <CustomHeader onSignOut={logout} />
@@ -62,18 +97,56 @@ const DetailScreen = () => {
         </View>
         <Wrapper>
           <CustomText textType={Fonts.semiBold} size={20}>
-            {data.title}
+            {movieData.title}
           </CustomText>
           <View style={{flexDirection: 'row'}}>
             <CustomText size={12} color={Colors.gray_969696}>
-              {year} |
+              {year}
+              {' | '}
             </CustomText>
-            <CustomText size={12} color={Colors.gray_969696}>
-              Action/Sci-fi |
-            </CustomText>
-            <CustomText></CustomText>
-            <CustomText></CustomText>
+
+            {data.genres.map((genre, index) => (
+              <CustomText key={genre.id} size={12} color={Colors.gray_969696}>
+                {index > 0 && '/'}
+                {genre.name}
+              </CustomText>
+            ))}
           </View>
+          <CustomSection
+            sectionTitle={'Sinopsis'}
+            titleSize={14}
+            titleFont={Fonts.semiBold}>
+            <ReadMore
+              numberOfLines={5}
+              seeMoreText=" Read More..."
+              seeMoreStyle={styles.sinopsisReadMore}
+              seeLessStyle={styles.sinopsisSeeLess}
+              ellipsis=""
+              style={styles.sinopsisText}>
+              {movieData.overview}
+            </ReadMore>
+          </CustomSection>
+          <CustomSection
+            sectionTitle={'Cast'}
+            titleSize={14}
+            titleFont={Fonts.semiBold}>
+            <CastList data={movieData.cast} />
+          </CustomSection>
+          {/* <Wrapper> */}
+          <CustomButton leftIcon={Icons.playBlack} buttonText={'Watch Now'} />
+          {/* </Wrapper> */}
+          <CustomSection
+            sectionTitle={'Related Movies'}
+            titleFont={Fonts.semiBold}
+            titleSize={14}>
+            {/* <MoviesList /> */}
+            <MoviesList
+              data={moviesPopular}
+              imageSize={100}
+              gridView
+              onEndReached={loadMorePopularMovies}
+            />
+          </CustomSection>
         </Wrapper>
       </ScrollView>
     </Wrapper>
@@ -98,8 +171,6 @@ const styles = StyleSheet.create({
   },
   gradient: {
     ...StyleSheet.absoluteFillObject,
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
     overflow: 'hidden',
   },
   image: {
@@ -113,5 +184,22 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 16,
+  },
+  sinopsisText: {
+    fontSize: 12,
+    fontFamily: Fonts.regular,
+    color: Colors.gray_969696,
+    lineHeight: 18,
+    textAlign: 'justify',
+  },
+  sinopsisReadMore: {
+    textType: Fonts.regular,
+    size: 12,
+    color: Colors.pink_ff465f,
+  },
+  sinopsisSeeLess: {
+    textType: Fonts.regular,
+    size: 12,
+    color: Colors.pink_ff465f,
   },
 });

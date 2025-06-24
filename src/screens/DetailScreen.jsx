@@ -34,7 +34,7 @@ const DetailScreen = ({navigation}) => {
 
   const uri = movieData.poster_path;
   const year = new Date(movieData.release_date).getFullYear();
-  //////
+
   const {
     user,
     loading,

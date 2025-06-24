@@ -86,17 +86,12 @@ export const ImageBox = ({
           <Image
             source={{uri: imageSource}}
             resizeMode="cover"
-            style={
-              // [
-              // styles1.image,
-              {
-                height: imageSize,
-                width: imageSize,
-                borderRadius: imageRadius,
-                marginTop: imageMarginTop,
-              }
-              // ]
-            }
+            style={{
+              height: imageSize,
+              width: imageSize,
+              borderRadius: imageRadius,
+              marginTop: imageMarginTop,
+            }}
             onLoad={handleImageLoad}
             onError={handleImageError}
           />
@@ -120,7 +115,6 @@ export const ImageBox = ({
               numberOfLines={2}
               style={{
                 textAlign: 'center',
-                // lineHeight: 16,
 
                 flexWrap: 'wrap',
               }}>
@@ -157,7 +151,4 @@ const styles1 = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // image: {
-  //   marginTop: 8,
-  // },
 });

@@ -1,61 +1,41 @@
-import {useState, useEffect, useCallback} from 'react';
-import {fetchUserData, logoutUser} from '../services/firebaseAuth';
-import {moviesPopular as initialMoviesFavorite} from '../data/DataManager';
-import Constants from '../utils/constants/Constants';
-import Strings from '../utils/constants/Strings';
+// src/viewModels/useFavoriteViewModel.js
+import {useCallback, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import storage from '../services/storage';
+import {loadFavorites, removeFavorite as rmFav} from '../redux/favoritesSlice';
 
 export function useFavoriteViewModel() {
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [moviesFavorite, setMoviesFavorite] = useState([]);
-  const [page, setPage] = useState(1);
-  const [isFetchingMore, setIsFetchingMore] = useState(false);
-
-  const pageSize = 10;
-
-  const fetchPage = useCallback((pageNum = 1) => {
-    const start = (pageNum - 1) * pageSize;
-    const end = start + pageSize;
-    return initialMoviesFavorite.slice(start, end);
-  }, []);
+  const dispatch = useDispatch();
+  const moviesFavorite = useSelector(state => state.favorites.items);
+  const loading = useSelector(state => state.favorites.loading);
 
   useEffect(() => {
-    const loadInitial = async () => {
-      setLoading(true);
-
-      const first = fetchPage(1);
-      setMoviesFavorite(first);
-      setPage(2);
-      setLoading(false);
-    };
-    const timeout = setTimeout(loadInitial, Constants.fetchTimeOut);
-    return () => clearTimeout(timeout);
-  }, [fetchPage]);
+    storage.getFavorites().then(list => {
+      dispatch(loadFavorites(list));
+    });
+  }, [dispatch]);
 
   const reloadFavoriteMovies = useCallback(() => {
-    setRefreshing(true);
-    const first = fetchPage(1);
-    setMoviesFavorite(first);
-    setPage(2);
-    setRefreshing(false);
-  }, [fetchPage]);
+    storage.getFavorites().then(list => {
+      dispatch(loadFavorites(list));
+    });
+  }, [dispatch]);
 
-  const loadMoreFavoriteMovies = useCallback(() => {
-    if (isFetchingMore) return;
-    setIsFetchingMore(true);
-    const next = fetchPage(page);
-    if (next.length) {
-      setMoviesFavorite(prev => [...prev, ...next]);
-      setPage(prev => prev + 1);
-    }
-    setIsFetchingMore(false);
-  }, [fetchPage, page, isFetchingMore]);
+  const removeFavorite = useCallback(
+    id => {
+      storage.removeFavorite(id).then(updatedList => {
+        dispatch(loadFavorites(updatedList));
+      });
+    },
+    [dispatch],
+  );
 
   return {
     loading,
     moviesFavorite,
-    refreshing,
+    refreshing: false,
     reloadFavoriteMovies,
-    loadMoreFavoriteMovies,
+    loadMoreFavoriteMovies: () => {},
+    removeFavorite,
   };
 }

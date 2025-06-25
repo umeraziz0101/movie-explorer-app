@@ -15,11 +15,6 @@ export const Loader = ({visible}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.white_ffffff,
-    padding: 20,
-    borderRadius: 10,
-  },
   overlay: {
     position: 'absolute',
     top: 0,
@@ -30,5 +25,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 9999,
+  },
+  container: {
+    backgroundColor: Colors.white_ffffff,
+    padding: 20,
+    borderRadius: 10,
   },
 });

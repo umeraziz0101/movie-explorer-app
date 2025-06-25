@@ -14,9 +14,8 @@ import CustomText from './CustomText';
 
 const DEFAULT_AVATAR = Images.avatar;
 
-const CustomHeader = ({logo, onSignOut}) => {
+const CustomHeader = ({logo, onSignOut, isFavorite, toggleFavorite}) => {
   const [profileImage, setProfileImage] = useState(DEFAULT_AVATAR);
-  const [favorite, setFavorite] = useState(false);
 
   const navigation = useNavigation();
   useEffect(() => {
@@ -44,12 +43,10 @@ const CustomHeader = ({logo, onSignOut}) => {
         )}
         {!logo && (
           <TouchableOpacity
-            onPress={() => {
-              setFavorite(prev => !prev);
-            }}
+            onPress={toggleFavorite}
             style={{marginLeft: 'auto', marginRight: 20}}>
             <CustomIcon
-              name={favorite ? Icons.heartFillLight : Icons.heartLight}
+              name={isFavorite ? Icons.heartFillLight : Icons.heartLight}
               size={24}
             />
           </TouchableOpacity>

@@ -789,5 +789,51 @@
     "status_code": 7,
     "status_message": "Invalid API key: You must be granted a valid key.",
     "success": false
+  },
+  "related_movies": {
+    "page": 1,
+    "total_pages": 1,
+    "total_results": 1,
+    "results": [
+      {
+        "id": 284053,
+        "title": "Thor: Ragnarok",
+        "original_title": "Thor: Ragnarok",
+        "overview": "Thor is imprisoned on the other side of the universe and finds himself in a race against time to return to Asgard and stop Ragnarok—the destruction of his home.",
+        "poster_path": "https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg",
+        "backdrop_path": "/6G2fLCVm9fiLyHvBrccq6GSe2ih.jpg",
+        "genre_ids": ["28", "12", "878"],
+        "popularity": 72.151,
+        "release_date": "2017-10-25",
+        "vote_average": 7.6,
+        "vote_count": 20847
+      },
+      {
+        "id": 299537,
+        "title": "Captain Marvel",
+        "original_title": "Captain Marvel",
+        "overview": "Carol Danvers becomes one of the universe’s most powerful heroes when Earth is caught in the middle of a galactic war between two alien races.",
+        "poster_path": "https://image.tmdb.org/t/p/w500/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg",
+        "backdrop_path": "/w2PMyoyLU22YvrGK3smVM9fW1jj.jpg",
+        "genre_ids": ["28", "12", "878"],
+        "popularity": 320.5,
+        "release_date": "2019-03-06",
+        "vote_average": 7.0,
+        "vote_count": 20000
+      },
+      {
+        "id": 299534,
+        "title": "Avengers: Endgame",
+        "original_title": "Avengers: Endgame",
+        "overview": "After the devastating events of Infinity War, the Avengers assemble once more in order to undo Thanos’s actions and restore balance to the universe.",
+        "poster_path": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+        "backdrop_path": "/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+        "genre_ids": ["28", "12", "53"],
+        "popularity": 450.3,
+        "release_date": "2019-04-26",
+        "vote_average": 8.3,
+        "vote_count": 27000
+      }
+    ]
   }
 }

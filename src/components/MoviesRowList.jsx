@@ -1,3 +1,4 @@
+// src/components/MoviesRowList.jsx
 import React from 'react';
 import {
   FlatList,
@@ -12,23 +13,31 @@ import CustomText from './CustomText';
 import CustomIcon from './CustomIcon';
 import Icons from '../utils/assets/Icons';
 import Colors from '../utils/constants/Colors';
-import Strings from '../utils/constants/Strings';
 import Fonts from '../utils/constants/Fonts';
 
-const MoviesRowList = ({data, onEndReached}) => {
-  return (
-    <FlatList
-      data={data}
-      keyExtractor={item => item.id.toString()}
-      renderItem={({item}) => <MoviesRowItem item={item} />}
-      onEndReached={onEndReached}
-      onEndReachedThreshold={0.5}
-      contentContainerStyle={styles.listContainer}
-    />
-  );
-};
+const MoviesRowList = ({
+  data,
+  onEndReached,
+  refreshing,
+  onRefresh,
+  ListHeaderComponent,
+  onRemove,
+  contentContainerStyle,
+}) => (
+  <FlatList
+    data={data}
+    keyExtractor={item => item.id.toString()}
+    renderItem={({item}) => <MoviesRowItem item={item} onRemove={onRemove} />}
+    onEndReached={onEndReached}
+    onEndReachedThreshold={0.5}
+    refreshing={refreshing}
+    onRefresh={onRefresh}
+    ListHeaderComponent={ListHeaderComponent}
+    contentContainerStyle={contentContainerStyle}
+  />
+);
 
-const MoviesRowItem = ({item}) => {
+const MoviesRowItem = ({item, onRemove}) => {
   const [menuVisible, setMenuVisible] = React.useState(false);
   const toggleMenu = () => setMenuVisible(v => !v);
 
@@ -42,24 +51,21 @@ const MoviesRowItem = ({item}) => {
           <LinearGradient
             colors={[Colors.opacity_dark, Colors.opacity_dark]}
             style={styles.gradient}
-            start={{x: 0.5, y: 1}}
-            end={{x: 0.5, y: 0}}
           />
           <View style={styles.playOverlay}>
             <CustomIcon name={Icons.play} size={24} />
           </View>
         </ImageBackground>
+
         <View style={styles.textContainer}>
           <CustomText textType={Fonts.semiBold} size={14}>
             {item.original_title}
           </CustomText>
-          <CustomText
-            textType={Fonts.medium}
-            size={12}
-            color={Colors.gray_969696}>
+          <CustomText size={12} color={Colors.gray_969696}>
             {new Date(item.release_date).getFullYear()}
           </CustomText>
         </View>
+
         <View style={styles.menuContainer}>
           <Menu
             visible={menuVisible}
@@ -69,7 +75,13 @@ const MoviesRowItem = ({item}) => {
                 <CustomIcon name={Icons.more} size={24} />
               </TouchableOpacity>
             }>
-            <Menu.Item onPress={() => {}} title={'Delete'} />
+            <Menu.Item
+              onPress={() => {
+                toggleMenu();
+                onRemove(item.id);
+              }}
+              title="Remove"
+            />
           </Menu>
         </View>
       </View>
@@ -81,9 +93,6 @@ const MoviesRowItem = ({item}) => {
 export default MoviesRowList;
 
 const styles = StyleSheet.create({
-  listContainer: {
-    paddingVertical: 8,
-  },
   itemRowContainer: {
     flexDirection: 'row',
     marginVertical: 8,
@@ -104,10 +113,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  textContainer: {
-    flex: 1,
-  },
-  menuContainer: {
-    marginLeft: 12,
-  },
+  textContainer: {flex: 1},
+  menuContainer: {marginLeft: 12},
 });

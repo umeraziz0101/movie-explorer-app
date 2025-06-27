@@ -24,6 +24,7 @@ import Home from '../../assets/icons/home.svg';
 import Play from '../../assets/icons/play.svg';
 import PlayBlack from '../../assets/icons/play_black.svg';
 import More from '../../assets/icons/more.svg';
+import Clock from '../../assets/icons/clock.svg';
 
 const Icons = {
   logo: Logo,
@@ -52,6 +53,7 @@ const Icons = {
   play: Play,
   playBlack: PlayBlack,
   more: More,
+  clock: Clock,
 };
 
 export default Icons;

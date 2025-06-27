@@ -1,4 +1,3 @@
-// src/screens/FavoriteScreen.jsx
 import React from 'react';
 import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import Wrapper from '../components/Wrapper';
@@ -7,6 +6,7 @@ import {SolidHeader} from '../components/CustomHeader';
 import MoviesRowList from '../components/MoviesRowList';
 import {useFavoriteViewModel} from '../viewModels/useFavoriteViewModel';
 import CustomText from '../components/CustomText';
+import Strings from '../utils/constants/Strings';
 
 const FavoriteScreen = ({navigation}) => {
   const {
@@ -27,26 +27,21 @@ const FavoriteScreen = ({navigation}) => {
 
   return (
     <Wrapper top>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={reloadFavoriteMovies}
-          />
-        }
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.headerWrapper}>
-          <SolidHeader iconBack title="Favorites" iconFavorite />
-        </View>
+      <View style={styles.headerWrapper}>
+        <SolidHeader
+          iconBack
+          title={Strings.headerTitle.favorites}
+          iconFavorite
+        />
+      </View>
 
-        <Wrapper style={styles.listContainer}>
-          {moviesFavorite.length === 0 ? (
-            <CustomText>No favorites yet.</CustomText>
-          ) : (
-            <MoviesRowList data={moviesFavorite} onRemove={removeFavorite} />
-          )}
-        </Wrapper>
-      </ScrollView>
+      <Wrapper style={styles.listContainer}>
+        {moviesFavorite.length === 0 ? (
+          <CustomText>{Strings.texts.noFavorites}</CustomText>
+        ) : (
+          <MoviesRowList data={moviesFavorite} onRemove={removeFavorite} />
+        )}
+      </Wrapper>
     </Wrapper>
   );
 };

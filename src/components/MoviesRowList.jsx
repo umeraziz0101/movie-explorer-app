@@ -1,6 +1,6 @@
-// src/components/MoviesRowList.jsx
 import React from 'react';
 import {
+  Alert,
   FlatList,
   ImageBackground,
   StyleSheet,
@@ -14,6 +14,7 @@ import CustomIcon from './CustomIcon';
 import Icons from '../utils/assets/Icons';
 import Colors from '../utils/constants/Colors';
 import Fonts from '../utils/constants/Fonts';
+import Strings from '../utils/constants/Strings';
 
 const MoviesRowList = ({
   data,
@@ -30,6 +31,7 @@ const MoviesRowList = ({
     renderItem={({item}) => <MoviesRowItem item={item} onRemove={onRemove} />}
     onEndReached={onEndReached}
     onEndReachedThreshold={0.5}
+    nestedScrollEnabled={true}
     refreshing={refreshing}
     onRefresh={onRefresh}
     ListHeaderComponent={ListHeaderComponent}
@@ -40,6 +42,23 @@ const MoviesRowList = ({
 const MoviesRowItem = ({item, onRemove}) => {
   const [menuVisible, setMenuVisible] = React.useState(false);
   const toggleMenu = () => setMenuVisible(v => !v);
+
+  const handleRemove = () => {
+    toggleMenu();
+    Alert.alert(
+      Strings.alerts.title.removeMovie,
+      Strings.alerts.message.areYouWantToRemoveMovie,
+      [
+        {text: Strings.buttons.no, style: 'cancel'},
+        {
+          text: Strings.buttons.yes,
+          style: 'destructive',
+          onPress: () => onRemove(item.id),
+        },
+      ],
+      {cancelable: true},
+    );
+  };
 
   return (
     <View>
@@ -75,13 +94,7 @@ const MoviesRowItem = ({item, onRemove}) => {
                 <CustomIcon name={Icons.more} size={24} />
               </TouchableOpacity>
             }>
-            <Menu.Item
-              onPress={() => {
-                toggleMenu();
-                onRemove(item.id);
-              }}
-              title="Remove"
-            />
+            <Menu.Item onPress={handleRemove} title={Strings.buttons.remove} />
           </Menu>
         </View>
       </View>

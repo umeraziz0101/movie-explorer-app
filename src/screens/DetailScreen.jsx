@@ -1,4 +1,3 @@
-// src/screens/DetailScreen.jsx
 import React from 'react';
 import {
   View,
@@ -24,6 +23,10 @@ import Strings from '../utils/constants/Strings';
 import Icons from '../utils/assets/Icons';
 import MoviesList from '../components/MoviesList';
 import Wrapper from '../components/Wrapper';
+import CustomIcon from '../components/CustomIcon';
+import {Rating} from 'react-native-ratings';
+import {moviesPopular} from '../data/DataManager';
+import CustomReadMore from '../components/CustomReadMore';
 
 const DetailScreen = () => {
   const {width} = useWindowDimensions();
@@ -32,7 +35,6 @@ const DetailScreen = () => {
 
   const {user, loading, logout, similarMovies, isFavorite, toggleFavorite} =
     useDetailViewModel(movie, navigation);
-  console.log('similar movies:', similarMovies);
 
   if (loading || !user) {
     return (
@@ -43,9 +45,14 @@ const DetailScreen = () => {
   }
 
   const year = new Date(movie.release_date).getFullYear();
+  const formatRuntime = mins => {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return `${h}h ${m}min`;
+  };
 
   return (
-    <View style={{flex: 1}}>
+    <Wrapper top style={styles.mainContainer}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={() => {}} />
@@ -62,58 +69,80 @@ const DetailScreen = () => {
             toggleFavorite={toggleFavorite}
           />
         </ImageBackground>
-
-        <View style={styles.content}>
+        <Wrapper>
           <CustomText textType={Fonts.semiBold} size={20}>
             {movie.title}
           </CustomText>
-          <CustomText size={12} color={Colors.gray_969696}>
-            {year} {' | '}{' '}
-            {movie.genres.map((g, i) => (i > 0 ? '/' : '') + g.name)}
-          </CustomText>
+          <View style={styles.row}>
+            <CustomText size={12} color={Colors.gray_969696}>
+              {year} {Strings.separators.pipe}
+              {Strings.texts.emptySpace}
+              {movie.genres.map(
+                (g, i) =>
+                  (i > 0 ? Strings.separators.slash : Strings.texts.empty) +
+                  g.name,
+              )}
+              {Strings.separators.pipe}
+              {formatRuntime(movie.runtime)}
+              {Strings.texts.emptySpace}
+            </CustomText>
+            <CustomIcon name={Icons.clock} size={16} />
+            <View style={styles.ratingContainer}>
+              <Rating
+                type="star"
+                imageSize={16}
+                readonly
+                ratingCount={5}
+                startingValue={movie.vote_average / 2}
+                fractions={1}
+                ratingColor={Colors.yellow_ffd60a}
+                tintColor={Colors.black_0d0d0d}
+              />
+            </View>
+          </View>
 
-          <CustomSection sectionTitle="Synopsis" titleFont={Fonts.semiBold}>
-            <ReadMore
+          <CustomSection
+            sectionTitle={Strings.section.synopsis}
+            titleFont={Fonts.semiBold}>
+            <CustomReadMore
               numberOfLines={5}
-              seeMoreText=" Read More..."
+              seeMoreText={Strings.texts.readMore}
               seeMoreStyle={styles.readMore}
               seeLessStyle={styles.readMore}
-              ellipsis=""
               style={styles.synopsis}>
               {movie.overview}
-            </ReadMore>
+            </CustomReadMore>
           </CustomSection>
 
-          <CustomSection sectionTitle="Cast" titleFont={Fonts.semiBold}>
+          <CustomSection
+            sectionTitle={Strings.section.cast}
+            titleFont={Fonts.semiBold}>
             <CastList data={movie.cast} />
           </CustomSection>
-          <CustomButton leftIcon={Icons.playBlack} buttonText={'Watch Now'} />
+          <CustomButton
+            leftIcon={Icons.playBlack}
+            buttonText={Strings.buttons.watchNow}
+          />
           <CustomSection
-            sectionTitle={'Related Movies'}
+            sectionTitle={Strings.section.relatedMovies}
             titleFont={Fonts.semiBold}
             titleSize={14}>
-            {/* <MoviesList /> */}
-            <MoviesList
-              data={similarMovies}
-              imageSize={100}
-              gridView
-              // onEndReached={loadMorePopularMovies}
-            />
+            <MoviesList data={moviesPopular} imageSize={100} gridView />
           </CustomSection>
-        </View>
+        </Wrapper>
       </ScrollView>
-    </View>
+    </Wrapper>
   );
 };
 
 export default DetailScreen;
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-    backgroundColor: Colors.black_0d0d0d,
-    flex: 1,
+  mainContainer: {
+    paddingBottom: 20,
   },
+  row: {flexDirection: 'row'},
+  ratingContainer: {marginLeft: 'auto'},
   synopsis: {
     fontSize: 12,
     lineHeight: 18,
@@ -121,6 +150,10 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
   },
   readMore: {
+    color: Colors.pink_ff465f,
+    fontFamily: Fonts.regular,
+  },
+  readLess: {
     color: Colors.pink_ff465f,
     fontFamily: Fonts.regular,
   },

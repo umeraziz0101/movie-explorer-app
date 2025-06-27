@@ -1,6 +1,7 @@
 const Colors = {
   white_ffffff: '#ffffff',
   white_fefefe: '#fefefe',
+  yellow_ffd60a: '#ffd60a',
   gray_d9d9d9: '#d9d9d9',
   gray_6c6c6c: '#6c6c6c',
   gray_535353: '#535353',

@@ -1,10 +1,11 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {moviesPopular, moviesRelated, popular_today} from '../data/DataManager';
+import ReduxConstants from '../utils/constants/ReduxConstants';
 
 const pageSize = 10;
 
 export const fetchPopular = createAsyncThunk(
-  'movies/fetchPopular',
+  ReduxConstants.actions.fetchPopular,
   async (page = 1) => {
     const start = (page - 1) * pageSize;
     const data = moviesPopular.slice(start, start + pageSize);
@@ -13,7 +14,7 @@ export const fetchPopular = createAsyncThunk(
 );
 
 export const fetchSimilar = createAsyncThunk(
-  'movies/fetchSimilar',
+  ReduxConstants.actions.fetchSimilar,
   async movieId => {
     const movie = moviesPopular.find(m => m.id === movieId);
 
@@ -30,7 +31,7 @@ export const fetchSimilar = createAsyncThunk(
 );
 
 const moviesSlice = createSlice({
-  name: 'movies',
+  name: ReduxConstants.Slices.movies,
   initialState: {
     popular: [],
     page: 1,

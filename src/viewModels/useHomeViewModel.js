@@ -1,4 +1,3 @@
-// useHomeViewModel.js
 import {useState, useEffect, useCallback} from 'react';
 import {Alert, BackHandler} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';

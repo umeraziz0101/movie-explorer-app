@@ -48,7 +48,6 @@ export const ImageBox = ({
   imageRadius = 8,
   imageMarginTop = 8,
 }) => {
-  // const known_for_department
   const castName = item.name;
   const title = item.title || item.known_for_department;
   const imageSource = item.poster_path || item.profile_path;

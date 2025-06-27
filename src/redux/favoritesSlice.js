@@ -1,11 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
+import ReduxConstants from '../utils/constants/ReduxConstants';
 
 const favoritesSlice = createSlice({
-  name: 'favorites',
+  name: ReduxConstants.Slices.favorites,
   initialState: {items: []},
   reducers: {
     loadFavorites(state, action) {
-      state.items = action.payload; // from AsyncStorage
+      state.items = action.payload;
     },
     addFavorite(state, action) {
       state.items.push(action.payload);

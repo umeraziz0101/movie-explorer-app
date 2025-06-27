@@ -17,6 +17,7 @@
         "genre_ids": ["28", "12", "53"],
         "popularity": 1201.619,
         "release_date": "2024-12-13",
+        "runtime": 148,
         "video": false,
         "vote_average": 6.113,
         "vote_count": 391
@@ -34,6 +35,7 @@
         "genre_ids": ["28", "878", "53"],
         "popularity": 1089.435,
         "release_date": "2024-10-22",
+        "runtime": 140,
         "video": false,
         "vote_average": 6.4,
         "vote_count": 1247
@@ -51,6 +53,7 @@
         "genre_ids": ["28", "12", "53"],
         "popularity": 1201.619,
         "release_date": "2024-12-13",
+        "runtime": 146,
         "video": false,
         "vote_average": 6.113,
         "vote_count": 391
@@ -88,21 +91,18 @@
             "name": "Action"
           },
           {
-            "id": 12,
-            "name": "Adventure"
-          },
-          {
             "id": 878,
-            "name": "Science Fiction"
+            "name": "Sci-fi"
           }
         ],
         "id": 939243,
         "original_language": "en",
         "original_title": "Sonic the Hedgehog 3",
-        "overview": "Sonic, Knuckles, and Tails reunite against a powerful new adversary, Shadow, a mysterious villain with powers unlike anything they have faced before. With their abilities outmatched in every way, Team Sonic must seek out an unlikely alliance in hopes of stopping Shadow and protecting the planet.",
+        "overview": "Sonic, Knuckles, and Tails reunite against a powerful new adversary, Shadow, a mysterious villain with powers unlike anything they have faced before. With their abilities outmatched in every way, Team Sonic must seek out an unlikely alliance in hopes of stopping Shadow and protecting the planet. Team Sonic must seek out an unlikely alliance in hopes of stopping Shadow and protecting the planet.",
         "popularity": 2553.141,
         "poster_path": "https://i0.wp.com/mynintendonews.com/wp-content/uploads/2024/11/sonic_movie_3-poster.jpeg?resize=691%2C1024&ssl=1",
         "release_date": "2024-12-19",
+        "runtime": 148,
         "title": "Sonic 3",
         "video": false,
         "vote_average": 7.6,
@@ -220,12 +220,8 @@
             "name": "Action"
           },
           {
-            "id": 12,
-            "name": "Adventure"
-          },
-          {
             "id": 878,
-            "name": "Science Fiction"
+            "name": "Sci-fi"
           }
         ],
         "id": 1241982,
@@ -235,6 +231,7 @@
         "popularity": 2341.789,
         "poster_path": "https://img.vwassets.com/pickwicktheatre.com/vertical_4b6e05dc-ddb0-4388-9586-524168a942be.jpg",
         "release_date": "2024-11-27",
+        "runtime": 140,
         "title": "Moana 2",
         "video": false,
         "vote_average": 7.0,
@@ -248,7 +245,7 @@
             "name": "Tom Holland",
             "original_name": "Tom Holland",
             "popularity": 49.869,
-            "profile_path": "/bBRlrpJm9XkNSg0YT5LCaxqoFMX.jpg",
+            "profile_path": "https://upload.wikimedia.org/wikipedia/commons/7/75/Benedict_Cumberbatch_2011.jpg",
             "cast_id": 16,
             "character": "Peter Parker / Spider-Man",
             "credit_id": "558993e49251414371001b1b",
@@ -262,7 +259,7 @@
             "name": "Zendaya",
             "original_name": "Zendaya Maree Stoermer Coleman",
             "popularity": 78.956,
-            "profile_path": "/h3dIYhZFbzpeKFEsXFXwXTm7YiB.jpg",
+            "profile_path": "https://upload.wikimedia.org/wikipedia/commons/7/75/Benedict_Cumberbatch_2011.jpg",
             "cast_id": 17,
             "character": "MJ",
             "credit_id": "5bc91da1c3a36857140032e8",
@@ -345,10 +342,6 @@
         "backdrop_path": "/zOpe0eHsq0A2NvNyBbtT6sj53qV.jpg",
         "genres": [
           {
-            "id": 28,
-            "name": "Action"
-          },
-          {
             "id": 12,
             "name": "Adventure"
           },
@@ -364,6 +357,7 @@
         "popularity": 2553.141,
         "poster_path": "https://i0.wp.com/mynintendonews.com/wp-content/uploads/2024/11/sonic_movie_3-poster.jpeg?resize=691%2C1024&ssl=1",
         "release_date": "2024-12-19",
+        "runtime": 145,
         "title": "Sonic 3",
         "video": false,
         "vote_average": 7.6,

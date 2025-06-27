@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 });
 
 export const SolidHeader = ({iconBack, search, title, iconFavorite}) => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   return (
     <View style={styles1.container}>
@@ -109,7 +109,7 @@ export const SolidHeader = ({iconBack, search, title, iconFavorite}) => {
           <View style={styles1.iconBackContainer}>
             <TouchableOpacity
               onPress={() => {
-                // navigation.navigate(Routes.tabs.root);
+                navigation.goBack();
               }}>
               <CustomIcon name={Icons.backLight} size={24} />
             </TouchableOpacity>

@@ -1,9 +1,9 @@
-// src/viewModels/useDetailViewModel.js
 import {useEffect, useState, useCallback} from 'react';
 import {Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchSimilar} from '../redux/moviesSlice';
 import {addFavorite, removeFavorite} from '../redux/favoritesSlice';
+import storage from '../services/storage';
 import {fetchUserData, logoutUser} from '../services/firebaseAuth';
 import Strings from '../utils/constants/Strings';
 import Routes from '../utils/constants/Routes';
@@ -14,7 +14,6 @@ export function useDetailViewModel(movie, navigation) {
   const [userLoading, setUserLoading] = useState(true);
 
   const similarRaw = useSelector(state => state.movies.similarById[movie.id]);
-
   const similarMovies = similarRaw || [];
 
   const favorites = useSelector(state => state.favorites.items);
@@ -63,10 +62,24 @@ export function useDetailViewModel(movie, navigation) {
     );
   }, [navigation]);
 
-  const toggleFavorite = useCallback(() => {
-    if (isFavorite) dispatch(removeFavorite(movie.id));
-    else dispatch(addFavorite(movie));
-  }, [dispatch, isFavorite, movie.id, movie]);
+  const toggleFavorite = useCallback(async () => {
+    try {
+      if (isFavorite) {
+        dispatch(removeFavorite(movie.id));
+
+        await storage.removeFavorite(movie.id);
+      } else {
+        dispatch(addFavorite(movie));
+
+        await storage.addFavorite(movie);
+      }
+    } catch (err) {
+      Alert.alert(
+        Strings.errors.error,
+        err.message || Strings.errors.failedToUpdateFavorites,
+      );
+    }
+  }, [dispatch, isFavorite, movie]);
 
   return {
     user,

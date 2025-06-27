@@ -12,6 +12,7 @@ const MoviesList = ({data, imageSize, gridView = false, ...rest}) => {
         horizontal={!isGrid}
         numColumns={isGrid ? 3 : 1}
         scrollEnabled={!isGrid}
+        nestedScrollEnabled={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}

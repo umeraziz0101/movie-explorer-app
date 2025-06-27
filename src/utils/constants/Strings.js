@@ -36,6 +36,7 @@ const Strings = {
     newPassword: 'Create New Password',
     signUp: 'Sign Up',
     favorites: 'Favorites',
+    genres: 'Genres',
   },
   headerDescription: {
     dontWorry: "Don't worry! Please enter the",

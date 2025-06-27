@@ -99,7 +99,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export const SolidHeader = ({iconBack, search, title, iconFavorite}) => {
+export const SolidHeader = ({
+  iconBack,
+  search,
+  title,
+  iconFavorite,
+  iconSearch,
+  iconMic,
+}) => {
   const navigation = useNavigation();
 
   return (
@@ -115,11 +122,25 @@ export const SolidHeader = ({iconBack, search, title, iconFavorite}) => {
             </TouchableOpacity>
           </View>
         )}
+        {iconSearch && (
+          <View style={styles1.iconBackContainer}>
+            <TouchableOpacity onPress={() => {}}>
+              <CustomIcon name={Icons.SearchLight} size={24} />
+            </TouchableOpacity>
+          </View>
+        )}
         {title && <CustomText>{title}</CustomText>}
         <View>
           {iconFavorite && (
             <CustomIcon
               name={Icons.heartFillLight}
+              size={24}
+              style={{marginLeft: 'auto'}}
+            />
+          )}
+          {iconMic && (
+            <CustomIcon
+              name={Icons.mic}
               size={24}
               style={{marginLeft: 'auto'}}
             />

@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import CustomIcon from './CustomIcon';
 import Icons from '../utils/assets/Icons';
@@ -11,6 +11,8 @@ import {auth} from '../services/firebaseConfig';
 import Images from '../utils/assets/Images';
 import Strings from '../utils/constants/Strings';
 import CustomText from './CustomText';
+import CustomInput from './CustomInput';
+import Fonts from '../utils/constants/Fonts';
 
 const DEFAULT_AVATAR = Images.avatar;
 
@@ -108,6 +110,7 @@ export const SolidHeader = ({
   iconMic,
 }) => {
   const navigation = useNavigation();
+  const [query, setQuery] = useState();
 
   return (
     <View style={styles1.container}>
@@ -124,9 +127,27 @@ export const SolidHeader = ({
         )}
         {iconSearch && (
           <View style={styles1.iconBackContainer}>
-            <TouchableOpacity onPress={() => {}}>
-              <CustomIcon name={Icons.SearchLight} size={24} />
-            </TouchableOpacity>
+            <CustomIcon name={Icons.SearchLight} size={24} />
+          </View>
+        )}
+        {search && (
+          <View style={styles1.inputContainer}>
+            <TextInput
+              style={[styles1.input]}
+              placeholderTextColor={Colors.white_fefefe}
+              placeholder="Search for a show, movie, genre, etc."
+              onChangeText={setQuery}
+              value={query}
+            />
+            {query && (
+              <TouchableOpacity onPress={() => setQuery('')}>
+                <CustomIcon
+                  name={Icons.cross}
+                  size={24}
+                  style={{marginHorizontal: 12}}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         )}
         {title && <CustomText>{title}</CustomText>}
@@ -158,6 +179,7 @@ const styles1 = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     backgroundColor: Colors.gray_535353,
+    // backgroundColor: Colors.pink_e17079,
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 10,
@@ -170,5 +192,26 @@ const styles1 = StyleSheet.create({
   iconBackContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  inputContainer: {
+    padding: 0,
+    // backgroundColor: '#aa3',
+    marginRight: 'auto',
+    marginLeft: 12,
+    fontSize: 12,
+    fontFamily: Fonts.semiBold,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  input: {
+    padding: 0,
+    margin: 0,
+    // backgroundColor: '#a88',
+    // marginRight: 'auto',
+    // marginLeft: 12,
+    fontSize: 12,
+    fontFamily: Fonts.regular,
+    flex: 1,
+    color: Colors.white_fefefe,
   },
 });

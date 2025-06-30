@@ -24,11 +24,14 @@ const MoviesRowList = ({
   ListHeaderComponent,
   onRemove,
   contentContainerStyle,
+  itemStyle,
 }) => (
   <FlatList
     data={data}
     keyExtractor={item => item.id.toString()}
-    renderItem={({item}) => <MoviesRowItem item={item} onRemove={onRemove} />}
+    renderItem={({item}) => (
+      <MoviesRowItem item={item} onRemove={onRemove} itemStyle={itemStyle} />
+    )}
     onEndReached={onEndReached}
     onEndReachedThreshold={0.5}
     nestedScrollEnabled={true}
@@ -36,10 +39,15 @@ const MoviesRowList = ({
     onRefresh={onRefresh}
     ListHeaderComponent={ListHeaderComponent}
     contentContainerStyle={contentContainerStyle}
+    ListEmptyComponent={() => (
+      <View style={styles.emptyContainer}>
+        <CustomText>No Movies Found</CustomText>
+      </View>
+    )}
   />
 );
 
-const MoviesRowItem = ({item, onRemove}) => {
+const MoviesRowItem = ({item, onRemove, itemStyle}) => {
   const [menuVisible, setMenuVisible] = React.useState(false);
   const toggleMenu = () => setMenuVisible(v => !v);
 
@@ -61,19 +69,23 @@ const MoviesRowItem = ({item, onRemove}) => {
   };
 
   return (
-    <View>
+    <View style={itemStyle}>
       <View style={styles.itemRowContainer}>
         <ImageBackground
           source={{uri: item.poster_path}}
           style={styles.image}
           resizeMode="cover">
-          <LinearGradient
-            colors={[Colors.opacity_dark, Colors.opacity_dark]}
-            style={styles.gradient}
-          />
-          <View style={styles.playOverlay}>
-            <CustomIcon name={Icons.play} size={24} />
-          </View>
+          {onRemove && (
+            <>
+              <LinearGradient
+                colors={[Colors.opacity_dark, Colors.opacity_dark]}
+                style={styles.gradient}
+              />
+              <View style={styles.playOverlay}>
+                <CustomIcon name={Icons.play} size={24} />
+              </View>
+            </>
+          )}
         </ImageBackground>
 
         <View style={styles.textContainer}>
@@ -84,21 +96,31 @@ const MoviesRowItem = ({item, onRemove}) => {
             {new Date(item.release_date).getFullYear()}
           </CustomText>
         </View>
-
-        <View style={styles.menuContainer}>
-          <Menu
-            visible={menuVisible}
-            onDismiss={toggleMenu}
-            anchor={
-              <TouchableOpacity onPress={toggleMenu}>
-                <CustomIcon name={Icons.more} size={24} />
-              </TouchableOpacity>
-            }>
-            <Menu.Item onPress={handleRemove} title={Strings.buttons.remove} />
-          </Menu>
-        </View>
+        {onRemove ? (
+          <View style={styles.menuContainer}>
+            <Menu
+              visible={menuVisible}
+              onDismiss={toggleMenu}
+              anchor={
+                <TouchableOpacity onPress={toggleMenu}>
+                  <CustomIcon name={Icons.more} size={24} />
+                </TouchableOpacity>
+              }>
+              <Menu.Item
+                onPress={handleRemove}
+                title={Strings.buttons.remove}
+              />
+            </Menu>
+          </View>
+        ) : (
+          <View style={styles.iconRightContainer}>
+            <View style={styles.playOverlay}>
+              <CustomIcon name={Icons.play} size={20} />
+            </View>
+          </View>
+        )}
       </View>
-      <Divider />
+      <Divider style={{backgroundColor: Colors.gray_393939}} />
     </View>
   );
 };
@@ -114,7 +136,6 @@ const styles = StyleSheet.create({
   image: {
     width: 60,
     height: 70,
-    borderRadius: 4,
     overflow: 'hidden',
     marginRight: 12,
   },
@@ -128,4 +149,15 @@ const styles = StyleSheet.create({
   },
   textContainer: {flex: 1},
   menuContainer: {marginLeft: 12},
+  iconRightContainer: {
+    width: 42,
+    height: 42,
+    borderColor: Colors.pink_ff465f,
+    borderRadius: 4,
+    borderWidth: 2,
+  },
+  emptyContainer: {
+    padding: 20,
+    alignItems: 'center',
+  },
 });

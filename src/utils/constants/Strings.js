@@ -12,12 +12,21 @@ const Strings = {
     didNotReceivedCode: "Didn't Received Code?",
     alreadyHaveAccount: 'Already have an account?',
     empty: '',
+    emptySpace: ' ',
     guest: 'Guest',
     or: 'OR',
     name: 'Name: ',
     Email: 'Email ',
     fastX: 'Fast X',
     newScreen: 'New Screen',
+    playTrailer: 'Play Trailer',
+    readMore: 'Read More...',
+    readLess: 'Read Less',
+    noFavorites: 'No favorites yet.',
+  },
+  separators: {
+    pipe: ' | ',
+    slash: '/',
   },
   headerTitle: {
     forgetPassword: 'Forget Password',
@@ -26,6 +35,7 @@ const Strings = {
     passwordChanged: 'Password Changed',
     newPassword: 'Create New Password',
     signUp: 'Sign Up',
+    favorites: 'Favorites',
   },
   headerDescription: {
     dontWorry: "Don't worry! Please enter the",
@@ -69,18 +79,34 @@ const Strings = {
     appleSignInFailed: 'Apple Sign-In failed',
     passwordResetFailed: 'Failed to request password reset.',
     failedToLoadImage: 'Failed to load image',
+    invalidMovieObject: 'Invalid movie object',
+    failedToSyncFavorites: 'Failed to sync favorites from Firebase',
+    firebaseSyncFailed: 'Firebase sync failed:',
+    failedToSaveFavorites: 'Failed to save favorites:',
+    failedToAddFavoriteToFirebase: 'Failed to add favorite to Firebase:',
+    failedToRemoveFavoriteFromFirebase:
+      'Failed to remove favorite from Firebase:',
+    failedToRemoveFavorite: 'Failed to remove favorite:',
+    failedToCleanupFavorites: 'Failed to cleanup favorites:',
+    failedToUpdateFavorites: 'Failed to update favorites',
+    errorRemovingFavorite: 'Error removing favorite:',
   },
   alerts: {
     title: {
       logout: 'Logout',
+      removeMovie: 'Remove Movie',
     },
     message: {
       areYouWantToLogOut: 'Are you sure you want to logout?',
+      areYouWantToRemoveMovie:
+        'Are you sure you want to remove this movie from favorites?',
+      cleanedFavorites: 'Cleaned up favorites, removed null values',
     },
   },
   buttons: {
     no: 'No',
     yes: 'Yes',
+    remove: 'Remove',
     sendCode: 'Send Code',
     logOut: 'Log out',
     logIn: 'Log in',
@@ -92,6 +118,7 @@ const Strings = {
     verify: 'Verify',
     backToLogin: 'Back to Login',
     resetPassword: 'Reset Password',
+    watchNow: 'Watch Now',
   },
   icons: {
     email: 'email',
@@ -136,6 +163,9 @@ const Strings = {
     popularMovies: 'Popular Movies',
     lastMonth: 'Last Month',
     lastSixMonth: 'Last 6 Month',
+    synopsis: 'Synopsis',
+    cast: 'Cast',
+    relatedMovies: 'Related Movies',
   },
 };
 

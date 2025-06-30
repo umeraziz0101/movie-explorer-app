@@ -42,9 +42,15 @@ const styles = StyleSheet.create({
   image: {},
 });
 
-export const ImageBox = ({item, imageSize = 130, imageRadius = 8}) => {
-  const title = item.title;
-  const imageSource = item.poster_path;
+export const ImageBox = ({
+  item,
+  imageSize = 130,
+  imageRadius = 8,
+  imageMarginTop = 8,
+}) => {
+  const castName = item.name;
+  const title = item.title || item.known_for_department;
+  const imageSource = item.poster_path || item.profile_path;
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const navigation = useNavigation();
@@ -62,22 +68,29 @@ export const ImageBox = ({item, imageSize = 130, imageRadius = 8}) => {
   return (
     <View>
       {title && (
-        <CustomText textType={Fonts.medium} size={12}>
+        <CustomText
+          textType={Fonts.medium}
+          size={12}
+          style={castName && {alignSelf: 'center'}}>
           {title}
         </CustomText>
       )}
       <View>
         <Pressable
           onPress={() => {
-            navigation.navigate(Routes.stack.detail, {data: item});
+            !castName
+              ? navigation.navigate(Routes.stack.detail, {data: item})
+              : null;
           }}>
           <Image
             source={{uri: imageSource}}
             resizeMode="cover"
-            style={[
-              styles1.image,
-              {height: imageSize, width: imageSize, borderRadius: imageRadius},
-            ]}
+            style={{
+              height: imageSize,
+              width: imageSize,
+              borderRadius: imageRadius,
+              marginTop: imageMarginTop,
+            }}
             onLoad={handleImageLoad}
             onError={handleImageError}
           />
@@ -92,6 +105,20 @@ export const ImageBox = ({item, imageSize = 130, imageRadius = 8}) => {
             <Text style={styles1.errorText}>
               {Strings.errors.failedToLoadImage}
             </Text>
+          </View>
+        )}
+        {castName && (
+          <View style={{width: imageSize, marginTop: 4, alignSelf: 'center'}}>
+            <CustomText
+              size={12}
+              numberOfLines={2}
+              style={{
+                textAlign: 'center',
+
+                flexWrap: 'wrap',
+              }}>
+              {castName}
+            </CustomText>
           </View>
         )}
       </View>
@@ -122,8 +149,5 @@ const styles1 = StyleSheet.create({
     backgroundColor: Colors.black_0d0d0d,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  image: {
-    marginTop: 8,
   },
 });

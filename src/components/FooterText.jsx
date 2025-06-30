@@ -3,6 +3,7 @@ import React from 'react';
 import Colors from '../utils/constants/Colors';
 import CustomText from './CustomText';
 import Fonts from '../utils/constants/Fonts';
+import Strings from '../utils/constants/Strings';
 
 const FooterText = ({
   text,
@@ -14,7 +15,8 @@ const FooterText = ({
     <View style={[styles.container, containerStyle]}>
       <View style={styles.row}>
         <CustomText textType={Fonts.medium} size={14}>
-          {text}{' '}
+          {text}
+          {Strings.texts.emptySpace}
         </CustomText>
         {coloredText && (
           <Pressable onPress={onPressColoredText}>

@@ -289,3 +289,88 @@ export const signInWithApple = async () => {
     return {success: false, message: getFirebaseErrorMessage(error)};
   }
 };
+
+export const getFavoritesFromFirebase = async () => {
+  try {
+    const uid = auth.currentUser?.uid;
+    if (!uid) throw new Error(Strings.errors.noAuthUserFound);
+
+    const favRef = doc(firestore, Collections.favorites, uid);
+    const snap = await getDoc(favRef);
+
+    if (snap.exists()) {
+      const data = snap.data();
+
+      const validItems = (data.items || []).filter(item => item && item.id);
+      return {success: true, items: validItems};
+    } else {
+      return {success: true, items: []};
+    }
+  } catch (error) {
+    return {success: false, message: getFirebaseErrorMessage(error)};
+  }
+};
+
+export const setFavoritesToFirebase = async favoritesList => {
+  try {
+    const uid = auth.currentUser?.uid;
+    if (!uid) throw new Error(Strings.errors.noAuthUserFound);
+
+    const validItems = favoritesList.filter(item => item && item.id);
+
+    const favRef = doc(firestore, Collections.favorites, uid);
+    await setDoc(favRef, {items: validItems});
+
+    return {success: true, items: validItems};
+  } catch (error) {
+    return {success: false, message: getFirebaseErrorMessage(error)};
+  }
+};
+
+export const addFavoriteToFirebase = async movie => {
+  try {
+    const uid = auth.currentUser?.uid;
+    if (!uid) throw new Error(Strings.errors.noAuthUserFound);
+
+    if (!movie || !movie.id) {
+      throw new Error(Strings.errors.invalidMovieObject);
+    }
+
+    const favRef = doc(firestore, Collections.favorites, uid);
+    const snap = await getDoc(favRef);
+    const existing = snap.exists() ? snap.data().items || [] : [];
+
+    const movieExists = existing.some(item => item && item.id === movie.id);
+    if (movieExists) {
+      return {success: true, items: existing};
+    }
+
+    const validExisting = existing.filter(item => item && item.id);
+    const updated = [...validExisting, movie];
+
+    await setDoc(favRef, {items: updated});
+    return {success: true, items: updated};
+  } catch (error) {
+    return {success: false, message: getFirebaseErrorMessage(error)};
+  }
+};
+
+export const removeFavoriteFromFirebase = async movieId => {
+  try {
+    const uid = auth.currentUser?.uid;
+    if (!uid) throw new Error(Strings.errors.noAuthUserFound);
+
+    const favRef = doc(firestore, Collections.favorites, uid);
+    const snap = await getDoc(favRef);
+    const existing = snap.exists() ? snap.data().items || [] : [];
+
+    const updated = existing.filter(
+      item => item && item.id && item.id !== movieId,
+    );
+
+    await setDoc(favRef, {items: updated});
+    return {success: true, items: updated};
+  } catch (error) {
+    return {success: false, message: getFirebaseErrorMessage(error)};
+  }
+};

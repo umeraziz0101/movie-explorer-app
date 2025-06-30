@@ -3,10 +3,15 @@ import React from 'react';
 import CustomText from './CustomText';
 import Fonts from '../utils/constants/Fonts';
 
-const CustomSection = ({sectionTitle, children}) => {
+const CustomSection = ({
+  sectionTitle,
+  titleSize = 20,
+  titleFont = Fonts.medium,
+  children,
+}) => {
   return (
     <View style={styles.container}>
-      <CustomText textType={Fonts.medium} size={20}>
+      <CustomText textType={titleFont} size={titleSize}>
         {sectionTitle}
       </CustomText>
       {children}

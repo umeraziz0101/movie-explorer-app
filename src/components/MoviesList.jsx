@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {ImageBox} from './CustomImage';
 
@@ -12,6 +12,7 @@ const MoviesList = ({data, imageSize, gridView = false, ...rest}) => {
         horizontal={!isGrid}
         numColumns={isGrid ? 3 : 1}
         scrollEnabled={!isGrid}
+        nestedScrollEnabled={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}

@@ -1,92 +1,73 @@
 import {useState, useEffect, useCallback} from 'react';
 import {Alert, BackHandler} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchPopular} from '../redux/moviesSlice';
 import {fetchUserData, logoutUser} from '../services/firebaseAuth';
-import {moviesPopular as initialMoviesPopular} from '../data/DataManager';
 import Routes from '../utils/constants/Routes';
 import Strings from '../utils/constants/Strings';
 import Constants from '../utils/constants/Constants';
 
 export function useHomeViewModel(navigation) {
+  const dispatch = useDispatch();
+
+  const {
+    popular: moviesPopular,
+    page,
+    loading: moviesLoading,
+  } = useSelector(state => state.movies);
+
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-
-  const [moviesPopular, setMoviesPopular] = useState([]);
-  const [page, setPage] = useState(1);
-  const [isFetchingMore, setIsFetchingMore] = useState(false);
-
-  const loadPopularMovies = async (pageNumber = 1, isRefresh = false) => {
-    if (isFetchingMore && !isRefresh) return;
-
-    if (isRefresh) {
-      setRefreshing(true);
-    } else {
-      setIsFetchingMore(true);
-    }
-
-    try {
-      const pageSize = 10;
-      const start = (pageNumber - 1) * pageSize;
-      const end = start + pageSize;
-      const nextPageData = initialMoviesPopular.slice(start, end);
-
-      setMoviesPopular(prev =>
-        isRefresh ? nextPageData : [...prev, ...nextPageData],
-      );
-
-      if (!isRefresh) setPage(pageNumber + 1);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      if (isRefresh) {
-        setRefreshing(false);
-        setPage(2);
-      } else {
-        setIsFetchingMore(false);
-      }
-    }
-  };
+  const [userLoading, setUserLoading] = useState(true);
 
   useEffect(() => {
-    loadPopularMovies(1, true);
-  }, []);
+    dispatch(fetchPopular(1));
+  }, [dispatch]);
 
-  const loadMorePopularMovies = () => {
-    loadPopularMovies(page);
-  };
+  const loadMorePopularMovies = useCallback(() => {
+    dispatch(fetchPopular(page));
+  }, [dispatch, page]);
 
-  const reloadPopularMovies = () => {
-    loadPopularMovies(1, true);
-  };
+  const reloadPopularMovies = useCallback(() => {
+    dispatch(fetchPopular(1));
+  }, [dispatch]);
 
   useEffect(() => {
-    const init = async () => {
-      setLoading(true);
+    let canceled = false;
+    const initUser = async () => {
+      setUserLoading(true);
       try {
         const data = await fetchUserData();
-        setUser(
-          data
-            ? {name: data.name, email: data.email}
-            : {name: Strings.texts.guest, email: Strings.texts.empty},
-        );
+        if (!canceled) {
+          setUser(
+            data
+              ? {name: data.name, email: data.email}
+              : {name: Strings.texts.guest, email: Strings.texts.empty},
+          );
+        }
       } catch {
-        setUser({name: Strings.texts.guest, email: Strings.texts.empty});
+        if (!canceled) {
+          setUser({name: Strings.texts.guest, email: Strings.texts.empty});
+        }
+      } finally {
+        if (!canceled) setUserLoading(false);
       }
-
-      setLoading(false);
     };
 
-    const timeout = setTimeout(init, Constants.fetchTimeOut);
-    return () => clearTimeout(timeout);
+    const timeout = setTimeout(initUser, Constants.fetchTimeOut);
+    return () => {
+      clearTimeout(timeout);
+      canceled = true;
+    };
   }, []);
 
   useFocusEffect(
     useCallback(() => {
-      const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      const onBack = () => {
         BackHandler.exitApp();
         return true;
-      });
+      };
+      const sub = BackHandler.addEventListener('hardwareBackPress', onBack);
       return () => sub.remove();
     }, []),
   );
@@ -100,7 +81,7 @@ export function useHomeViewModel(navigation) {
         {
           text: Strings.buttons.yes,
           onPress: async () => {
-            setLoading(true);
+            setUserLoading(true);
             try {
               if (user?.email) {
                 const res = await logoutUser();
@@ -111,7 +92,7 @@ export function useHomeViewModel(navigation) {
             } catch (err) {
               Alert.alert(Strings.errors.error, err.message);
             } finally {
-              setLoading(false);
+              setUserLoading(false);
             }
           },
         },
@@ -122,11 +103,11 @@ export function useHomeViewModel(navigation) {
 
   return {
     user,
-    loading,
+    loading: userLoading,
     logout,
     moviesPopular,
-    refreshing,
-    reloadPopularMovies,
+    refreshing: moviesLoading,
     loadMorePopularMovies,
+    reloadPopularMovies,
   };
 }

@@ -10,10 +10,11 @@ import Routes from '../utils/constants/Routes';
 import {auth} from '../services/firebaseConfig';
 import Images from '../utils/assets/Images';
 import Strings from '../utils/constants/Strings';
+import CustomText from './CustomText';
 
 const DEFAULT_AVATAR = Images.avatar;
 
-const CustomHeader = ({logo, onSignOut}) => {
+const CustomHeader = ({logo, onSignOut, isFavorite, toggleFavorite}) => {
   const [profileImage, setProfileImage] = useState(DEFAULT_AVATAR);
 
   const navigation = useNavigation();
@@ -36,14 +37,21 @@ const CustomHeader = ({logo, onSignOut}) => {
               onPress={() => {
                 navigation.navigate(Routes.tabs.root);
               }}>
-              <CustomIcon
-                name={Icons.back}
-                size={35}
-                fill={Colors.white_ffffff}
-              />
+              <CustomIcon name={Icons.back} size={35} />
             </TouchableOpacity>
           </View>
         )}
+        {!logo && (
+          <TouchableOpacity
+            onPress={toggleFavorite}
+            style={{marginLeft: 'auto', marginRight: 20}}>
+            <CustomIcon
+              name={isFavorite ? Icons.heartFillLight : Icons.heartLight}
+              size={24}
+            />
+          </TouchableOpacity>
+        )}
+
         <Menu
           visible={visible}
           onDismiss={closeMenu}
@@ -86,6 +94,59 @@ const styles = StyleSheet.create({
   iconContainer: {
     backgroundColor: Colors.gray_d9d9d9,
     borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export const SolidHeader = ({iconBack, search, title, iconFavorite}) => {
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles1.container}>
+      <View style={styles1.row}>
+        {iconBack && (
+          <View style={styles1.iconBackContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <CustomIcon name={Icons.backLight} size={24} />
+            </TouchableOpacity>
+          </View>
+        )}
+        {title && <CustomText>{title}</CustomText>}
+        <View>
+          {iconFavorite && (
+            <CustomIcon
+              name={Icons.heartFillLight}
+              size={24}
+              style={{marginLeft: 'auto'}}
+            />
+          )}
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles1 = StyleSheet.create({
+  container: {
+    top: 40,
+    width: '90%',
+    position: 'absolute',
+    alignSelf: 'center',
+    backgroundColor: Colors.gray_535353,
+    borderRadius: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  iconBackContainer: {
     justifyContent: 'center',
     alignItems: 'center',
   },

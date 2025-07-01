@@ -6,12 +6,11 @@ import CustomImage from './CustomImage';
 import Colors from '../utils/constants/Colors';
 import {Menu} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
-import Routes from '../utils/constants/Routes';
 import {auth} from '../services/firebaseConfig';
 import Images from '../utils/assets/Images';
 import Strings from '../utils/constants/Strings';
 import CustomText from './CustomText';
-import CustomInput from './CustomInput';
+
 import Fonts from '../utils/constants/Fonts';
 
 const DEFAULT_AVATAR = Images.avatar;
@@ -37,7 +36,7 @@ const CustomHeader = ({logo, onSignOut, isFavorite, toggleFavorite}) => {
           <View style={styles.iconContainer}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(Routes.tabs.root);
+                navigation.goBack();
               }}>
               <CustomIcon name={Icons.back} size={35} />
             </TouchableOpacity>
@@ -108,9 +107,10 @@ export const SolidHeader = ({
   iconFavorite,
   iconSearch,
   iconMic,
+  searchValue,
+  onSearchChange,
 }) => {
   const navigation = useNavigation();
-  const [query, setQuery] = useState();
 
   return (
     <View style={styles1.container}>
@@ -135,12 +135,15 @@ export const SolidHeader = ({
             <TextInput
               style={[styles1.input]}
               placeholderTextColor={Colors.white_fefefe}
-              placeholder="Search for a show, movie, genre, etc."
-              onChangeText={setQuery}
-              value={query}
+              placeholder={Strings.inputPlaceholder.search}
+              onChangeText={onSearchChange}
+              value={searchValue}
             />
-            {query && (
-              <TouchableOpacity onPress={() => setQuery('')}>
+            {searchValue && (
+              <TouchableOpacity
+                onPress={() => {
+                  onSearchChange(Strings.texts.empty);
+                }}>
                 <CustomIcon
                   name={Icons.cross}
                   size={24}
@@ -179,7 +182,6 @@ const styles1 = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     backgroundColor: Colors.gray_535353,
-    // backgroundColor: Colors.pink_e17079,
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 10,
@@ -195,7 +197,6 @@ const styles1 = StyleSheet.create({
   },
   inputContainer: {
     padding: 0,
-    // backgroundColor: '#aa3',
     marginRight: 'auto',
     marginLeft: 12,
     fontSize: 12,
@@ -206,9 +207,6 @@ const styles1 = StyleSheet.create({
   input: {
     padding: 0,
     margin: 0,
-    // backgroundColor: '#a88',
-    // marginRight: 'auto',
-    // marginLeft: 12,
     fontSize: 12,
     fontFamily: Fonts.regular,
     flex: 1,

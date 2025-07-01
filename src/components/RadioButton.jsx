@@ -4,12 +4,17 @@ import CustomText from './CustomText';
 import Icon from '@react-native-vector-icons/material-design-icons';
 import Colors from '../utils/constants/Colors';
 import Fonts from '../utils/constants/Fonts';
+import Icons from '../utils/assets/Icons';
 
 const RadioButton = ({label, value, selected, onSelect}) => {
   return (
     <TouchableOpacity style={styles.container} onPress={() => onSelect(value)}>
       <Icon
-        name={selected ? 'check-circle' : 'checkbox-blank-circle'}
+        name={
+          selected
+            ? Icons.materialDesignIcons.checkCircle
+            : Icons.materialDesignIcons.checkboxBlankCircle
+        }
         color={selected ? Colors.pink_ff465f : Colors.gray_3b3833}
         size={25}
       />

@@ -14,8 +14,6 @@ import CustomText from '../components/CustomText';
 import CustomButton from '../components/CustomButton';
 import CustomSection from '../components/CustomSection';
 import CastList from '../components/CastList';
-import MoviesCarousel from '../components/MoviesCarousel';
-import ReadMore from '@fawazahmed/react-native-read-more';
 import {Loader} from '../components/Loader';
 import Colors from '../utils/constants/Colors';
 import Fonts from '../utils/constants/Fonts';
@@ -27,6 +25,7 @@ import CustomIcon from '../components/CustomIcon';
 import {Rating} from 'react-native-ratings';
 import {moviesPopular} from '../data/DataManager';
 import CustomReadMore from '../components/CustomReadMore';
+import NotFound from '../components/NotFound';
 
 const DetailScreen = () => {
   const {width} = useWindowDimensions();
@@ -117,7 +116,11 @@ const DetailScreen = () => {
           <CustomSection
             sectionTitle={Strings.section.cast}
             titleFont={Fonts.semiBold}>
-            <CastList data={movie.cast} />
+            {movie.cast.length === 0 ? (
+              <NotFound />
+            ) : (
+              <CastList data={movie.cast} />
+            )}
           </CustomSection>
           <CustomButton
             leftIcon={Icons.playBlack}
@@ -127,7 +130,11 @@ const DetailScreen = () => {
             sectionTitle={Strings.section.relatedMovies}
             titleFont={Fonts.semiBold}
             titleSize={14}>
-            <MoviesList data={moviesPopular} imageSize={100} gridView />
+            {moviesPopular.length === 0 ? (
+              <NotFound />
+            ) : (
+              <MoviesList data={moviesPopular} imageSize={100} gridView />
+            )}
           </CustomSection>
         </Wrapper>
       </ScrollView>

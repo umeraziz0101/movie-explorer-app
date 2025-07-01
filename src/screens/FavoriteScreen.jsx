@@ -5,8 +5,8 @@ import {Loader} from '../components/Loader';
 import {SolidHeader} from '../components/CustomHeader';
 import MoviesRowList from '../components/MoviesRowList';
 import {useFavoriteViewModel} from '../viewModels/useFavoriteViewModel';
-import CustomText from '../components/CustomText';
 import Strings from '../utils/constants/Strings';
+import NotFound from '../components/NotFound';
 
 const FavoriteScreen = ({navigation}) => {
   const {
@@ -16,14 +16,6 @@ const FavoriteScreen = ({navigation}) => {
     reloadFavoriteMovies,
     removeFavorite,
   } = useFavoriteViewModel();
-
-  if (loading) {
-    return (
-      <Wrapper>
-        <Loader visible />
-      </Wrapper>
-    );
-  }
 
   return (
     <Wrapper top>
@@ -37,11 +29,12 @@ const FavoriteScreen = ({navigation}) => {
 
       <Wrapper style={styles.listContainer}>
         {moviesFavorite.length === 0 ? (
-          <CustomText>{Strings.texts.noFavorites}</CustomText>
+          <NotFound />
         ) : (
           <MoviesRowList data={moviesFavorite} onRemove={removeFavorite} />
         )}
       </Wrapper>
+      {loading && <Loader visible />}
     </Wrapper>
   );
 };

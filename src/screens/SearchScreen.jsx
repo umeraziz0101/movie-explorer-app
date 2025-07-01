@@ -4,41 +4,34 @@ import Wrapper from '../components/Wrapper';
 import {Loader} from '../components/Loader';
 import {SolidHeader} from '../components/CustomHeader';
 import MoviesRowList from '../components/MoviesRowList';
-import {useFavoriteViewModel} from '../viewModels/useFavoriteViewModel';
 import CustomText from '../components/CustomText';
-import Strings from '../utils/constants/Strings';
 import Fonts from '../utils/constants/Fonts';
-import {moviesPopular} from '../data/DataManager';
+import {useSearchViewModel} from '../viewModels/useSearchViewModel';
+import Strings from '../utils/constants/Strings';
 
 const SearchScreen = ({navigation}) => {
-  const {
-    loading,
-    moviesFavorite,
-    refreshing,
-    reloadFavoriteMovies,
-    removeFavorite,
-  } = useFavoriteViewModel();
-
-  if (loading) {
-    return (
-      <Wrapper>
-        <Loader visible />
-      </Wrapper>
-    );
-  }
+  const {query, results, loading, onChangeQuery} = useSearchViewModel();
+  console.log(query);
 
   return (
     <Wrapper top>
       <View style={styles.headerWrapper}>
-        <SolidHeader iconSearch search iconMic />
+        <SolidHeader
+          iconSearch
+          search
+          iconMic
+          onSearchChange={onChangeQuery}
+          searchValue={query}
+        />
       </View>
 
       <Wrapper style={styles.listContainer}>
         <CustomText textType={Fonts.semiBold} size={20}>
-          Top Searches
+          {query ? Strings.texts.results : Strings.texts.topSearches}
         </CustomText>
-        <MoviesRowList data={moviesPopular} />
+        <MoviesRowList data={results} />
       </Wrapper>
+      {loading && <Loader visible />}
     </Wrapper>
   );
 };

@@ -60,6 +60,10 @@ const Icons = {
   SearchLight: SearchLight,
   mic: Mic,
   cross: Cross,
+  materialDesignIcons: {
+    checkCircle: 'check-circle',
+    checkboxBlankCircle: 'checkbox-blank-circle',
+  },
 };
 
 export default Icons;

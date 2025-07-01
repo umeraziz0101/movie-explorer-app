@@ -1,10 +1,5 @@
-import React, {useCallback, useEffect} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  RefreshControl,
-  BackHandler,
-} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import Wrapper from '../components/Wrapper';
 import {Loader} from '../components/Loader';
 import {useHomeViewModel} from '../viewModels/useHomeViewModel';
@@ -16,7 +11,7 @@ import MoviesList from '../components/MoviesList';
 import MoviesCarousel from '../components/MoviesCarousel';
 import Icons from '../utils/assets/Icons';
 import CustomIcon from '../components/CustomIcon';
-import {useFocusEffect} from '@react-navigation/native';
+import NotFound from '../components/NotFound';
 
 const HomeScreen = ({navigation}) => {
   const {
@@ -37,6 +32,9 @@ const HomeScreen = ({navigation}) => {
     );
   }
 
+  if (!moviesPopular || moviesPopular.length === 0) {
+    return <NotFound />;
+  }
   return (
     <Wrapper top>
       <ScrollView

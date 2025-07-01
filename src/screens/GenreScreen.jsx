@@ -10,32 +10,35 @@ import {Divider} from 'react-native-paper';
 import Fonts from '../utils/constants/Fonts';
 import CustomButton from '../components/CustomButton';
 import MoviesRowList from '../components/MoviesRowList';
-import {moviesPopular} from '../data/DataManager';
-import {useFavoriteViewModel} from '../viewModels/useFavoriteViewModel';
+import {useFilterViewModel} from '../viewModels/useFilterViewModel';
+import {Loader} from '../components/Loader';
+import NotFound from '../components/NotFound';
 
 const GenreScreen = () => {
-  const {moviesFavorite} = useFavoriteViewModel();
-  const [selectedSort, setSelectedSort] = useState('option1');
-  const [selectedGenre, setSelectedGenre] = useState('option1');
+  const {
+    sortBy,
+    genre,
+    results,
+    loading,
+    onSelectSort,
+    onSelectGenre,
+    applySettings,
+    availableGenres,
+  } = useFilterViewModel();
 
   const sortOptions = [
-    {label: 'Most Relevant', value: 'option1'},
-    {label: 'Most Popular', value: 'option2'},
-    {label: 'Most Recent', value: 'option3'},
-  ];
-  const genres = [
-    {label: 'All', value: 'option1'},
-    {label: 'Fantasy', value: 'option2'},
-    {label: 'Horror', value: 'option3'},
-    {label: 'Sci-fi', value: 'option4'},
-    {label: 'Action', value: 'option5'},
-    {label: 'History', value: 'option6'},
-    {label: 'Thriller', value: 'option7'},
-    {label: 'Anime', value: 'option8'},
-    {label: 'Drama', value: 'option9'},
-    {label: 'Romantic', value: 'option10'},
-    {label: 'Comedy', value: 'option11'},
-    {label: 'Crime', value: 'option12'},
+    {
+      label: Strings.radioButtons.label.relevant,
+      value: Strings.radioButtons.value.relevant,
+    },
+    {
+      label: Strings.radioButtons.label.popular,
+      value: Strings.radioButtons.value.popular,
+    },
+    {
+      label: Strings.radioButtons.label.recent,
+      value: Strings.radioButtons.value.recent,
+    },
   ];
 
   const ListHeader = () => (
@@ -45,46 +48,66 @@ const GenreScreen = () => {
       </View>
 
       <Wrapper style={styles.listContainer}>
-        <CustomText textType={Fonts.semiBold}>SORT BY</CustomText>
+        <CustomText textType={Fonts.semiBold}>
+          {Strings.texts.sortBy}
+        </CustomText>
         {sortOptions.map(opt => (
           <RadioButton
             key={opt.value}
             label={opt.label}
             value={opt.value}
-            selected={selectedSort === opt.value}
-            onSelect={setSelectedSort}
+            selected={sortBy === opt.value}
+            onSelect={onSelectSort}
           />
         ))}
 
         <Divider style={styles.dividerStyle} bold />
 
-        <CustomText textType={Fonts.semiBold}>GENRES</CustomText>
+        <CustomText textType={Fonts.semiBold}>
+          {Strings.texts.genres}
+        </CustomText>
         <View style={styles.genresContainer}>
-          {genres.map(g => (
-            <View key={g.value} style={styles.genreItem}>
+          {availableGenres.map(({id, name}) => (
+            <View key={id} style={styles.genreItem}>
               <RadioButton
-                label={g.label}
-                value={g.value}
-                selected={selectedGenre === g.value}
-                onSelect={setSelectedGenre}
+                label={name}
+                value={id}
+                selected={genre === id}
+                onSelect={onSelectGenre}
               />
             </View>
           ))}
         </View>
 
-        <CustomButton buttonText="Apply Settings" onPress={() => {}} />
+        <CustomButton
+          buttonText={Strings.buttons.applySettings}
+          onPress={applySettings}
+        />
       </Wrapper>
     </>
   );
 
+  if (loading) {
+    return (
+      <Wrapper>
+        <Loader visible />
+      </Wrapper>
+    );
+  }
+
+  if (!results?.length) {
+    return <NotFound />;
+  }
+
   return (
     <Wrapper top style={{paddingBottom: 22}}>
       <MoviesRowList
-        data={moviesPopular}
+        data={results}
         ListHeaderComponent={ListHeader}
         itemStyle={{paddingHorizontal: 16}}
         contentContainerStyle={{paddingBottom: 80}}
       />
+      {loading && <Loader visible />}
     </Wrapper>
   );
 };

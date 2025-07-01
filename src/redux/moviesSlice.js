@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {moviesPopular, moviesRelated, popular_today} from '../data/DataManager';
 import ReduxConstants from '../utils/constants/ReduxConstants';
+import Strings from '../utils/constants/Strings';
 
 const pageSize = 10;
 
@@ -24,7 +25,9 @@ export const fetchSimilar = createAsyncThunk(
 
     const similar = raw.map(m => ({
       ...m,
-      overview: Array.isArray(m.overview) ? m.overview.join(' ') : m.overview,
+      overview: Array.isArray(m.overview)
+        ? m.overview.join(Strings.texts.emptySpace)
+        : m.overview,
     }));
     return {movieId, similar};
   },

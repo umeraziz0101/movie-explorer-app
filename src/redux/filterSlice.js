@@ -2,11 +2,12 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {moviesPopular} from '../data/DataManager';
 import ReduxConstants from '../utils/constants/ReduxConstants';
 import Strings from '../utils/constants/Strings';
+import Constants from '../utils/constants/Constants';
 
 export const applyFilters = createAsyncThunk(
   ReduxConstants.actions.applyFilters,
   async ({sortBy, genre}) => {
-    await new Promise(res => setTimeout(res, 300));
+    await new Promise(res => setTimeout(res, Constants.fetchTimeOut));
     let filtered = [...moviesPopular];
 
     if (genre !== 0) {

@@ -100,12 +100,12 @@ const GenreScreen = () => {
   }
 
   return (
-    <Wrapper top style={{paddingBottom: 22}}>
+    <Wrapper top style={styles.container}>
       <MoviesRowList
         data={results}
         ListHeaderComponent={ListHeader}
-        itemStyle={{paddingHorizontal: 16}}
-        contentContainerStyle={{paddingBottom: 80}}
+        itemStyle={styles.itemStyle}
+        contentContainerStyle={styles.contentContainerStyle}
       />
       {loading && <Loader visible />}
     </Wrapper>
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
   },
+  container: {paddingBottom: 22},
   listContainer: {
     marginTop: 80,
   },
@@ -137,4 +138,6 @@ const styles = StyleSheet.create({
     width: '50%',
     paddingVertical: 6,
   },
+  itemStyle: {paddingHorizontal: 16},
+  contentContainerStyle: {paddingBottom: 80},
 });

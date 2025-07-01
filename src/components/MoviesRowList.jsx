@@ -130,7 +130,7 @@ const MoviesRowItem = ({item, onRemove, itemStyle}) => {
             </View>
           )}
         </View>
-        <Divider style={{backgroundColor: Colors.gray_393939}} />
+        <Divider style={styles.divider} />
       </Pressable>
     </View>
   );
@@ -167,4 +167,5 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 2,
   },
+  divider: {backgroundColor: Colors.gray_393939},
 });

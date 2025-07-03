@@ -6,6 +6,7 @@ import {
   ImageBackground,
   StyleSheet,
   useWindowDimensions,
+  Alert,
 } from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {useDetailViewModel} from '../viewModels/useDetailViewModel';
@@ -23,27 +24,39 @@ import MoviesList from '../components/MoviesList';
 import Wrapper from '../components/Wrapper';
 import CustomIcon from '../components/CustomIcon';
 import {Rating} from 'react-native-ratings';
-import {moviesPopular} from '../data/DataManager';
 import CustomReadMore from '../components/CustomReadMore';
 import NotFound from '../components/NotFound';
+import {buildImageUrl} from '../utils/image';
+import LinearGradient from 'react-native-linear-gradient';
+import Images from '../utils/assets/Images';
 
 const DetailScreen = () => {
   const {width} = useWindowDimensions();
   const navigation = useNavigation();
-  const {data: movie} = useRoute().params;
 
-  const {user, loading, logout, similarMovies, isFavorite, toggleFavorite} =
-    useDetailViewModel(movie, navigation);
+  const {movieId} = useRoute().params;
+  const {
+    user,
+    movie,
+    loadingMovie,
+    loading,
+    error,
+    isFavorite,
+    toggleFavorite,
+    logout,
+  } = useDetailViewModel(movieId, navigation);
 
-  if (loading || !user) {
+  if (loading || !user || loadingMovie || !movie) {
     return (
       <Wrapper>
         <Loader visible={true} />
       </Wrapper>
     );
   }
+  if (error) return Alert.alert('Error', error);
 
-  const year = new Date(movie.release_date).getFullYear();
+  const year = movie.release_date?.slice(0, 4);
+  const poster = buildImageUrl(movie.poster_path);
   const formatRuntime = mins => {
     const h = Math.floor(mins / 60);
     const m = mins % 60;
@@ -58,9 +71,25 @@ const DetailScreen = () => {
         }
         showsVerticalScrollIndicator={false}>
         <ImageBackground
-          source={{uri: movie.poster_path}}
+          source={{uri: poster ? poster : Images.dummy}}
           style={{width, height: width * 1.2}}
           resizeMode="cover">
+          <LinearGradient
+            colors={[Colors.opacity_dark, Colors.opacity_dark]}
+            start={{x: 0.5, y: 1}}
+            end={{x: 0.5, y: 0}}
+            style={styles.gradient}
+          />
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <CustomIcon name={Icons.play} size={66} />
+            <CustomText
+              textType={Fonts.semiBold}
+              size={14}
+              style={{marginTop: 16}}>
+              {Strings.texts.playTrailer}
+            </CustomText>
+          </View>
           <CustomHeader
             logo={false}
             onSignOut={logout}
@@ -73,19 +102,24 @@ const DetailScreen = () => {
             {movie.title}
           </CustomText>
           <View style={styles.row}>
-            <CustomText size={12} color={Colors.gray_969696}>
-              {year} {Strings.separators.pipe}
-              {Strings.texts.emptySpace}
-              {movie.genres.map(
-                (g, i) =>
-                  (i > 0 ? Strings.separators.slash : Strings.texts.empty) +
-                  g.name,
-              )}
-              {Strings.separators.pipe}
-              {formatRuntime(movie.runtime)}
-              {Strings.texts.emptySpace}
-            </CustomText>
-            <CustomIcon name={Icons.clock} size={16} />
+            <View style={styles.infoSection}>
+              <CustomText
+                size={12}
+                color={Colors.gray_969696}
+                style={styles.infoText}>
+                {year} {Strings.separators.pipe}
+                {Strings.texts.emptySpace}
+                {movie.genres.map(
+                  (g, i) =>
+                    (i > 0 ? Strings.separators.slash : Strings.texts.empty) +
+                    g.name,
+                )}
+                {Strings.separators.pipe}
+                {formatRuntime(movie.runtime)}
+                {Strings.texts.emptySpace}
+              </CustomText>
+              <CustomIcon name={Icons.clock} size={16} />
+            </View>
             <View style={styles.ratingContainer}>
               <Rating
                 type="star"
@@ -116,10 +150,10 @@ const DetailScreen = () => {
           <CustomSection
             sectionTitle={Strings.section.cast}
             titleFont={Fonts.semiBold}>
-            {movie.cast.length === 0 ? (
+            {movie.credits.cast.length === 0 ? (
               <NotFound />
             ) : (
-              <CastList data={movie.cast} />
+              <CastList data={movie.credits?.cast ?? []} />
             )}
           </CustomSection>
           <CustomButton
@@ -130,10 +164,14 @@ const DetailScreen = () => {
             sectionTitle={Strings.section.relatedMovies}
             titleFont={Fonts.semiBold}
             titleSize={14}>
-            {moviesPopular.length === 0 ? (
+            {movie.recommendations.results.length === 0 ? (
               <NotFound />
             ) : (
-              <MoviesList data={moviesPopular} imageSize={100} gridView />
+              <MoviesList
+                data={movie.recommendations?.results ?? []}
+                imageSize={100}
+                gridView
+              />
             )}
           </CustomSection>
         </Wrapper>
@@ -148,7 +186,11 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingBottom: 20,
   },
-  row: {flexDirection: 'row'},
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'nowrap',
+  },
   ratingContainer: {marginLeft: 'auto'},
   synopsis: {
     fontSize: 12,
@@ -163,5 +205,19 @@ const styles = StyleSheet.create({
   readLess: {
     color: Colors.pink_ff465f,
     fontFamily: Fonts.regular,
+  },
+  gradient: {
+    ...StyleSheet.absoluteFillObject,
+    overflow: 'hidden',
+  },
+  infoSection: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingRight: 10,
+  },
+  infoText: {
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    marginBottom: 4,
   },
 });

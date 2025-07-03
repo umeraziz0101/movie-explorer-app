@@ -1,27 +1,28 @@
 import {useEffect, useState, useCallback} from 'react';
 import {Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {fetchSimilar} from '../redux/moviesSlice';
+import {fetchMovie} from '../redux/movieDetailsSlice';
 import {addFavorite, removeFavorite} from '../redux/favoritesSlice';
 import storage from '../services/storage';
 import {fetchUserData, logoutUser} from '../services/firebaseAuth';
 import Strings from '../utils/constants/Strings';
 import Routes from '../utils/constants/Routes';
 
-export function useDetailViewModel(movie, navigation) {
+export function useDetailViewModel(movieId, navigation) {
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
 
-  const similarRaw = useSelector(state => state.movies.similarById[movie.id]);
-  const similarMovies = similarRaw || [];
-
   const favorites = useSelector(state => state.favorites.items);
-  const isFavorite = favorites.some(m => m.id === movie.id);
+  const isFavorite = favorites.some(m => m.id === movieId);
+
+  const movie = useSelector(s => s.movie.byId[movieId]);
+  const loadingMovie = useSelector(s => s.movie.loading[movieId]);
+  const error = useSelector(s => s.movie.error[movieId]);
 
   useEffect(() => {
-    dispatch(fetchSimilar(movie.id));
-  }, [dispatch, movie.id]);
+    if (!movie) dispatch(fetchMovie(movieId));
+  }, [movieId, movie, dispatch]);
 
   useEffect(() => {
     (async () => {
@@ -65,9 +66,9 @@ export function useDetailViewModel(movie, navigation) {
   const toggleFavorite = useCallback(async () => {
     try {
       if (isFavorite) {
-        dispatch(removeFavorite(movie.id));
+        dispatch(removeFavorite(movieId));
 
-        await storage.removeFavorite(movie.id);
+        await storage.removeFavorite(movieId);
       } else {
         dispatch(addFavorite(movie));
 
@@ -83,9 +84,12 @@ export function useDetailViewModel(movie, navigation) {
 
   return {
     user,
+    loadingMovie,
+    error,
     loading: userLoading,
     logout,
-    similarMovies,
+
+    movie,
     isFavorite,
     toggleFavorite,
   };

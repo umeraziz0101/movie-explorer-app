@@ -1,28 +1,27 @@
 import {useEffect, useCallback, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {moviesPopular} from '../data/DataManager';
-import {setSortBy, setGenre, applyFilters} from '../redux/filterSlice';
+import {
+  setSortBy,
+  setGenre,
+  applyFilters,
+  fetchGenres,
+} from '../redux/filterSlice';
 import Strings from '../utils/constants/Strings';
 
 export function useFilterViewModel() {
   const dispatch = useDispatch();
-  const {sortBy, genre, results, loading} = useSelector(s => s.filters);
+  const {sortBy, genre, results, loading, genresList} = useSelector(
+    s => s.filters,
+  );
 
-  const availableGenres = useMemo(() => {
-    const map = {};
-    moviesPopular.forEach(m =>
-      m.genres.forEach(g => {
-        map[g.id] = g.name;
-      }),
-    );
-    return [
-      {id: 0, name: Strings.radioButtons.label.all},
-      ...Object.entries(map).map(([id, name]) => ({
-        id: Number(id),
-        name,
-      })),
-    ];
-  }, []);
+  useEffect(() => {
+    dispatch(fetchGenres());
+  }, [dispatch]);
+
+  const availableGenres = useMemo(
+    () => [{id: 0, name: Strings.radioButtons.label.all}, ...genresList],
+    [genresList],
+  );
 
   useEffect(() => {
     dispatch(applyFilters({sortBy, genre}));

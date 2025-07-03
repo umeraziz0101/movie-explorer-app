@@ -3,7 +3,6 @@ import React from 'react';
 import {ImageBox} from './CustomImage';
 
 const CastList = ({data, ...rest}) => {
-  console.log(data);
   return (
     <View style={[styles.container]}>
       <FlatList

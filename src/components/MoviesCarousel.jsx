@@ -13,6 +13,7 @@ import Fonts from '../utils/constants/Fonts';
 import CustomHeader from './CustomHeader';
 import LinearGradient from 'react-native-linear-gradient';
 import Constants from '../utils/constants/Constants';
+import {buildImageUrl} from '../utils/image';
 
 const MoviesCarousel = ({movies, onSignOut}) => {
   const {width} = useWindowDimensions();
@@ -34,16 +35,17 @@ const MoviesCarousel = ({movies, onSignOut}) => {
         autoPlayInterval={Constants.carousel.AutoPlayInterval}
         onSnapToItem={index => setCurrentIndex(index)}
         renderItem={({item}) => {
-          const uri = item.poster_path;
-
+          const rawPath = item.poster_path || item.profile_path;
+          const imageSource = buildImageUrl(rawPath);
           return (
             <ImageBackground
-              source={{uri}}
+              source={{uri: imageSource}}
               style={[styles.image, {width}]}
               resizeMode="cover">
               <LinearGradient
                 colors={[
                   Colors.opacity_dark_max,
+                  Colors.opacity_dark,
                   Colors.opacity_dark,
                   Colors.opacity_dark,
                 ]}
@@ -96,8 +98,6 @@ const styles = StyleSheet.create({
   },
   gradient: {
     ...StyleSheet.absoluteFillObject,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     overflow: 'hidden',
   },
   image: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  dot: {width: 12, height: 12, borderRadius: 6, marginHorizontal: 6},
+  dot: {width: 10, height: 10, borderRadius: 5, marginHorizontal: 4},
   dotActive: {backgroundColor: Colors.gray_d9d9d9},
   dotInactive: {backgroundColor: Colors.gray_6c6c6c},
 });

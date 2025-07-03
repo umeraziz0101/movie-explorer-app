@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Alert,
   FlatList,
   ImageBackground,
@@ -19,6 +20,8 @@ import Strings from '../utils/constants/Strings';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
 import NotFound from './NotFound';
+import {buildImageUrl} from '../utils/image';
+import Images from '../utils/assets/Images';
 
 const MoviesRowList = ({
   data,
@@ -55,6 +58,8 @@ const MoviesRowList = ({
 const MoviesRowItem = ({item, onRemove, itemStyle}) => {
   const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = React.useState(false);
+  const [imageLoading, setImageLoading] = React.useState(true);
+  const [imageError, setImageError] = React.useState(false);
   const toggleMenu = () => setMenuVisible(v => !v);
 
   const handleRemove = () => {
@@ -73,18 +78,31 @@ const MoviesRowItem = ({item, onRemove, itemStyle}) => {
       {cancelable: true},
     );
   };
+  const poster = buildImageUrl(item.poster_path);
 
   return (
     <View style={itemStyle}>
       <Pressable
         onPress={() => {
-          navigation.navigate(Routes.stack.detail, {data: item});
+          navigation.navigate(Routes.stack.detail, {movieId: item.id});
         }}>
         <View style={styles.itemRowContainer}>
           <ImageBackground
-            source={{uri: item.poster_path}}
+            source={{
+              uri: poster ? poster : Images.dummy,
+            }}
             style={styles.image}
-            resizeMode="cover">
+            resizeMode="cover"
+            onLoadEnd={() => setImageLoading(false)}
+            onError={() => {
+              setImageLoading(false);
+              setImageError(true);
+            }}>
+            {imageLoading && (
+              <View style={styles.imageLoader}>
+                <ActivityIndicator size="small" color={Colors.pink_ff465f} />
+              </View>
+            )}
             {onRemove && (
               <>
                 <LinearGradient
@@ -168,4 +186,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   divider: {backgroundColor: Colors.gray_393939},
+
+  imageLoader: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: Colors.black_0d0d0d,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
+  },
 });

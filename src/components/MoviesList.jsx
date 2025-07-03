@@ -2,20 +2,21 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {ImageBox} from './CustomImage';
 
-const MoviesList = ({data, imageSize, gridView = false, ...rest}) => {
+const MoviesList = ({data, listKey, imageSize, gridView = false, ...rest}) => {
   const isGrid = Boolean(gridView);
 
   return (
     <View style={[styles.container]}>
       <FlatList
         data={data}
+        listKey={listKey}
         horizontal={!isGrid}
         numColumns={isGrid ? 3 : 1}
         scrollEnabled={!isGrid}
         nestedScrollEnabled={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => (
           <MovieItem item={item} imageSize={imageSize} isGrid={isGrid} />
         )}
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   row: {
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
 
   gridContent: {

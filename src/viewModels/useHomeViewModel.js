@@ -2,7 +2,12 @@ import {useState, useEffect, useCallback} from 'react';
 import {Alert, BackHandler} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-import {fetchPopular} from '../redux/moviesSlice';
+import {
+  fetchTrendingToday,
+  fetchPopular,
+  fetchLastMonth,
+  fetchLastSixMonths,
+} from '../redux/moviesSlice';
 import {fetchUserData, logoutUser} from '../services/firebaseAuth';
 import Routes from '../utils/constants/Routes';
 import Strings from '../utils/constants/Strings';
@@ -12,24 +17,40 @@ export function useHomeViewModel(navigation) {
   const dispatch = useDispatch();
 
   const {
-    popular: moviesPopular,
+    trendingToday,
+    popular,
     page,
-    loading: moviesLoading,
+    lastMonth,
+    lastSixMonths,
+    loadingTrending,
+    loadingPopular,
+    loadingLastMonth,
+    loadingLastSix,
   } = useSelector(state => state.movies);
 
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
 
   useEffect(() => {
+    dispatch(fetchTrendingToday());
     dispatch(fetchPopular(1));
   }, [dispatch]);
 
-  const loadMorePopularMovies = useCallback(() => {
+  const loadMorePopular = useCallback(() => {
+    if (loadingPopular) return;
     dispatch(fetchPopular(page));
-  }, [dispatch, page]);
+  }, [dispatch, page, loadingPopular]);
 
-  const reloadPopularMovies = useCallback(() => {
+  const reloadAll = useCallback(() => {
+    dispatch(fetchTrendingToday());
     dispatch(fetchPopular(1));
+    dispatch(fetchLastMonth());
+    dispatch(fetchLastSixMonths());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchLastMonth());
+    dispatch(fetchLastSixMonths());
   }, [dispatch]);
 
   useEffect(() => {
@@ -105,9 +126,13 @@ export function useHomeViewModel(navigation) {
     user,
     loading: userLoading,
     logout,
-    moviesPopular,
-    refreshing: moviesLoading,
-    loadMorePopularMovies,
-    reloadPopularMovies,
+    trendingToday,
+    popular,
+    loadMorePopularMovies: loadMorePopular,
+    reloadPopularMovies: reloadAll,
+    lastMonth,
+    lastSixMonths,
+    refreshing:
+      loadingTrending || loadingPopular || loadingLastMonth || loadingLastSix,
   };
 }

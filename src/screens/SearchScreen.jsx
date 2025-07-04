@@ -10,7 +10,8 @@ import {useSearchViewModel} from '../viewModels/useSearchViewModel';
 import Strings from '../utils/constants/Strings';
 
 const SearchScreen = ({navigation}) => {
-  const {query, results, loading, onChangeQuery} = useSearchViewModel();
+  const {query, results, loading, onChangeQuery, trendingToday} =
+    useSearchViewModel();
   console.log(query);
 
   return (
@@ -29,7 +30,11 @@ const SearchScreen = ({navigation}) => {
         <CustomText textType={Fonts.semiBold} size={20}>
           {query ? Strings.texts.results : Strings.texts.topSearches}
         </CustomText>
-        <MoviesRowList data={results} />
+        {query ? (
+          <MoviesRowList data={results} />
+        ) : (
+          <MoviesRowList data={trendingToday} />
+        )}
       </Wrapper>
       {loading && <Loader visible />}
     </Wrapper>

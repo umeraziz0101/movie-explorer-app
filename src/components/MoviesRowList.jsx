@@ -3,6 +3,7 @@ import {
   Alert,
   FlatList,
   ImageBackground,
+  Pressable,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -15,6 +16,9 @@ import Icons from '../utils/assets/Icons';
 import Colors from '../utils/constants/Colors';
 import Fonts from '../utils/constants/Fonts';
 import Strings from '../utils/constants/Strings';
+import {useNavigation} from '@react-navigation/native';
+import Routes from '../utils/constants/Routes';
+import NotFound from './NotFound';
 
 const MoviesRowList = ({
   data,
@@ -24,22 +28,32 @@ const MoviesRowList = ({
   ListHeaderComponent,
   onRemove,
   contentContainerStyle,
-}) => (
-  <FlatList
-    data={data}
-    keyExtractor={item => item.id.toString()}
-    renderItem={({item}) => <MoviesRowItem item={item} onRemove={onRemove} />}
-    onEndReached={onEndReached}
-    onEndReachedThreshold={0.5}
-    nestedScrollEnabled={true}
-    refreshing={refreshing}
-    onRefresh={onRefresh}
-    ListHeaderComponent={ListHeaderComponent}
-    contentContainerStyle={contentContainerStyle}
-  />
-);
+  itemStyle,
+}) => {
+  if (!data || data.length === 0) {
+    return <NotFound />;
+  }
 
-const MoviesRowItem = ({item, onRemove}) => {
+  return (
+    <FlatList
+      data={data}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({item}) => (
+        <MoviesRowItem item={item} onRemove={onRemove} itemStyle={itemStyle} />
+      )}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
+      nestedScrollEnabled={true}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      ListHeaderComponent={ListHeaderComponent}
+      contentContainerStyle={contentContainerStyle}
+    />
+  );
+};
+
+const MoviesRowItem = ({item, onRemove, itemStyle}) => {
+  const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const toggleMenu = () => setMenuVisible(v => !v);
 
@@ -61,44 +75,63 @@ const MoviesRowItem = ({item, onRemove}) => {
   };
 
   return (
-    <View>
-      <View style={styles.itemRowContainer}>
-        <ImageBackground
-          source={{uri: item.poster_path}}
-          style={styles.image}
-          resizeMode="cover">
-          <LinearGradient
-            colors={[Colors.opacity_dark, Colors.opacity_dark]}
-            style={styles.gradient}
-          />
-          <View style={styles.playOverlay}>
-            <CustomIcon name={Icons.play} size={24} />
+    <View style={itemStyle}>
+      <Pressable
+        onPress={() => {
+          navigation.navigate(Routes.stack.detail, {data: item});
+        }}>
+        <View style={styles.itemRowContainer}>
+          <ImageBackground
+            source={{uri: item.poster_path}}
+            style={styles.image}
+            resizeMode="cover">
+            {onRemove && (
+              <>
+                <LinearGradient
+                  colors={[Colors.opacity_dark, Colors.opacity_dark]}
+                  style={styles.gradient}
+                />
+                <View style={styles.playOverlay}>
+                  <CustomIcon name={Icons.play} size={24} />
+                </View>
+              </>
+            )}
+          </ImageBackground>
+
+          <View style={styles.textContainer}>
+            <CustomText textType={Fonts.semiBold} size={14}>
+              {item.title}
+            </CustomText>
+            <CustomText size={12} color={Colors.gray_969696}>
+              {new Date(item.release_date).getFullYear()}
+            </CustomText>
           </View>
-        </ImageBackground>
-
-        <View style={styles.textContainer}>
-          <CustomText textType={Fonts.semiBold} size={14}>
-            {item.original_title}
-          </CustomText>
-          <CustomText size={12} color={Colors.gray_969696}>
-            {new Date(item.release_date).getFullYear()}
-          </CustomText>
+          {onRemove ? (
+            <View style={styles.menuContainer}>
+              <Menu
+                visible={menuVisible}
+                onDismiss={toggleMenu}
+                anchor={
+                  <TouchableOpacity onPress={toggleMenu}>
+                    <CustomIcon name={Icons.more} size={24} />
+                  </TouchableOpacity>
+                }>
+                <Menu.Item
+                  onPress={handleRemove}
+                  title={Strings.buttons.remove}
+                />
+              </Menu>
+            </View>
+          ) : (
+            <View style={styles.iconRightContainer}>
+              <View style={styles.playOverlay}>
+                <CustomIcon name={Icons.play} size={20} />
+              </View>
+            </View>
+          )}
         </View>
-
-        <View style={styles.menuContainer}>
-          <Menu
-            visible={menuVisible}
-            onDismiss={toggleMenu}
-            anchor={
-              <TouchableOpacity onPress={toggleMenu}>
-                <CustomIcon name={Icons.more} size={24} />
-              </TouchableOpacity>
-            }>
-            <Menu.Item onPress={handleRemove} title={Strings.buttons.remove} />
-          </Menu>
-        </View>
-      </View>
-      <Divider />
+        <Divider style={styles.divider} />
+      </Pressable>
     </View>
   );
 };
@@ -114,7 +147,6 @@ const styles = StyleSheet.create({
   image: {
     width: 60,
     height: 70,
-    borderRadius: 4,
     overflow: 'hidden',
     marginRight: 12,
   },
@@ -128,4 +160,12 @@ const styles = StyleSheet.create({
   },
   textContainer: {flex: 1},
   menuContainer: {marginLeft: 12},
+  iconRightContainer: {
+    width: 42,
+    height: 42,
+    borderColor: Colors.pink_ff465f,
+    borderRadius: 4,
+    borderWidth: 2,
+  },
+  divider: {backgroundColor: Colors.gray_393939},
 });

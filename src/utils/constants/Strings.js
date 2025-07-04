@@ -23,6 +23,11 @@ const Strings = {
     readMore: 'Read More...',
     readLess: 'Read Less',
     noFavorites: 'No favorites yet.',
+    sortBy: 'SORT BY',
+    genres: 'GENRES',
+    noDataFound: 'No data Found',
+    results: 'Results',
+    topSearches: 'Top Searches',
   },
   separators: {
     pipe: ' | ',
@@ -36,6 +41,7 @@ const Strings = {
     newPassword: 'Create New Password',
     signUp: 'Sign Up',
     favorites: 'Favorites',
+    genres: 'Genres',
   },
   headerDescription: {
     dontWorry: "Don't worry! Please enter the",
@@ -119,6 +125,7 @@ const Strings = {
     backToLogin: 'Back to Login',
     resetPassword: 'Reset Password',
     watchNow: 'Watch Now',
+    applySettings: 'Apply Settings',
   },
   icons: {
     email: 'email',
@@ -137,6 +144,7 @@ const Strings = {
     newPassword: 'New Password',
     confirmPassword: 'Confirm Password',
     name: 'Name',
+    search: 'Search for a show, movie, genre, etc.',
   },
   consoleMessage: {
     registerUserFetchedUserData: '[registerUser] Fetched document data:',
@@ -166,6 +174,19 @@ const Strings = {
     synopsis: 'Synopsis',
     cast: 'Cast',
     relatedMovies: 'Related Movies',
+  },
+  radioButtons: {
+    label: {
+      relevant: 'Most Relevant',
+      popular: 'Most Popular',
+      recent: 'Most Recent',
+      all: 'All',
+    },
+    value: {
+      relevant: 'relevant',
+      popular: 'popular',
+      recent: 'recent',
+    },
   },
 };
 

@@ -84,7 +84,7 @@ export default TabNavigator;
 const styles = StyleSheet.create({
   tabBarContainer: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 40,
     width: '92%',
     elevation: 0,
     backgroundColor: Colors.pink_ff465f,

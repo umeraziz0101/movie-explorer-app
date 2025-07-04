@@ -19,12 +19,15 @@ import HeartLight from '../../assets/icons/heart_light.svg';
 import Heart from '../../assets/icons/heart.svg';
 import SearchFill from '../../assets/icons/search_fill.svg';
 import Search from '../../assets/icons/search.svg';
+import SearchLight from '../../assets/icons/serach_light.svg';
 import HomeFill from '../../assets/icons/home_fill.svg';
 import Home from '../../assets/icons/home.svg';
 import Play from '../../assets/icons/play.svg';
 import PlayBlack from '../../assets/icons/play_black.svg';
 import More from '../../assets/icons/more.svg';
 import Clock from '../../assets/icons/clock.svg';
+import Mic from '../../assets/icons/mic.svg';
+import Cross from '../../assets/icons/cross.svg';
 
 const Icons = {
   logo: Logo,
@@ -54,6 +57,13 @@ const Icons = {
   playBlack: PlayBlack,
   more: More,
   clock: Clock,
+  SearchLight: SearchLight,
+  mic: Mic,
+  cross: Cross,
+  materialDesignIcons: {
+    checkCircle: 'check-circle',
+    checkboxBlankCircle: 'checkbox-blank-circle',
+  },
 };
 
 export default Icons;

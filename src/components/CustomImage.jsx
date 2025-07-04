@@ -85,12 +85,7 @@ export const ImageBox = ({
           <Image
             source={{uri: imageSource}}
             resizeMode="cover"
-            style={{
-              height: imageSize,
-              width: imageSize,
-              borderRadius: imageRadius,
-              marginTop: imageMarginTop,
-            }}
+            style={styles1.image}
             onLoad={handleImageLoad}
             onError={handleImageError}
           />
@@ -108,15 +103,11 @@ export const ImageBox = ({
           </View>
         )}
         {castName && (
-          <View style={{width: imageSize, marginTop: 4, alignSelf: 'center'}}>
+          <View style={styles1.castName}>
             <CustomText
               size={12}
               numberOfLines={2}
-              style={{
-                textAlign: 'center',
-
-                flexWrap: 'wrap',
-              }}>
+              style={styles1.castNameText}>
               {castName}
             </CustomText>
           </View>
@@ -149,5 +140,16 @@ const styles1 = StyleSheet.create({
     backgroundColor: Colors.black_0d0d0d,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  image: {
+    height: imageSize,
+    width: imageSize,
+    borderRadius: imageRadius,
+    marginTop: imageMarginTop,
+  },
+  castName: {width: imageSize, marginTop: 4, alignSelf: 'center'},
+  castNameText: {
+    textAlign: 'center',
+    flexWrap: 'wrap',
   },
 });

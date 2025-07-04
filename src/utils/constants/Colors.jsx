@@ -5,6 +5,8 @@ const Colors = {
   gray_d9d9d9: '#d9d9d9',
   gray_6c6c6c: '#6c6c6c',
   gray_535353: '#535353',
+  gray_3b3833: '#3b3833',
+  gray_393939: '#393939',
   gray_969696: '#969696',
   pink_e17079: '#e17079',
   pink_ff465f: '#ff465f',

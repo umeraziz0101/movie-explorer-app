@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import CustomIcon from './CustomIcon';
 import Icons from '../utils/assets/Icons';
@@ -6,11 +6,12 @@ import CustomImage from './CustomImage';
 import Colors from '../utils/constants/Colors';
 import {Menu} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
-import Routes from '../utils/constants/Routes';
 import {auth} from '../services/firebaseConfig';
 import Images from '../utils/assets/Images';
 import Strings from '../utils/constants/Strings';
 import CustomText from './CustomText';
+
+import Fonts from '../utils/constants/Fonts';
 
 const DEFAULT_AVATAR = Images.avatar;
 
@@ -35,7 +36,7 @@ const CustomHeader = ({logo, onSignOut, isFavorite, toggleFavorite}) => {
           <View style={styles.iconContainer}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(Routes.tabs.root);
+                navigation.goBack();
               }}>
               <CustomIcon name={Icons.back} size={35} />
             </TouchableOpacity>
@@ -99,7 +100,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export const SolidHeader = ({iconBack, search, title, iconFavorite}) => {
+export const SolidHeader = ({
+  iconBack,
+  search,
+  title,
+  iconFavorite,
+  iconSearch,
+  iconMic,
+  searchValue,
+  onSearchChange,
+}) => {
   const navigation = useNavigation();
 
   return (
@@ -115,11 +125,46 @@ export const SolidHeader = ({iconBack, search, title, iconFavorite}) => {
             </TouchableOpacity>
           </View>
         )}
+        {iconSearch && (
+          <View style={styles1.iconBackContainer}>
+            <CustomIcon name={Icons.SearchLight} size={24} />
+          </View>
+        )}
+        {search && (
+          <View style={styles1.inputContainer}>
+            <TextInput
+              style={[styles1.input]}
+              placeholderTextColor={Colors.white_fefefe}
+              placeholder={Strings.inputPlaceholder.search}
+              onChangeText={onSearchChange}
+              value={searchValue}
+            />
+            {searchValue && (
+              <TouchableOpacity
+                onPress={() => {
+                  onSearchChange(Strings.texts.empty);
+                }}>
+                <CustomIcon
+                  name={Icons.cross}
+                  size={24}
+                  style={{marginHorizontal: 12}}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
         {title && <CustomText>{title}</CustomText>}
         <View>
           {iconFavorite && (
             <CustomIcon
               name={Icons.heartFillLight}
+              size={24}
+              style={{marginLeft: 'auto'}}
+            />
+          )}
+          {iconMic && (
+            <CustomIcon
+              name={Icons.mic}
               size={24}
               style={{marginLeft: 'auto'}}
             />
@@ -149,5 +194,22 @@ const styles1 = StyleSheet.create({
   iconBackContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  inputContainer: {
+    padding: 0,
+    marginRight: 'auto',
+    marginLeft: 12,
+    fontSize: 12,
+    fontFamily: Fonts.semiBold,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  input: {
+    padding: 0,
+    margin: 0,
+    fontSize: 12,
+    fontFamily: Fonts.regular,
+    flex: 1,
+    color: Colors.white_fefefe,
   },
 });

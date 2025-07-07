@@ -19,7 +19,7 @@ const CustomButton = ({
       activeOpacity={0.7}
       style={[
         styles.buttonContainer,
-        transparent && {backgroundColor: Colors.transparent},
+        transparent && styles.buttonTransparent,
         buttonContainerStyle,
       ]}
       onPress={onPress}>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.pink_ff465f,
     marginVertical: 10,
   },
+  buttonTransparent: {backgroundColor: Colors.transparent},
   row: {
     flexDirection: 'row',
   },

@@ -45,7 +45,7 @@ const CustomHeader = ({logo, onSignOut, isFavorite, toggleFavorite}) => {
         {!logo && (
           <TouchableOpacity
             onPress={toggleFavorite}
-            style={{marginLeft: 'auto', marginRight: 20}}>
+            style={styles.favoriteButton}>
             <CustomIcon
               name={isFavorite ? Icons.heartFillLight : Icons.heartLight}
               size={24}
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  favoriteButton: {marginLeft: 'auto', marginRight: 20},
 });
 
 export const SolidHeader = ({
@@ -147,7 +148,7 @@ export const SolidHeader = ({
                 <CustomIcon
                   name={Icons.cross}
                   size={24}
-                  style={{marginHorizontal: 12}}
+                  style={styles1.iconCross}
                 />
               </TouchableOpacity>
             )}
@@ -159,15 +160,11 @@ export const SolidHeader = ({
             <CustomIcon
               name={Icons.heartFillLight}
               size={24}
-              style={{marginLeft: 'auto'}}
+              style={styles1.iconFavorite}
             />
           )}
           {iconMic && (
-            <CustomIcon
-              name={Icons.mic}
-              size={24}
-              style={{marginLeft: 'auto'}}
-            />
+            <CustomIcon name={Icons.mic} size={24} style={styles1.iconMic} />
           )}
         </View>
       </View>
@@ -195,6 +192,9 @@ const styles1 = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  iconCross: {marginHorizontal: 12},
+  iconFavorite: {marginLeft: 'auto'},
+  iconMic: {marginLeft: 'auto'},
   inputContainer: {
     padding: 0,
     marginRight: 'auto',

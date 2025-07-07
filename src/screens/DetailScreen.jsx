@@ -53,7 +53,7 @@ const DetailScreen = () => {
       </Wrapper>
     );
   }
-  if (error) return Alert.alert('Error', error);
+  if (error) return Alert.alert(Strings.errors.error, error);
 
   const year = movie.release_date?.slice(0, 4);
   const poster = buildImageUrl(movie.poster_path);
@@ -80,13 +80,12 @@ const DetailScreen = () => {
             end={{x: 0.5, y: 0}}
             style={styles.gradient}
           />
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View style={styles.playContainer}>
             <CustomIcon name={Icons.play} size={66} />
             <CustomText
               textType={Fonts.semiBold}
               size={14}
-              style={{marginTop: 16}}>
+              style={styles.playTrailerText}>
               {Strings.texts.playTrailer}
             </CustomText>
           </View>
@@ -186,6 +185,8 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingBottom: 20,
   },
+  playContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  playTrailerText: {marginTop: 16},
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -8,9 +8,7 @@ const Divider = ({colored}) => {
   return (
     <View style={styles.container}>
       <View style={styles.border} />
-      <CustomText
-        size={14}
-        style={[styles.text, colored && {color: Colors.pink_ff465f}]}>
+      <CustomText size={14} style={[styles.text, colored && styles.colored]}>
         {Strings.texts.or}
       </CustomText>
       <View style={styles.border} />
@@ -34,4 +32,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Colors.white_ffffff,
   },
+  colored: {color: Colors.pink_ff465f},
 });

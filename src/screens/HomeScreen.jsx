@@ -49,7 +49,7 @@ const HomeScreen = ({navigation}) => {
           />
         }>
         <MoviesCarousel movies={trendingToday} onSignOut={logout} />
-        <Wrapper style={{paddingTop: 0}}>
+        <Wrapper style={styles.listBackground}>
           <CustomIcon
             name={Icons.backgroundHome}
             size={'100%'}
@@ -106,4 +106,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.transparent,
     paddingVertical: 20,
   },
+  listBackground: {paddingTop: 0},
 });

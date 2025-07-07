@@ -75,7 +75,7 @@ export const ImageBox = ({
           <CustomText
             textType={Fonts.medium}
             size={12}
-            style={castName && {alignSelf: 'center'}}
+            style={castName && styles1.castTypeText}
             numberOfLines={1}>
             {title}
           </CustomText>
@@ -152,7 +152,7 @@ const styles1 = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  castTypeText: {alignSelf: 'center'},
   castName: {marginTop: 4, alignSelf: 'center'},
   castNameText: {
     textAlign: 'center',

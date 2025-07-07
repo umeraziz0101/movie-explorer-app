@@ -1,16 +1,21 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {moviesPopular} from '../data/DataManager';
+
 import ReduxConstants from '../utils/constants/ReduxConstants';
 import Strings from '../utils/constants/Strings';
+import {API_KEY} from '../api/api';
+import {SEARCH} from '../api/endpoints';
 
 export const fetchSearchResults = createAsyncThunk(
   ReduxConstants.actions.fetchSearchResults,
   async query => {
-    const q = query.toLowerCase();
-    const filtered = moviesPopular.filter(m =>
-      m.title.toLowerCase().includes(q),
+    const res = await fetch(
+      `${SEARCH}?api_key=${API_KEY}` +
+        `&language=en-US&query=${encodeURIComponent(query)}` +
+        `&page=1&include_adult=false`,
     );
-    return filtered;
+    if (!res.ok) throw new Error(Strings.errors.searchFailed);
+    const body = await res.json();
+    return body.results;
   },
 );
 

@@ -96,6 +96,14 @@ const Strings = {
     failedToCleanupFavorites: 'Failed to cleanup favorites:',
     failedToUpdateFavorites: 'Failed to update favorites',
     errorRemovingFavorite: 'Error removing favorite:',
+    failedToLoadMovie: 'Failed to load movie',
+    failedToLoadMovies: 'Failed to load movies',
+    failedToLoadGenres: 'Failed to load genres',
+    failedToLoadPopular: 'Failed to load popular',
+    failedLastMonthList: 'Failed last‑month list',
+    failedSixMonthList: 'Failed 6‑month list',
+    failedToLoadTrending: 'Failed to load trending',
+    searchFailed: 'Search failed',
   },
   alerts: {
     title: {

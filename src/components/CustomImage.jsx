@@ -14,6 +14,8 @@ import Colors from '../utils/constants/Colors';
 import Strings from '../utils/constants/Strings';
 import {useNavigation} from '@react-navigation/native';
 import Routes from '../utils/constants/Routes';
+import {buildImageUrl} from '../utils/image';
+import Images from '../utils/assets/Images';
 
 const CustomImage = ({local, imageSource, imageSize = 130, imageCircle}) => {
   imageCircle = imageSize / 2;
@@ -50,7 +52,8 @@ export const ImageBox = ({
 }) => {
   const castName = item.name;
   const title = item.title || item.known_for_department;
-  const imageSource = item.poster_path || item.profile_path;
+  const rawPath = item.poster_path || item.profile_path;
+  const imageSource = buildImageUrl(rawPath);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const navigation = useNavigation();
@@ -68,24 +71,32 @@ export const ImageBox = ({
   return (
     <View>
       {title && (
-        <CustomText
-          textType={Fonts.medium}
-          size={12}
-          style={castName && {alignSelf: 'center'}}>
-          {title}
-        </CustomText>
+        <View style={[styles1.titleContainer, {width: imageSize}]}>
+          <CustomText
+            textType={Fonts.medium}
+            size={12}
+            style={castName && styles1.castTypeText}
+            numberOfLines={1}>
+            {title}
+          </CustomText>
+        </View>
       )}
       <View>
         <Pressable
           onPress={() => {
             !castName
-              ? navigation.navigate(Routes.stack.detail, {data: item})
+              ? navigation.navigate(Routes.stack.detail, {movieId: item.id})
               : null;
           }}>
           <Image
-            source={{uri: imageSource}}
+            source={{uri: imageSource ? imageSource : Images.dummy}}
             resizeMode="cover"
-            style={styles1.image}
+            style={{
+              height: imageSize,
+              width: imageSize,
+              borderRadius: imageRadius,
+              marginTop: imageMarginTop,
+            }}
             onLoad={handleImageLoad}
             onError={handleImageError}
           />
@@ -103,7 +114,7 @@ export const ImageBox = ({
           </View>
         )}
         {castName && (
-          <View style={styles1.castName}>
+          <View style={[styles1.castName, {width: imageSize}]}>
             <CustomText
               size={12}
               numberOfLines={2}
@@ -141,15 +152,14 @@ const styles1 = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  image: {
-    height: imageSize,
-    width: imageSize,
-    borderRadius: imageRadius,
-    marginTop: imageMarginTop,
-  },
-  castName: {width: imageSize, marginTop: 4, alignSelf: 'center'},
+  castTypeText: {alignSelf: 'center'},
+  castName: {marginTop: 4, alignSelf: 'center'},
   castNameText: {
     textAlign: 'center',
     flexWrap: 'wrap',
+  },
+
+  titleContainer: {
+    flexShrink: 1,
   },
 });

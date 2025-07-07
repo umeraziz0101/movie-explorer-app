@@ -30,6 +30,11 @@ const Keys = {
     facebook: 'facebook',
     apple: 'apple',
   },
+  moviesList: {
+    popularMonth: 'popular_month',
+    popularLastMonth: 'popular_last_month',
+    popularLastSix: 'popular_last_six',
+  },
 };
 
 export default Keys;

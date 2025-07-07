@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import CustomText from './CustomText';
 import Colors from '../utils/constants/Colors';
 import Fonts from '../utils/constants/Fonts';
@@ -47,16 +47,7 @@ const CustomReadMore = ({
       <View>
         <CustomText style={style}>{children}</CustomText>
         <TouchableOpacity onPress={toggleExpanded}>
-          <CustomText
-            style={[
-              {
-                color: Colors.pink_ff465f,
-                fontFamily: Fonts.regular,
-                fontSize: 12,
-                marginTop: 4,
-              },
-              seeLessStyle,
-            ]}>
+          <CustomText style={[styles.seeLess, seeLessStyle]}>
             {seeLessText}
           </CustomText>
         </TouchableOpacity>
@@ -74,14 +65,7 @@ const CustomReadMore = ({
           <>
             {truncatedText}
             <CustomText
-              style={[
-                {
-                  color: Colors.pink_ff465f,
-                  fontFamily: Fonts.regular,
-                  fontSize: 12,
-                },
-                seeMoreStyle,
-              ]}
+              style={[styles.seeMore, seeMoreStyle]}
               onPress={toggleExpanded}>
               {seeMoreText}
             </CustomText>
@@ -95,3 +79,17 @@ const CustomReadMore = ({
 };
 
 export default CustomReadMore;
+
+const styles = StyleSheet.create({
+  seeLess: {
+    color: Colors.pink_ff465f,
+    fontFamily: Fonts.regular,
+    fontSize: 12,
+    marginTop: 4,
+  },
+  seeMore: {
+    color: Colors.pink_ff465f,
+    fontFamily: Fonts.regular,
+    fontSize: 12,
+  },
+});

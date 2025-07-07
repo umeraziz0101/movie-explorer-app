@@ -4,9 +4,9 @@ import CustomText from './CustomText';
 import Colors from '../utils/constants/Colors';
 import Strings from '../utils/constants/Strings';
 
-const NotFound = () => {
+const NotFound = ({style}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <CustomText>{Strings.texts.noDataFound}</CustomText>
     </View>
   );

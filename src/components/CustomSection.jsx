@@ -4,13 +4,14 @@ import CustomText from './CustomText';
 import Fonts from '../utils/constants/Fonts';
 
 const CustomSection = ({
+  containerStyle,
   sectionTitle,
   titleSize = 20,
   titleFont = Fonts.medium,
   children,
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <CustomText textType={titleFont} size={titleSize}>
         {sectionTitle}
       </CustomText>

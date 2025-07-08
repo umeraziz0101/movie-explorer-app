@@ -1,5 +1,95 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+## 📱 App Screens
+
+### Splash Screen
+
+<p >
+  <img src="./assets/1 splash.png" alt="Splash Screen" width="200"/>
+</p>
+
+### Onboarding Screen
+
+<p >
+  <img src="./assets/2 onboarding.png" width="200"/>
+</p>
+
+### Login Screen
+
+<p >
+  <img src="./assets/3 login.png" width="200"/>
+</p>
+
+### Forget Password Screen
+
+<p >
+  <img src="./assets/4.1 forget.png" width="200"/>
+  <img src="./assets/4.2 forget.png" width="200"/>
+</p>
+
+### OTP Verification Screen
+
+<p >
+  <img src="./assets/5 otp.png" width="200"/>
+</p>
+
+### New Password Screen
+
+<p >
+  <img src="./assets/6.1 new password.png" width="200"/>
+  <img src="./assets/6.2 new password.png" width="200"/>
+</p>
+
+### Password Changed Screen
+
+<p >
+  <img src="./assets/7 password changed.png" width="200"/>
+
+</p>
+
+### Sign Up Screen
+
+<p >
+  <img src="./assets/8.1 sign up.png" width="200"/>
+  <img src="./assets/8.2 login with google.png" width="200"/>
+</p>
+
+### Home Screen
+
+<p >
+  <img src="./assets/9.1 home.png" width="200"/>
+  <img src="./assets/9.2 home.png" width="200"/>
+  <img src="./assets/9.3 home.png" width="200"/>
+  <img src="./assets/9.4 home pull up to loading.png" width="200"/>
+</p>
+
+### Detail Screen
+
+<p >
+  <img src="./assets/10.1 detail.png" width="200"/>
+  <img src="./assets/10.2 detail.png" width="200"/>
+</p>
+
+### Favorite Screen
+
+<p >
+  <img src="./assets/11 favorite.png" width="200"/>
+</p>
+
+### Search Screen
+
+<p >
+  <img src="./assets/12.1 search.png" width="200"/>
+  <img src="./assets/12.2 search.png" width="200"/>
+</p>
+
+### Sign Up Screen
+
+<p >
+  <img src="./assets/13.1 genre.png" width="200"/>
+  <img src="./assets/13.2 genre.png" width="200"/>
+</p>
+
 # Getting Started
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
